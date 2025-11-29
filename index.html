@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Oren Gamchi - Vibe Coding Master Kit</title>
+    <title>Oren Gamchi - Vibe Coding Master Kit (INFINITE LOOP)</title>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Orbitron:wght@500;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Orbitron:wght@500;700;900&family=Fira+Code:wght@400;500;700&family=Black+Ops+One&display=swap" rel="stylesheet">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Tailwind (for utilities) -->
@@ -15,1753 +15,1060 @@
     <style>
         /* --- Vibe Coding Theme Variables --- */
         :root {
-            --bg-dark: #0a0a0a;
-            --card-bg: rgba(20, 20, 25, 0.85);
+            --bg-dark: #020202;
+            --card-bg: rgba(12, 12, 18, 0.95);
             --text-primary: #e2e8f0;
             --text-secondary: #94a3b8;
-            --accent-primary: #6366f1;    /* Indigo (Pivot, Code) */
-            --accent-secondary: #10b981; /* Emerald (Success, Live) */
-            --accent-highlight: #f43f5e; /* Rose (Legacy, Danger) */
-            --accent-warning: #f59e0b;    /* Amber (Warning) */
-            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-primary: #6366f1;    /* Indigo */
+            --accent-secondary: #10b981; /* Emerald */
+            --accent-highlight: #f43f5e; /* Rose */
+            --border-color: rgba(99, 102, 241, 0.5); 
             --font-mono: 'Fira Code', monospace;
-            --font-sans: 'Courier New', Courier, monospace; 
+            --font-sans: 'Assistant', sans-serif;
             --font-display: 'Orbitron', sans-serif;
-            
-            --success: var(--accent-secondary); 
-            --danger: #ef4444; 
+            --font-stamp: 'Black Ops One', cursive;
+            --danger: #ef4444;
+            --success: #10b981;
         }
 
         * { box-sizing: border-box; }
 
         html, body {
             width: 100%;
-            max-width: 100%;
-            overflow-x: hidden;
-        }
-
-        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
             font-family: var(--font-sans);
             background-color: var(--bg-dark);
             color: var(--text-primary);
-            margin: 0;
-            padding: 20px 10px;
-            line-height: 1.6;
-        }
-
-        /* --- Animations Classes --- */
-        /* Base class for elements to animate on scroll */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+            touch-action: none;
         }
         
-        .reveal-on-scroll.in-view {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Staggered delays for lists/grids */
-        .delay-100 { transition-delay: 0.1s; }
-        .delay-200 { transition-delay: 0.2s; }
-        .delay-300 { transition-delay: 0.3s; }
-
-        /* Typewriter Effect Cursor */
-        .typewriter-cursor::after {
-            content: '|';
-            animation: blink 1s step-start infinite;
-            color: var(--accent-secondary);
-        }
-        @keyframes blink { from, to { opacity: 0 } 50% { opacity: 1 } }
-        
-        /* General typing container */
-        .type-this {
-            min-height: 1.5em; /* Prevent layout jump */
-        }
-        /* Specific elements inside the terminal that need typing */
-        .terminal-content .typing-container {
-             display: block; /* Important for preserving line breaks */
-        }
-        
-        /* --- Pivot Assets Animations (New) --- */
-        /* Extrude & Bevel Look */
-        .li-col {
-            box-shadow: 0 0 5px rgba(255,255,255,0.1), 
-                        inset 0 0 15px rgba(0,0,0,0.5); /* Inner bevel */
-        }
-        
-        /* Arrow Pulse Animation */
-        @keyframes pulse-arrow {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-        .li-arrow {
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 2rem;
-            animation: pulse-arrow 2s ease-in-out infinite;
-            color: var(--accent-primary);
-        }
-        
-
-        /* --- Animated Background --- */
-        .bg-grid {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            animation: grid-pan 20s linear infinite;
-        }
-        @keyframes grid-pan { 0% { transform: translateY(0); } 100% { transform: translateY(40px); } }
-
-        .bg-glow {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 80vw; height: 80vh;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 60%);
-            z-index: -2; pointer-events: none;
-        }
-
-        .container { max-width: 950px; margin: 0 auto; width: 100%; }
-
-        /* --- Header --- */
-        header { text-align: center; margin-bottom: 40px; padding: 0 10px; }
-        h1 { 
-            font-family: var(--font-display); 
-            font-size: clamp(1.8rem, 5vw, 3rem);
-            margin-bottom: 10px; 
-            letter-spacing: 1px;
-            background: linear-gradient(to right, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            word-break: break-word;
-        }
-        
-        .typewriter-text {
-            font-family: var(--font-mono);
-            color: var(--success);
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
-            border-left: 2px solid var(--success);
-            display: inline-block;
-            white-space: pre-wrap;
-            word-break: break-word;
-            min-height: 1.5em;
-        }
-        
-        /* --- Glass Cards --- */
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+        /* --- UTILS --- */
+        .btn, .modal-content, .gallery-item-3d, .nav-buttons .btn, .stat-item, .terminal, .resignation-letter {
+            border-radius: 2px 12px 2px 12px !important; 
             border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 0;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            transition: 0.3s ease;
-            width: 100%;
         }
-        .card:hover { 
-            transform: translateY(-5px); 
-            border-color: rgba(99, 102, 241, 0.4);
-            box-shadow: 0 15px 50px rgba(99, 102, 241, 0.15);
+        
+        .big-price { font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 8vw, 3rem); font-weight: 900; line-height: 1; display: block; margin: 10px 0; }
+        .price-tag-old { color: var(--accent-highlight); text-decoration: line-through; opacity: 0.7; }
+        .price-tag-new { color: var(--accent-secondary); }
+
+        /* --- LED TICKER BANNER --- */
+        .led-ticker-wrap {
+            position: fixed; top: 0; left: 0; width: 100%; height: 36px;
+            background-color: #000; border-bottom: 2px solid var(--accent-secondary);
+            z-index: 9999; overflow: hidden; display: flex; align-items: center;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
         }
 
-        .card-header {
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--border-color);
-            background: rgba(255,255,255,0.02);
-            display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
+        .led-ticker {
+            display: flex; white-space: nowrap;
+            animation: ticker 80s linear infinite; /* Slower for readability */
         }
 
-        .card-title {
-            font-family: var(--font-mono);
-            font-weight: 700; font-size: 1.1rem; color: #fff;
+        .led-item {
+            padding: 0 40px; font-family: var(--font-mono); font-size: 14px;
+            color: var(--accent-secondary); text-shadow: 0 0 5px var(--accent-secondary);
             display: flex; align-items: center; gap: 10px;
         }
-        
-        .card-body { padding: 20px; }
 
-        /* --- Tags --- */
-        .tag {
-            font-family: var(--font-mono); font-size: 0.7rem; padding: 5px 12px; border-radius: 4px;
-            text-transform: uppercase; border: 1px solid transparent; letter-spacing: 1px;
-            white-space: nowrap;
-        }
-        .tag-code { background: rgba(99, 102, 241, 0.15); color: #818cf8; border-color: #818cf8; }
-        .tag-live { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: #34d399; }
-        .tag-alert { background: rgba(244, 63, 94, 0.15); color: #fb7185; border-color: #fb7185; }
-        .tag-thanks { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: #fbbf24; }
-
-        /* --- Profile --- */
-        .profile-flex { display: flex; gap: 20px; align-items: center; flex-direction: column; text-align: center; }
-        @media (min-width: 768px) {
-            .profile-flex { flex-direction: row; text-align: right; }
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
         }
 
-        .profile-img-box {
-            width: 120px; height: 120px; border-radius: 50%; position: relative;
-            padding: 4px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            flex-shrink: 0;
-            /* Initial state for animation */
-            transform: scale(0.8); opacity: 0; transition: all 0.8s ease;
-        }
-        .profile-img-box.in-view { transform: scale(1); opacity: 1; }
-
-        .profile-img-box img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid var(--bg-dark); }
-        .profile-status {
-            position: absolute; bottom: 5px; right: 5px; width: 24px; height: 24px;
-            background: var(--accent-secondary); border: 4px solid var(--bg-dark); border-radius: 50%;
-            box-shadow: 0 0 15px var(--accent-secondary);
-        }
-        
-        .role-badge {
-            display: inline-block; background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 50px;
-            font-family: var(--font-mono); font-size: 0.75rem; border: 1px solid var(--border-color); margin-bottom: 10px;
-            color: var(--accent-secondary);
-        }
-        
-        .tech-stack { margin-top: 20px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
-        @media (min-width: 768px) { .tech-stack { justify-content: flex-start; } }
-
-        .tech-pill { 
-            font-family: var(--font-mono); font-size: 0.75rem; background: rgba(255,255,255,0.05); 
-            padding: 5px 12px; border-radius: 4px; color: var(--text-secondary); border: 1px solid var(--border-color);
-            transition: 0.2s;
-        }
-        .tech-pill:hover { border-color: var(--accent-primary); color: #fff; box-shadow: 0 0 10px rgba(99, 102, 241, 0.3); }
-
-        /* --- Terminal / Text Content --- */
-        .terminal {
-            background: #0d0d0d; border-radius: 8px; overflow: hidden; margin-bottom: 25px;
-            border: 1px solid #333; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-        }
-        .terminal-bar {
-            background: #1a1a1a; padding: 8px 15px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #333;
-        }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
-        .terminal-title { margin-left: 10px; font-family: var(--font-mono); font-size: 0.75rem; color: #666; }
-        
-        .terminal-content {
-            padding: 20px; font-family: var(--font-mono); font-size: 0.85rem; color: #d4d4d4; white-space: pre-wrap; line-height: 1.7; word-break: break-word;
-        }
-        .hl-kw { color: #c586c0; } .hl-str { color: #ce9178; } .hl-com { color: #6a9955; font-style: italic; }
-
-        /* --- Cost Table Styling --- */
-        .cost-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            text-align: right;
-        }
-        .cost-table th, .cost-table td {
-            padding: 10px 5px;
-            border-bottom: 1px solid var(--border-color);
-            white-space: nowrap;
-        }
-        .cost-table th {
-            color: var(--accent-primary);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-        }
-        .cost-table .legacy-cost {
-            color: var(--accent-highlight);
-            font-weight: bold;
-        }
-        .cost-table .ai-cost {
-            color: var(--accent-secondary);
-            font-weight: bold;
-        }
-        .cost-table tr:hover {
-            background: rgba(99, 102, 241, 0.05);
-        }
-        .cost-table .total-row {
-            border-top: 2px solid var(--accent-primary);
-            font-size: 1rem;
-            font-weight: 700;
-        }
-        /* Mobile adjustments for table */
-        @media (max-width: 600px) {
-            .cost-table thead { display: none; }
-            .cost-table, .cost-table tbody, .cost-table tr, .cost-table td { display: block; width: 100%; }
-            .cost-table tr { margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 8px; }
-            .cost-table td { text-align: right; border-bottom: none; position: relative; padding-right: 50%; }
-            .cost-table td:before {
-                content: attr(data-label);
-                position: absolute;
-                right: 6px;
-                width: 45%;
-                font-weight: 700;
-                color: var(--text-secondary);
-                text-align: left;
-            }
-            .cost-table .total-row td { padding-right: 6px; }
-        }
-
-        /* --- Buttons --- */
-        .action-bar { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 20px; flex-wrap: wrap; }
-        .btn {
-            background: transparent; border: 1px solid var(--accent-primary); color: var(--accent-primary);
-            padding: 8px 20px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.85rem; cursor: pointer;
-            transition: 0.2s; display: flex; align-items: center; gap: 8px; text-decoration: none;
-            justify-content: center; width: 100%; /* Full width on mobile */
-        }
-        @media (min-width: 768px) { .btn { width: auto; } }
-
-        .btn:hover { background: var(--accent-primary); color: #fff; box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); }
-        .btn-live { border-color: var(--accent-secondary); color: var(--accent-secondary); }
-        .btn-live:hover { background: var(--accent-secondary); color: #000; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
-
-        /* --- Graphics & Charts --- */
-        .stats-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 30px; }
-        @media (min-width: 768px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
-
-        .stat-item { 
-            background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; 
-            border-left: 3px solid var(--accent-primary); transition: 0.3s;
-            cursor: pointer; /* Clickable */
-        }
-        .stat-item.new { border-color: var(--accent-secondary); background: rgba(16, 185, 129, 0.05); }
-        .stat-item:hover { transform: scale(1.02); box-shadow: 0 0 15px rgba(99, 102, 241, 0.1); }
-        
-        .stat-val { font-size: 1.8rem; font-weight: 900; font-family: var(--font-display); color: #fff; margin: 5px 0; display: flex; align-items: center; } /* Added flex for icon placement */
-        .stat-val i { margin-right: 15px; font-size: 2.2rem; } /* Icon spacing/size */
-        .stat-lbl { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; } /* Added align-items: center; */
-        .stat-expand-icon { transition: transform 0.3s; }
-        
-        /* Expanded Stat Graph */
-        .stat-breakdown {
-            max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out, opacity 0.5s ease;
-            opacity: 0; margin-top: 0;
-        }
-        /* Keep open styling */
-        .stat-item.open .stat-breakdown { max-height: 300px; opacity: 1; margin-top: 20px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 15px; }
-        .stat-item.open .stat-expand-icon { transform: rotate(180deg); }
-        
-        .graph-bar-container { margin-bottom: 12px; }
-        .graph-label { font-size: 0.7rem; color: #ccc; display: flex; justify-content: space-between; margin-bottom: 3px; font-family: var(--font-mono); }
-        .graph-track { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
-        
-        /* Grow Animation for Bars */
-        .graph-fill { 
-            height: 100%; border-radius: 3px; 
-            width: 0; /* Start at 0 width for animation */
-            transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1); 
-        }
-        
-        /* Width classes that will be applied when in view */
-        .stat-item.open.in-view .graph-fill.fill-high { width: 90%; background: var(--accent-highlight); }
-        .stat-item.open.in-view .graph-fill.fill-med { width: 60%; background: var(--accent-warning); }
-        .stat-item.open.in-view .graph-fill.fill-low { width: 10%; background: var(--accent-secondary); }
-        .stat-item.open.in-view .graph-fill.fill-zero { width: 2%; background: var(--accent-secondary); }
-
-
-        .pie-layout { 
-            display: flex; align-items: center; justify-content: space-around; flex-direction: column; gap: 20px;
-            background: #0f0f11; padding: 30px; border-radius: 16px; border: 1px solid #333; text-align: center;
-        }
-        @media (min-width: 768px) { .pie-layout { flex-direction: row; text-align: right; } }
-
-        /* --- PIE ANIMATION --- */
-        @keyframes pie-rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .pie-visual {
-            width: 140px; height: 140px; border-radius: 50%; flex-shrink: 0;
-            background: conic-gradient(var(--accent-primary) 0% 40%, var(--accent-secondary) 40% 70%, var(--accent-warning) 70% 90%, var(--accent-highlight) 90% 100%);
-            position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            /* Animation Added Here */
-            animation: pie-rotate 20s linear infinite;
-            opacity: 0; transform: scale(0.5); transition: all 1s ease; /* Entrance state */
-        }
-        .pie-visual.in-view { opacity: 1; transform: scale(1); }
-        
-        .pie-visual::after {
-            content: "CORE"; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-            width: 90px; height: 90px; background: #0f0f11; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; color: #fff;
-            font-family: var(--font-mono);
-        }
-        .pie-legend li { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); justify-content: center; }
-        @media (min-width: 768px) { .pie-legend li { justify-content: flex-start; } }
-        .l-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-        /* --- Project Gallery --- */
-        .gallery-scroll {
-            display: flex; overflow-x: auto; gap: 20px; padding: 10px 0 25px 0;
-            scrollbar-width: thin; scrollbar-color: var(--accent-primary) transparent;
-            -webkit-overflow-scrolling: touch; /* Smooth scroll on mobile */
-        }
-        .gallery-scroll::-webkit-scrollbar { height: 6px; }
-        .gallery-scroll::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 10px; }
-        
-        .gallery-card {
-            min-width: 250px; height: 160px; background: #1a1a1a; border-radius: 12px;
-            position: relative; overflow: hidden; cursor: pointer; border: 1px solid #333; transition: 0.3s;
-            flex-shrink: 0; /* Don't shrink cards */
-        }
-        .gallery-card:hover { transform: scale(1.05); border-color: var(--accent-secondary); box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
-        
-        /* Updated Overlay Styles for Hover Effect */
-        .g-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; /* Full Cover */
-            background: rgba(0, 0, 0, 0.85); /* Dark overlay for text readability */
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            opacity: 0; /* Hidden by default */
-            transition: opacity 0.3s ease;
-            padding: 20px; text-align: center;
-            backdrop-filter: blur(4px);
-        }
-        /* Show overlay on hover OR focus (for mobile touch) */
-        .gallery-card:hover .g-overlay, .gallery-card:active .g-overlay {
-            opacity: 1;
-        }
-        
-        .g-title { 
-            font-family: var(--font-display); font-size: 1.1rem; color: #fff; 
-            margin-bottom: 10px;
-            transform: translateY(20px); transition: transform 0.3s ease;
-        }
-        .gallery-card:hover .g-title { transform: translateY(0); }
-        
-        .g-desc {
-            font-family: var(--font-mono); font-size: 0.75rem; color: #ccc;
-            margin-bottom: 15px;
-            transform: translateY(20px); transition: transform 0.4s ease;
-        }
-        .gallery-card:hover .g-desc { transform: translateY(0); }
-
-        .g-btn {
-            background: transparent; border: 1px solid var(--accent-secondary); color: var(--accent-secondary);
-            padding: 5px 15px; border-radius: 20px; font-size: 0.7rem; font-family: var(--font-mono);
-            text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
-            transform: translateY(20px); transition: all 0.5s ease;
-        }
-        .g-btn:hover { background: var(--accent-secondary); color: #000; }
-
-
-        /* --- Mobile Mockup / Preview --- */
-        .mockup-stage, .phone-frame, .notch { display: none; }
-        
-        .full-preview-container {
-            width: 100%;
-            height: 400px; /* Default for mobile */
-            background: #0a0a0a;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative; 
-        }
-        @media (min-width: 768px) { .full-preview-container { height: 600px; } }
-        
-        .full-preview-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-            overflow: hidden; /* Added to hide scrollbars inside iframe */
-        }
-
-
-        /* --- Social Graphics (PIVOT ASSETS) --- */
-        .graphic-linkedin {
-            background: #050505; padding: 25px; border-radius: 12px; border: 1px solid #333; position: relative; overflow: hidden; direction: ltr;
-        }
-        .li-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 20px 20px; }
-        .li-cols { display: flex; gap: 15px; position: relative; z-index: 1; margin-top: 20px; flex-direction: column; }
-        @media(min-width:768px){ .li-cols { flex-direction: row; } }
-        
-        /* Extrude & Bevel Styling */
-        .li-col.li-old { 
-            background: rgba(239, 68, 68, 0.1); 
-            border: 1px solid var(--danger); 
-            box-shadow: 0 5px 0 0 var(--danger), inset 0 0 10px rgba(239, 68, 68, 0.5); 
-            transform: translateZ(0); /* Ensure 3D context */
-        }
-        .li-col.li-new { 
-            background: rgba(16, 185, 129, 0.1); 
-            border: 1px solid var(--success); 
-            box-shadow: 0 5px 0 0 var(--success), inset 0 0 10px rgba(16, 185, 129, 0.5);
-            transform: translateZ(0);
-        }
-        
-        .li-arrow-container {
-            display: flex; align-items: center; justify-content: center;
-        }
-        .li-arrow {
-            font-size: 2rem;
-            color: var(--accent-primary);
-            animation: pulse-arrow 2s ease-in-out infinite;
-        }
-
-
-        /* --- Social Graphics --- */
-        .graphic-facebook {
-            background: transparent; 
-            padding: 30px; 
-            border-radius: 12px; 
-            position: relative; 
-            overflow: hidden; 
-            min-height: 450px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            direction: ltr;
-        }
-        .fb-invoice { background: rgba(255,255,255,0.95); padding: 20px; border-radius: 10px; width: 100%; max-width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; z-index: 1; color: #333; }
-        .fb-row { display: flex; justify-content: space-between; margin-bottom: 8px; color: #555; text-decoration: line-through; font-size: 0.85rem; }
-        .canceled-stamp { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%) rotate(-15deg); border: 3px solid #d32f2f; color: #d32f2f; font-weight: 900; font-size: 2rem; padding: 5px 15px; text-transform: uppercase; opacity: 0.8; pointer-events: none; white-space: nowrap; }
-
-        /* POST 2 Specific Side-by-Side Layout */
-        @media (min-width: 768px) {
-            .post-body-flex {
-                display: flex;
-                gap: 30px;
-                align-items: center;
-                /* RTL: First child is Right, Second child is Left */
-            }
-            .post-text-content {
-                flex: 1;
-            }
-            .post-visual-content {
-                flex: 1;
-                display: flex;
-                justify-content: center;
-            }
-            /* Adjust graphic container height for this specific layout */
-            .post-visual-content .graphic-box {
-                width: 100%;
-                margin-top: 0 !important;
-            }
-            .post-visual-content .graphic-facebook {
-                min-height: 350px; /* Slightly reduced height for side-by-side balance */
-            }
-        }
-
-        /* Toast */
-        #toast {
-            visibility: hidden; min-width: 200px; background: var(--accent-secondary); color: #000; text-align: center;
-            border-radius: 50px; padding: 12px; position: fixed; z-index: 1000; left: 50%; bottom: 40px;
-            transform: translateX(-50%); font-weight: bold; font-family: var(--font-mono); opacity: 0; transition: 0.3s;
-        }
-        #toast.show { visibility: visible; opacity: 1; bottom: 60px; }
-
-        /* --- RESIGNATION LETTER --- */
-        .resignation-letter {
-            background: #fdfbf7; /* Off-white paper */
-            color: #1e293b; /* Dark text for paper */
-            padding: 30px;
-            border-radius: 2px;
-            margin-bottom: 20px;
-            position: relative;
-            transform: rotate(-1deg); /* Slight paper tilt */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3); /* Drop shadow */
-            border: none;
-            border-top: 8px solid #ef4444; /* Red strip at top */
-            font-family: 'Courier New', Courier, monospace; /* Typewriter font */
-            width: 100%;
-        }
-        
-        /* Confidential Stamp */
-        .resignation-letter::after {
-            content: "CONFIDENTIAL";
-            position: absolute;
-            top: 20px;
-            right: 20px; /* Top Right Stamp */
-            border: 3px solid #ef4444;
-            color: #ef4444;
-            font-size: 1rem;
-            font-weight: 900;
-            padding: 5px 12px;
-            transform: rotate(-15deg);
-            opacity: 0.6;
-            font-family: sans-serif;
-            letter-spacing: 2px;
-            display: block;
+        /* --- GEOMETRIC BACKGROUND GRID --- */
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
+            background-image: 
+                linear-gradient(rgba(99, 102, 241, 0.4) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.4) 1px, transparent 1px);
+            background-size: 80px 80px;
+            transform: perspective(400px) rotateX(60deg) translateY(-100px) scale(2.5);
+            transform-origin: center 30%;
+            opacity: 0.5;
             pointer-events: none;
+            box-shadow: 0 -200px 200px #000 inset;
+            animation: grid-flow 20s linear infinite;
         }
         
-        .resignation-letter strong {
-            color: #000;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1rem;
-            font-weight: 700;
-            display: inline-block;
-            margin-left: 5px;
+        .bg-grid-2 {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background-image: radial-gradient(var(--accent-primary) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(400px) rotateX(60deg) translateY(-100px) scale(2.5);
+            transform-origin: center 30%;
+            opacity: 0.2;
+            pointer-events: none;
+            animation: grid-flow-reverse 30s linear infinite;
         }
 
-        /* Styling for the text inside the letter */
-        .resignation-letter p {
-            color: #333;
-            margin: 15px 0;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-        
-        .resignation-letter hr {
-            border: 0; 
-            border-top: 1px solid #ccc; 
-            margin: 20px 0;
-        }
-        
-        .resignation-letter .promotion-text {
-            color: #000;
-            background: rgba(255, 255, 0, 0.2); /* Highlight marker style */
-            font-weight: 700;
-            font-size: 1.05rem;
-            padding: 0 4px;
+        @keyframes grid-flow { 0% { background-position: 0 0; } 100% { background-position: 0 80px; } }
+        @keyframes grid-flow-reverse { 0% { background-position: 0 0; } 100% { background-position: 40px -40px; } }
+
+        /* --- GLITCH & NOISE STRONGER --- */
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 90; pointer-events: none;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 3px, 3px 100%;
+            opacity: 0.6; /* Increased opacity from 0.3 */
         }
 
-
-        /* --- Modal Overlay (CV) --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.95); z-index: 1000;
-            display: none; justify-content: center; align-items: center;
-            overflow-y: auto;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            animation: fadeIn 0.3s;
-        }
-        .modal-content {
-            background: var(--card-bg);
-            border: 1px solid var(--accent-primary);
-            border-radius: 20px;
-            width: 95%; 
-            max-width: 1200px; /* Increased max-width by 2x */
-            margin: 20px auto;
-            padding: 20px;
-            box-shadow: 0 10px 50px rgba(99, 102, 241, 0.5);
-            animation: slideUp 0.4s ease-out;
-            position: relative;
-        }
-        .modal-close {
-            position: absolute; top: 15px; right: 15px;
-            background: var(--accent-highlight); color: #fff;
-            width: 30px; height: 30px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; font-size: 1.2rem;
-            transition: background 0.2s;
-            z-index: 1010;
-        }
-        .modal-close:hover { background: #e73254; }
-
-        /* CV Timeline Styles */
-        .cv-timeline {
-            border-right: 2px solid var(--accent-primary);
-            padding-right: 15px;
-            margin-top: 30px;
-            /* Allow scrolling within the CV content, effectively extending the length */
-            max-height: 70vh; /* Increased max height */
-            overflow-y: auto;
-            padding-bottom: 20px;
-        }
-        /* Style for the internal scrolling content to look clean */
-        .cv-timeline::-webkit-scrollbar { width: 4px; }
-        .cv-timeline::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 10px; }
-
-
-        .cv-item {
-            position: relative;
-            padding: 0 0 15px 10px;
-            margin-right: -1px;
-            border-left: 2px dashed rgba(255,255,255,0.1);
-            cursor: pointer;
-            transition: background 0.3s;
-            border-radius: 8px;
-        }
-        .cv-item:hover {
-            background: rgba(255,255,255,0.03);
-        }
-        .cv-item:last-child { padding-bottom: 0; border-left: none; }
-        .cv-dot {
-            position: absolute; top: 15px; right: -15px;
-            width: 12px; height: 12px; border-radius: 50%;
-            background: var(--accent-primary);
-            box-shadow: 0 0 10px var(--accent-primary);
-        }
-        
-        .cv-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 0;
-        }
-        .cv-header-left {
-            display: flex;
-            align-items: flex-start; /* Vertically align year and title */
-            gap: 10px;
-            flex-direction: column;
-        }
-        @media(min-width: 768px) {
-             .cv-header-left { flex-direction: row; align-items: center; }
-        }
-
-        .cv-year {
-            font-family: var(--font-display);
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--accent-secondary);
-            margin: 0;
-            min-width: 60px;
-        }
-        .cv-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #fff;
-            margin: 0;
-        }
-        .cv-toggle-icon {
-            color: var(--text-secondary);
-            transition: transform 0.3s ease;
-            font-size: 0.9rem;
-            margin-left: 10px;
-        }
-        
-        .cv-details {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out, opacity 0.4s ease-out, margin-top 0.4s ease;
+        .broadcast-noise {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 999; pointer-events: none;
             opacity: 0;
-            margin-top: 0;
-            padding-right: 10px;
-        }
-        
-        .cv-item.expanded .cv-details {
-            max-height: 1000px;
-            opacity: 1;
-            margin-top: 10px;
-        }
-        .cv-item.expanded .cv-toggle-icon {
-            transform: rotate(180deg);
-            color: var(--accent-primary);
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.4"/%3E%3C/svg%3E');
+            transition: opacity 0.05s; /* Faster transition for sharper glitch */
         }
 
-        .cv-subtitle {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            font-family: var(--font-mono);
-            margin-bottom: 8px;
-        }
-        .cv-description {
-            font-size: 0.9rem;
-            color: #ccc;
-            margin-bottom: 15px;
-        }
-        
-        .cv-section h3 {
-            font-family: var(--font-display);
-            font-size: 1.4rem;
-            color: var(--accent-highlight);
-            border-bottom: 1px dashed var(--border-color);
-            padding-bottom: 10px;
-            margin-top: 40px;
-            margin-bottom: 20px;
-        }
-        .cv-skills-list {
-            display: flex; flex-wrap: wrap; gap: 8px;
-            margin-top: 15px;
-        }
-        .cv-skills-list span {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--accent-primary);
-            padding: 4px 10px;
-            border-radius: 5px;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
+        /* --- 3D SCROLL ENGINE --- */
+        .viewport-3d {
+            position: fixed; top: 36px; left: 0; width: 100%; height: calc(100% - 36px);
+            perspective: 800px; overflow: hidden;
         }
 
+        .stage-3d { position: absolute; width: 100%; height: 100%; transform-style: preserve-3d; }
+        
+        .page-slide-3d {
+            position: absolute; top: 50%; left: 50%;
+            width: 85vw; max-width: 900px; min-height: 60vh; max-height: 85vh;
+            background: var(--card-bg);
+            border: none;
+            box-shadow: 0 0 0 rgba(0,0,0,0);
+            overflow: visible;
+            padding: 0;
+            backface-visibility: hidden; 
+            will-change: transform, opacity;
+            display: flex; flex-direction: column;
+        }
 
-        /* --- New Button Style for Modal Footer --- */
-        .modal-footer {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
+        /* THE JAGGED GRID OVERLAY */
+        .cyber-grid-overlay {
+            position: absolute; 
+            top: -20px; left: -20px; right: -20px; bottom: -20px;
+            z-index: -1;
+            background-color: rgba(5, 5, 10, 0.9);
+            border: 2px solid var(--accent-primary);
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 60%),
+                linear-gradient(45deg, transparent 48%, rgba(99, 102, 241, 0.2) 50%, transparent 52%);
+            background-size: 100% 100%, 20px 20px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        .btn-modal-close {
-            background: var(--accent-primary); 
-            color: #fff;
-            padding: 10px 25px;
-            border-radius: 8px;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s, box-shadow 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .btn-modal-close:hover {
-            background: #4f46e5;
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+
+        .page-slide-3d.active .cyber-grid-overlay {
+            border-color: var(--accent-secondary);
+            box-shadow: 0 0 60px rgba(16, 185, 129, 0.2);
         }
         
-        /* Custom Styles for New Dashboard */
-        .big-price { font-family: 'Orbitron', sans-serif; font-size: 3rem; font-weight: 900; line-height: 1; display: block; margin: 10px 0; }
-        .price-tag-old { color: var(--accent-highlight); text-shadow: 0 0 20px rgba(244, 63, 94, 0.3); }
-        .price-tag-new { color: var(--accent-secondary); text-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+        /* Inner Content */
+        .slide-content-wrap {
+            padding: 40px; height: 100%; overflow-y: auto; position: relative; z-index: 2;
+        }
+        .slide-content-wrap::-webkit-scrollbar { width: 4px; }
+        .slide-content-wrap::-webkit-scrollbar-thumb { background: var(--accent-primary); }
 
-        /* Legacy Pie Specific Styles */
-        .legacy-pie-visual {
-            width: 100px; height: 100px; border-radius: 50%; flex-shrink: 0;
-            background: conic-gradient(
-                var(--accent-highlight) 0% 50%, 
-                var(--accent-warning) 50% 80%, 
-                #f43f5e 80% 100% 
-            );
-            position: relative; box-shadow: 0 0 20px rgba(244, 63, 94, 0.5);
-            animation: pie-rotate 30s linear infinite reverse;
-        }
-        .legacy-pie-visual::after {
-            content: "HIGH"; 
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-            width: 50px; height: 50px; background: #0f0f11; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.7rem; color: #fff;
-            font-family: var(--font-mono);
-        }
-        .legacy-pie-layout {
-            display: flex; align-items: center; justify-content: flex-end; gap: 15px; margin-top: 15px;
-            direction: ltr; /* Align Pie Visual elements to the left for better RTL flow */
-            text-align: left;
-        }
-        
-        /* --- FOOTER with Video Background (UPDATED STYLES) --- */
-        .contact-footer {
-            margin-top: 50px;
-            position: relative;
-            /* Removed fixed padding to allow content to position absolutely/flex */
-            padding: 0; 
-            background: #000;
-            border-radius: 16px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            overflow: hidden; /* Crop the video */
-            min-height: 250px; /* Ensure space for video */
+        /* --- "YOU'RE FIRED" STYLES & GRAPHIC FLAMES --- */
+        .fired-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            height: 100%;
+            perspective: 500px;
+            position: relative;
         }
+        .fired-text {
+            font-family: 'Black Ops One', cursive;
+            font-size: clamp(3rem, 12vw, 7rem);
+            line-height: 0.9;
+            text-align: center;
+            font-weight: 900;
+            color: #d1d5db; 
+            background: linear-gradient(to bottom, #ffffff 0%, #9ca3af 50%, #4b5563 51%, #d1d5db 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(1px 1px 0px #881337)
+                    drop-shadow(2px 2px 0px #881337)
+                    drop-shadow(3px 3px 0px #881337)
+                    drop-shadow(4px 4px 0px #881337)
+                    drop-shadow(5px 5px 0px #881337)
+                    drop-shadow(0px 0px 20px rgba(225, 29, 72, 0.8));
+            transform: rotateX(10deg);
+            animation: fired-pulse 1.2s infinite alternate ease-in-out;
+            margin-bottom: 20px;
+            position: relative; z-index: 2;
+        }
+        @keyframes fired-pulse {
+            0% { transform: scale(1) rotateX(10deg); filter: drop-shadow(1px 1px 0px #881337) drop-shadow(0px 0px 10px rgba(225, 29, 72, 0.5)); }
+            100% { transform: scale(1.05) rotateX(10deg); filter: drop-shadow(1px 1px 0px #881337) drop-shadow(2px 2px 0px #881337) drop-shadow(3px 3px 0px #881337) drop-shadow(4px 4px 0px #881337) drop-shadow(5px 5px 0px #881337) drop-shadow(0px 0px 30px rgba(225, 29, 72, 1)); }
+        }
+        .fired-subtitle {
+            font-family: var(--font-mono); color: var(--text-secondary); margin-top: 20px; letter-spacing: 2px;
+            opacity: 0; animation: fade-in 1s 0.5s forwards; position: relative; z-index: 2;
+        }
+        @keyframes fade-in { to { opacity: 1; } }
+
+        /* --- GRAPHIC FLAMES --- */
+        .graphic-flame { position: absolute; top: 50%; left: 50%; width: 200px; height: 300px; z-index: 1; pointer-events: none; opacity: 0.8; filter: drop-shadow(0 0 20px #ff5722); }
+        .flame-left { transform: translate(-140%, -60%) rotate(-25deg); }
+        .flame-right { transform: translate(40%, -60%) rotate(25deg) scaleX(-1); }
+
+        /* --- STAMPS --- */
+        .stamp-overlay {
+            position: absolute; z-index: 50; pointer-events: none; border: 5px solid var(--danger); color: var(--danger);
+            font-family: var(--font-stamp); font-size: 4rem; padding: 10px 30px; text-transform: uppercase; letter-spacing: 5px;
+            border-radius: 10px; transform-style: preserve-3d; white-space: nowrap;
+            text-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
+            box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.5), 0 0 30px rgba(239, 68, 68, 0.5);
+            opacity: 0;
+            mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="3" /></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.9" /></svg>');
+        }
+        .stamp-animate { animation: stamp-slam 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes stamp-slam {
+            0% { transform: translate(-50%, -50%) translateZ(600px) scale(3) rotate(var(--rotate, 0deg)); opacity: 0; }
+            100% { transform: translate(-50%, -50%) translateZ(0) scale(1) rotate(var(--rotate, 0deg)); opacity: 0.9; }
+        }
+
+        /* --- VS SLIDE STYLES --- */
+        .vs-container { display: flex; width: 100%; height: 100%; position: relative; overflow: hidden; border-radius: 12px; }
+        .vs-half { flex: 1; padding: 30px; display: flex; flex-direction: column; justify-content: center; transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); position: relative; overflow: hidden; }
+        .vs-left { background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), transparent); border-right: 1px solid rgba(239, 68, 68, 0.3); transform: translateX(-110%); align-items: flex-end; text-align: right; }
+        .vs-right { background: linear-gradient(-135deg, rgba(16, 185, 129, 0.15), transparent); transform: translateX(110%); align-items: flex-start; text-align: left; }
+        .active .vs-left, .active .vs-right { transform: translateX(0); }
+        .vs-badge { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0); background: #000; border: 2px solid #fff; color: #fff; font-family: 'Orbitron'; font-weight: 900; font-size: 2.5rem; width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 10; transition: transform 0.4s 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 0 30px rgba(255,255,255,0.5); }
+        .active .vs-badge { transform: translate(-50%, -50%) scale(1); }
+        .vs-list { list-style: none; padding: 0; margin: 0; font-family: var(--font-mono); font-size: 1.1rem; opacity: 0.8; z-index: 2; position: relative; }
+        .vs-left .vs-list li { color: #fca5a5; margin-bottom: 10px; }
+        .vs-right .vs-list li { color: #86efac; margin-bottom: 10px; }
+        .vs-title { font-family: var(--font-display); font-size: 2rem; margin-bottom: 20px; text-transform: uppercase; z-index: 2; position: relative; }
         
-        .footer-content {
-            position: absolute; /* Changed to absolute to float over video */
-            z-index: 2; /* Place content above video */
-            width: 100%;
-            padding: 40px 20px; /* Add internal padding */
-            background: rgba(0, 0, 0, 0.4); /* Dark overlay for better text contrast */
-            backdrop-filter: blur(2px);
+        /* Background Icons for VS */
+        .vs-bg-icon {
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.1;
+            z-index: 1;
+            transition: transform 0.5s;
+        }
+        .vs-left .vs-bg-icon {
+            left: -20px; bottom: -20px; color: var(--danger); transform: rotate(15deg);
+        }
+        .vs-right .vs-bg-icon {
+            right: -20px; bottom: -20px; color: var(--success); transform: rotate(-15deg);
         }
 
-        .contact-links {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
-            margin-top: 30px; /* Added spacing after title */
+        /* --- TEXT ANIMATIONS --- */
+        .header-anim-enter { animation: tech-slide-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
+        @keyframes tech-slide-in { 0% { opacity: 0; transform: translateX(50px); clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); filter: blur(10px); } 50% { opacity: 1; filter: blur(0px); } 100% { opacity: 1; transform: translateX(0); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); } }
+        .typing-cursor::after { content: '_'; animation: blink 0.7s infinite; color: var(--accent-secondary); }
+        @keyframes blink { 50% { opacity: 0; } }
+        .pre-type-hidden { visibility: hidden; }
+
+        /* --- UI OVERLAY --- */
+        .ui-overlay { position: fixed; top: 40px; right: 0; left: 0; z-index: 100; padding: 20px; pointer-events: none; }
+        header { text-align: center; pointer-events: auto; }
+        .nav-buttons { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 101; pointer-events: auto; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; width: 100%; }
+        .scroll-indicator { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); color: var(--accent-primary); font-size: 0.8rem; font-family: var(--font-mono); z-index: 10; animation: bounce-arrow 1.5s infinite; pointer-events: none; text-shadow: 0 0 10px var(--accent-primary); }
+        @keyframes bounce-arrow { 0%, 100% { transform: translate(-50%, 0); opacity: 0.5; } 50% { transform: translate(-50%, -10px); opacity: 1; } }
+        
+        /* --- CONTENT STYLES --- */
+        .slide-header { font-family: var(--font-display); font-size: clamp(1.5rem, 5vw, 2.2rem); color: var(--accent-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px; direction: ltr; }
+        .resignation-letter { background: #fdfbf7; color: #1e293b; padding: 30px; position: relative; transform: rotate(-1deg); border-top: 5px solid var(--danger); font-family: 'Courier New', monospace; direction: rtl; }
+        .resignation-letter::after { content: "CONFIDENTIAL"; position: absolute; top: 15px; right: 15px; border: 3px solid var(--danger); color: var(--danger); font-weight: 900; padding: 5px; transform: rotate(10deg); opacity: 0.8; font-family: sans-serif; }
+
+        /* Table */
+        .cost-table { width: 100%; border-collapse: separate; border-spacing: 0 15px; font-family: var(--font-mono); font-size: 1rem; direction: ltr; }
+        .cost-table td { padding: 20px; background: rgba(255,255,255,0.03); vertical-align: middle; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .cost-table th { color: var(--text-secondary); padding: 15px 20px; text-align: left; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; }
+        .cost-table .legacy-cost { color: var(--accent-highlight); font-size: 1.8rem; font-weight: 700; background: rgba(244, 63, 94, 0.1); text-shadow: 0 0 15px rgba(244, 63, 94, 0.4); border-radius: 8px; }
+        .cost-table .ai-cost { color: var(--accent-secondary); font-size: 1.8rem; font-weight: 700; background: rgba(16, 185, 129, 0.1); text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); border-radius: 8px; }
+        .total-row td { font-size: 1.2rem; border-top: 2px solid #333; background: transparent !important; }
+        
+        /* Blink Animation for Final Sum */
+        .blink-infinite {
+            animation: infinite-blink 0.5s infinite alternate;
         }
-        .contact-links a {
-            /* Kept existing button styles for consistency */
-            border: 1px solid var(--accent-secondary); 
-            color: var(--accent-secondary);
-            background: rgba(0,0,0,0.7); 
-            backdrop-filter: blur(8px);
-        }
-        .contact-links a:hover {
-            background: var(--accent-secondary);
-            color: #000;
+        @keyframes infinite-blink {
+            0% { opacity: 1; text-shadow: 0 0 20px var(--accent-highlight); color: #fff; }
+            100% { opacity: 0.7; text-shadow: 0 0 5px var(--accent-highlight); color: var(--accent-highlight); }
         }
 
+        /* Gallery Updated */
+        .project-slide-grid { display: flex; overflow-x: auto; gap: 20px; padding-bottom: 25px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+        .project-slide-grid::-webkit-scrollbar { height: 8px; }
+        .project-slide-grid::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 4px; }
+        .project-slide-grid::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 4px; }
+        
+        .gallery-item-3d { 
+            min-width: 260px; height: 220px; scroll-snap-align: center; 
+            background: #050510; /* Darker blue-ish base */
+            border: 1px solid #333; overflow: hidden; transition: 0.3s; 
+            cursor: pointer; position: relative; display: flex; flex-direction: column; 
+        }
+        .gallery-item-3d video { 
+            width: 100%; height: 160px; object-fit: cover; 
+            opacity: 0.8; transition: all 0.3s;
+            filter: sepia(100%) hue-rotate(190deg) saturate(200%) contrast(1.1);
+        }
+        .gallery-item-3d:hover { transform: translateY(-5px); border-color: var(--accent-secondary); box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3); }
+        .gallery-item-3d:hover video { opacity: 1; filter: none; }
+        .gallery-item-3d h5 { padding: 15px; margin: 0; color: #fff; font-size: 0.9rem; font-family: var(--font-mono); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #080808; flex-grow: 1; display:flex; align-items:center; justify-content:center; position: relative; z-index: 2; }
+        .gallery-item-3d::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 200%; height: 100%;
+            background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.1) 45%, rgba(99, 102, 241, 0.4) 50%, transparent 55%);
+            z-index: 3; pointer-events: none; transform: translateX(-150%) skewX(-20deg); animation: shimmer 4s infinite;
+        }
+        @keyframes shimmer { 0%, 70% { transform: translateX(-150%) skewX(-20deg); } 100% { transform: translateX(150%) skewX(-20deg); } }
+        
+        .gallery-scroll-hint { display: flex; justify-content: center; align-items: center; gap: 15px; color: var(--accent-secondary); font-family: var(--font-mono); font-size: 0.9rem; margin-bottom: 15px; opacity: 0.8; animation: pulse-horizontal 2s infinite ease-in-out; letter-spacing: 2px; }
+        @keyframes pulse-horizontal { 0%, 100% { transform: translateX(0); opacity: 0.6; } 50% { transform: translateX(10px); opacity: 1; text-shadow: 0 0 10px var(--accent-secondary); } }
+
+        /* Profile */
+        .slide-profile-img { width: 140px; height: 140px; border-radius: 50% !important; margin: 0 auto 20px; padding: 4px; background: linear-gradient(var(--accent-primary), var(--accent-secondary)); box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
+        .slide-profile-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 50% !important; border: 4px solid #000; }
+
+        /* Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.95); z-index: 200; display: none; justify-content: center; align-items: center; overflow-y: auto; backdrop-filter: blur(5px); }
+        .modal-content { max-width: 800px; width: 95%; margin: 20px auto; padding: 30px; background: #080808; border: 1px solid var(--accent-primary); position: relative; box-shadow: 0 0 50px rgba(99, 102, 241, 0.2); }
+        .modal-close { position: absolute; top: 15px; left: 15px; color: var(--accent-highlight); cursor: pointer; font-size: 1.5rem; transition: transform 0.2s; }
+        .modal-close:hover { transform: scale(1.1); }
+        .cv-timeline { border-right: 2px solid var(--accent-primary); padding-right: 30px; margin-top: 30px; direction: rtl; }
+        .cv-item { position: relative; margin-bottom: 30px; }
+        .cv-dot { position: absolute; top: 5px; right: -36px; width: 12px; height: 12px; background: var(--bg-dark); border: 2px solid var(--accent-secondary); border-radius: 50% !important; z-index: 2; }
+        
+        /* Glitch Text */
+        .glitch-text { position: relative; display: inline-block; }
+        .glitch-text::before, .glitch-text::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); }
+        .glitch-text::before { left: 2px; text-shadow: -1px 0 #ff00c1; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim-1 5s infinite linear alternate-reverse; }
+        .glitch-text::after { left: -2px; text-shadow: -1px 0 #00fff9; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim-2 5s infinite linear alternate-reverse; }
+        @keyframes glitch-anim-1 { 0% { clip: rect(30px, 9999px, 10px, 0); } 100% { clip: rect(0, 0, 0, 0); } }
+        @keyframes glitch-anim-2 { 0% { clip: rect(10px, 9999px, 80px, 0); } 100% { clip: rect(0, 0, 0, 0); } }
+
+        @media (max-width: 600px) {
+            .page-slide-3d { width: 95vw; }
+            .slide-content-wrap { padding: 25px; }
+            .big-price { font-size: 2rem; }
+            .nav-buttons { bottom: 10px; gap: 10px; }
+            .btn { padding: 8px 16px; font-size: 0.8rem; }
+            .cv-timeline { padding-right: 15px; }
+            .cv-dot { right: -22px; }
+            .cost-table .legacy-cost, .cost-table .ai-cost { font-size: 1.4rem; }
+            .gallery-item-3d { min-width: 220px; height: 200px; }
+            .stamp-overlay { font-size: 3rem; }
+            .vs-container { flex-direction: column; }
+            .vs-half { border-bottom: 1px solid rgba(239,68,68,0.3); border-right: none; transform: translateY(-100%); }
+            .vs-right { transform: translateY(100%); }
+            .active .vs-left, .active .vs-right { transform: translateY(0); }
+            /* Mobile Flames adjustment */
+            .graphic-flame { width: 120px; height: 180px; }
+            .flame-left { transform: translate(-100%, -60%) rotate(-15deg); }
+            .flame-right { transform: translate(0%, -60%) rotate(15deg) scaleX(-1); }
+            .vs-bg-icon { font-size: 8rem; opacity: 0.15; }
+        }
     </style>
 </head>
-<body>
+<body ondblclick="handleDoubleTap()">
 
     <div class="bg-grid"></div>
-    <div class="bg-glow"></div>
+    <div class="bg-grid-2"></div>
+    
+    <div class="scanlines"></div> 
+    <div id="broadcast-noise" class="broadcast-noise"></div>
 
-    <div class="container">
-        
-        <header>
-            <h1 class="typewriter-text" id="main-header">CAMPAIGN_MASTER_KIT</h1>
-            <div class="typewriter-text" style="display:block; margin-top:10px;">Oren Gamchi // Technical Artist // Pivot 2025</div>
-        </header>
-
-        <!-- 6. LIVE DEMO -->
-        <!-- ******* REMOVED LIVE_RUNTIME: Son_of_Man (Full Screen) AS REQUESTED ******* -->
-        <!--
-        <div class="card reveal-on-scroll">
-            <div class="card-header">
-                <div class="card-title"><i class="fa-solid fa-mobile-screen"></i> <span class="typing-reveal">LIVE_RUNTIME: Son_of_Man (Full Screen)</span></div>
-                <span class="tag tag-live">App 🍏</span>
-            </div>
-            <div class="card-body" style="padding: 0; position: relative;">
-                <div style="padding: 20px 30px; position:absolute; z-index:10; pointer-events:none; width:100%;">
-                    <p class="typing-reveal" style="margin-bottom:0; font-size:0.9rem; color:rgba(255,255,255,0.7); font-family:var(--font-mono); text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
-                        > Interface expanded to fullscreen mode inside the card.<br>
-                        > Initializing Physics Engine...
-                    </p>
-                </div>
-                <div class="full-preview-container" style="border-radius: 0 0 24px 24px; height: 600px;">
-                    <iframe id="live-preview" title="Son of Man Preview" src="https://raw.githubusercontent.com/orengamchi/landing_page_test/main/sonofman_v7.html" scrolling="no"></iframe>
-                </div>
-            </div>
-        </div>
-        -->
-
-        <!-- 3. LINKEDIN POST (POST_01: THE_CUTBACK) - Only the resignation letter remains here -->
-        <div class="card reveal-on-scroll">
-            <div class="card-header">
-                <div class="card-title"><i class="fa-brands fa-linkedin"></i> <span class="typing-reveal">POST_01: THE_CUTBACK</span></div>
-                <span class="tag tag-alert">Business Logic</span>
-            </div>
-            <div class="card-body">
-                
-                <!-- Resignation Letter (PAPER STYLE) -->
-                <div class="resignation-letter">
-                    <strong style="color:var(--text-secondary); font-family:var(--font-sans);">לכבוד:</strong> אורן גמצ'י (הגרסה הישנה)<br>
-                    <strong style="color:var(--text-secondary); font-family:var(--font-sans);">מאת:</strong> הדירקטוריון (אני)<br>
-                    <strong style="color:var(--text-secondary); font-family:var(--font-sans);">הנדון:</strong> סיום העסקה מיידי - מחלקת עבודת כפיים<br>
-                    <br>
-
-                    <p class="type-this" data-text="אורן שלום,"></p>
-                    <p class="type-this" data-text="לאחר בחינה מעמיקה של הביצועים והתשואות, הגענו למסקנה שההתעקשות שלך להזיז פיקסלים ידנית ב-Photoshop פוגעת בשורת הרווח ומעכבת את הצמיחה."></p>
-                    <p class="type-this" data-text='החל מהבוקר, תפקידך כ"ביצועיסט" מבוטל. אתה מקודם לתפקיד "ארכיטקט חזון".'></p>
-                    <p class="type-this" data-text="נא להשאיר את העכבר בכניסה. מעתה אתה עובד עם המוח."></p>
-                    
-                    <div style="font-size:0.9rem; margin-top:40px; text-align:left;">
-                        בברכה,<br>
-                        האני העתידי שלך.
-                    </div>
-                </div>
-
-                <!-- NEW COST COMPARISON TABLE -->
-                <div class="terminal reveal-on-scroll delay-200" style="margin-top: 30px;">
-                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">cost_reduction_table.csv</div></div>
-                    <div class="terminal-content">
-                        <h4 style="margin-top:0; color:var(--accent-primary); font-family:var(--font-display); font-size:1.1rem; text-align:center;">
-                            BEFORE & AFTER: ANNUAL SOFTWARE COSTS
-                        </h4>
-                        
-                        <table class="cost-table">
-                            <thead>
-                                <tr>
-                                    <th>כלי עבודה (TOOL)</th>
-                                    <th>BEFORE (שנתי - דולר)</th>
-                                    <th>AFTER (שנתי - דולר)</th>
-                                    <th>הערות</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td data-label="כלי עבודה">Adobe Creative Cloud (Full)</td>
-                                    <td data-label="BEFORE" class="legacy-cost">$720</td>
-                                    <td data-label="AFTER" class="ai-cost">$0</td>
-                                    <td data-label="הערות">הוחלף על ידי Midjourney / Gen-2 ו-AI Coding</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="כלי עבודה">WIX Premium Business</td>
-                                    <td data-label="BEFORE" class="legacy-cost">$348</td>
-                                    <td data-label="AFTER" class="ai-cost">$0</td>
-                                    <td data-label="הערות">הוחלף על ידי קוד פתוח (HTML/JS/Three.js)</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="כלי עבודה">Unity Pro / 3D Asset Store</td>
-                                    <td data-label="BEFORE" class="legacy-cost">$4,000+</td>
-                                    <td data-label="AFTER" class="ai-cost">$0</td>
-                                    <td data-label="הערות">הוחלף על ידי Three.js / Cannon.js (קוד פתוח)</td>
-                                </tr>
-                                <tr>
-                                    <td data-label="כלי עבודה">הוצאות תפעול (שרתים קנייניים)</td>
-                                    <td data-label="BEFORE" class="legacy-cost">$500</td>
-                                    <td data-label="AFTER" class="ai-cost">$0</td>
-                                    <td data-label="הערות">הוחלף בפתרונות אירוח רזים/חינמיים</td>
-                                </tr>
-                                <tr class="total-row">
-                                    <td data-label="סה"כ" style="color:white; font-size:1.1rem;">TOTAL ESTIMATED SAVINGS</td>
-                                    <td data-label="BEFORE" class="legacy-cost" style="font-size:1.1rem;">~$5,568</td>
-                                    <td data-label="AFTER" class="ai-cost" style="font-size:1.1rem;">~$0</td>
-                                    <td data-label="הערות" style="color:var(--accent-secondary);">מחשבה במקום רישיונות!</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 1. PROFILE (MOVED HERE: Positioned after Post 01)-->
-        <div class="card reveal-on-scroll">
-            <div class="card-body">
-                <div class="profile-flex">
-                    <div class="profile-img-box">
-                           <img src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Foren_pics_masters%2Foren%20blue.png?alt=media" alt="Oren" onerror="this.src='https://placehold.co/150x150/6366f1/ffffff?text=OG'">
-                           <div class="profile-status"></div>
-                    </div>
-                    <div style="flex:1; width:100%;">
-                        <div class="role-badge typing-reveal">SYSTEM_STATUS: ONLINE 🟢</div>
-                        <h2 class="reveal-on-scroll delay-100" style="margin:0 0 10px 0; font-size:2rem; font-weight:800; font-family:var(--font-display);">אורן גמצ'י</h2>
-                        <div class="reveal-on-scroll delay-200" style="color:var(--text-secondary); margin:5px 0; font-family:var(--font-mono); font-size:0.9rem;">
-                            <span style="text-decoration:line-through; opacity:0.5;">Web Designer</span> 
-                            <span style="color:var(--accent-primary);">➜</span> 
-                            <span style="color:var(--accent-secondary);">Technical Artist (AI & Physics)</span>
-                        </div>
-                        <p class="reveal-on-scroll delay-300 type-this" data-text="בונה מנועי פיזיקה ברכבת התחתית. שובר את הקיר שבין עיצוב לקוד.
-יוצר את DafkaZe.com" style="color:#cbd5e1; margin:15px 0;">
-                        </p>
-                        <div class="tech-stack reveal-on-scroll delay-300">
-                            <span class="tech-pill">#ThreeJS</span>
-                            <span class="tech-pill">#AI_Coding</span>
-                            <span class="tech-pill">#WebGL</span>
-                            <span class="tech-pill">#NoCode_Revolution</span>
-                        </div>
-                        
-                        <div class="action-bar reveal-on-scroll delay-300">
-                            <a href="https://dafkaze.com" target="_blank" class="btn btn-live"><i class="fa-solid fa-bolt"></i> NEW SITE</a>
-                            <a href="https://www.linkedin.com/in/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-                            <!-- הוספת לינק לפייסבוק -->
-                            <a href="https://www.facebook.com/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-facebook-f"></i> Facebook</a> 
-                            <a href="#" onclick="openModal('cv-modal'); return false;" class="btn"><i class="fa-solid fa-file-pdf"></i> View CV (Timeline)</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- NEW ENHANCED PIVOT DASHBOARD -->
-        <div class="card reveal-on-scroll" id="pivot-game-changer">
-            <div class="card-header">
-                <div class="card-title">
-                    <i class="fa-solid fa-gamepad" style="color: var(--accent-highlight);"></i> 
-                    <span class="typing-reveal">PIVOT_STRATEGY: THE_BIGGER_GAME</span>
-                </div>
-                <span class="tag tag-alert">STRATEGIC ANALYSIS</span>
-            </div>
+    <!-- LED TICKER (Infinite) -->
+    <div class="led-ticker-wrap">
+        <div class="led-ticker">
+            <!-- Set 1 -->
+            <div class="led-item"><i class="fa-solid fa-circle-info"></i> הנחיות: גלול או החלק למעבר</div>
+            <div class="led-item">/// לחיצה כפולה לדילוג מהיר ///</div>
+            <div class="led-item">תוכן: גלריית פרויקטים אינטראקטיבית</div>
+            <div class="led-item">השוואת טכנולוגיות: LEGACY vs AI</div>
+            <div class="led-item">/// יצירת קשר: orengamchi@gmail.com ///</div>
+            <div class="led-item"><i class="fa-brands fa-linkedin"></i> LinkedIn: Oren Gamchi</div>
+            <div class="led-item">יוצר: אורן גמצ'י - ארכיטקט טכני ומפתח AI</div>
+            <div class="led-item">/// גלול כדי להתחיל ///</div>
             
-            <div class="card-body">
-                
-                <!-- INTRO & VISION (Typing Animation) WITH TROPHY -->
-                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px;">
-                    
-                    <!-- Text (Right) -->
-                    <div class="terminal reveal-on-scroll" style="flex: 1; margin-bottom: 0;">
-                        <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">vision_statement.txt</div></div>
-                        <div class="terminal-content type-this" 
-                             data-text="// הגיימצ'יינג'ר: אומנות במקום ביצוע.
-
-המעבר שלי אינו רק חיסכון בעלויות. זהו פינוי של כוח קוגניטיבי מ'עבודת כפיים דיגיטלית' למקומות שבהם רק המוח האנושי יכול לפעול: חזון, פיזיקה, קוד ליבה ואומנות קונספטואלית. זו הוכחה ל'משחק הגדול' של הטכנולוגיה, בו יצירתיות היא הנכס היחיד."
-                             style="min-height: 120px;">
-                             <span class="hl-com">// הגיימצ'יינג'ר: אומנות במקום ביצוע.</span>
-
-                             המעבר שלי אינו רק חיסכון בעלויות. זהו פינוי של כוח קוגניטיבי מ'עבודת כפיים דיגיטלית' למקומות שבהם רק המוח האנושי יכול לפעול: חזון, פיזיקה, קוד ליבה ואומנות קונספטואלית. זו הוכחה ל'משחק הגדול' של הטכנולוגיה, בו יצירתיות היא הנכס היחיד.
-                        </div>
-                    </div>
-
-                    <!-- Trophy (Left) -->
-                    <div class="reveal-on-scroll delay-200" style="font-size: 6rem; color: #ffd700; text-shadow: 0 0 30px rgba(255, 215, 0, 0.4); padding-left: 20px;">
-                        <i class="fa-solid fa-trophy"></i>
-                    </div>
-                </div>
-
-                <!-- 1. BEFORE: THE LEGACY COST PROBLEM (LEFT SIDE) -->
-                <div style="background:rgba(239, 68, 68, 0.1); border:1px solid var(--danger); padding:20px; border-radius:16px; margin-bottom: 30px;" class="reveal-on-scroll delay-100">
-                    <h4 style="font-family:var(--font-display); color:var(--accent-highlight); margin:0 0 15px 0; font-size:1.5rem; display: flex; align-items: center; gap: 10px;">
-                        <i class="fa-solid fa-chart-simple"></i>
-                        LEGACY MODEL
-                    </h4>
-                    
-                    <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
-                        <!-- PRICE TAG -->
-                        <div style="flex: 1; text-align: center;">
-                            <div style="font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-mono);">ANNUAL BURN RATE (ESTIMATED)</div>
-                            <span class="big-price price-tag-old" style="font-size: 3rem;">₪650K</span>
-                            <div style="font-size: 0.9rem; color: var(--text-secondary); font-family: var(--font-mono); font-weight: bold;">COST REDUCTION: <span style="color: var(--accent-secondary);">99.9%</span></div>
-                        </div>
-                        
-                        <!-- PIE CHART: LEGACY BREAKDOWN -->
-                        <div style="flex: 1; min-width: 150px;">
-                            <div class="legacy-pie-layout" style="justify-content: flex-start; direction: ltr; text-align: left;">
-                                <div class="legacy-pie-visual"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Animated Arrow / Transition -->
-                <div style="text-align: center; margin: 20px 0;" class="reveal-on-scroll delay-200">
-                    <div class="li-arrow" style="color: var(--accent-primary); font-size: 3rem; transform: rotate(90deg) scaleX(-1); margin: 0 auto; width: 60px;">➜</div>
-                    <p style="font-family: var(--font-display); color: var(--accent-primary); font-size: 1.2rem; margin-top: 10px;">THE PIVOT</p>
-                </div>
-
-                <!-- 2. AFTER: THE AI VELOCITY SOLUTION (RIGHT SIDE) -->
-                <div style="background:rgba(16, 185, 129, 0.1); border:1px solid var(--success); padding:20px; border-radius:16px;" class="reveal-on-scroll delay-300">
-                    <h4 style="font-family:var(--font-display); color:var(--accent-secondary); margin:0 0 15px 0; font-size:1.5rem; display: flex; align-items: center; gap: 10px;">
-                        <i class="fa-solid fa-bolt"></i>
-                        AI VELOCITY
-                    </h4>
-
-                    <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
-                        <!-- PRICE TAG -->
-                        <div style="flex: 1; text-align: center;">
-                            <div style="font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-mono);">ANNUAL COST (MAINTENANCE)</div>
-                            <span class="big-price price-tag-new" style="font-size: 3rem;">₪0</span>
-                            <div style="font-size: 0.9rem; color: var(--text-secondary); font-family: var(--font-mono); font-weight: bold;">SPEED TO MARKET: <span style="color: var(--accent-primary);">10X FASTER</span></div>
-                        </div>
-                        
-                        <!-- PIE CHART: RESOURCE ALLOCATION -->
-                         <div style="flex: 1; min-width: 150px;">
-                            <div class="pie-layout" style="padding: 0; background: transparent; border: none; justify-content: flex-start; direction: ltr; text-align: left;">
-                                <!-- NOTE: Reusing pie-visual styles from parent section -->
-                                <div class="pie-visual in-view" style="width: 100px; height: 100px; margin: 0 15px 0 0; box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); animation-duration: 30s;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. WORKFLOW EXPLANATION (CODE TERMINAL - Typing Animation) -->
-                <div class="terminal reveal-on-scroll delay-400" style="margin-top: 30px;">
-                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">new_workflow.js</div></div>
-                    <div class="terminal-content" data-text="// תהליך עבודה: מ-5 ימים ל-5 דקות.
-
-// 1. LEGACY: The Manual Bottleneck
-function Legacy_Workflow() {
-    console.log('// 1. פוטושופ: מזיז פיקסל.');
-    console.log('// 2. אפטר אפקטס: יוצר קיפריימים ידנית.');
-    throw new Error('Process too slow. Requires physical chair.');
-}
-
-// 2. AI VELOCITY: The New Engine
-function New_Workflow_Powered_By_AI() {
-    // Stage 1: Vision (Human Input)
-    const vision = 'Generate interactive 3D physics scene.';
-    
-    // Stage 2: Code Generation (AI)
-    const code = gemini.generateContent({ prompt: vision }); 
-    
-    // Stage 3: Asset Creation (AI)
-    const assets = midjourney.generateAssets({ prompt: 'Vibe Code Graphics' });
-
-    // Stage 4: Real-time Integration
-    return new ThreeJS_App(code, assets); 
-}
-
-// EXECUTION:
-// --------------------
-// New_Workflow_Powered_By_AI()
-// Output: App running in milliseconds, cost: $0.00"
-                         style="min-height: 250px;">
-// תהליך עבודה: מ-5 ימים ל-5 דקות.
-
-<span class="hl-com">// 1. LEGACY: The Manual Bottleneck</span>
-<span class="hl-kw">function</span> Legacy_Workflow() {
-    <span class="hl-str">console.log('// 1. פוטושופ: מזיז פיקסל.');</span>
-    <span class="hl-str">console.log('// 2. אפטר אפקטס: יוצר קיפריימים ידנית.');</span>
-    <span class="hl-kw">throw new Error('Process too slow. Requires physical chair.');</span>
-}
-
-<span class="hl-com">// 2. AI VELOCITY: The New Engine</span>
-<span class="hl-kw">function</span> New_Workflow_Powered_By_AI() {
-    <span class="hl-com">// Stage 1: Vision (Human Input)</span>
-    <span class="hl-kw">const</span> vision = <span class="hl-str">'Generate interactive 3D physics scene.'</span>;
-    
-    <span class="hl-com">// Stage 2: Code Generation (AI)</span>
-    <span class="hl-kw">const</span> code = gemini.generateContent({ prompt: vision }); 
-    
-    <span class="hl-com">// Stage 3: Asset Creation (AI)</span>
-    <span class="hl-kw">const</span> assets = midjourney.generateAssets({ prompt: <span class="hl-str">'Vibe Code Graphics'</span> });
-
-    <span class="hl-com">// Stage 4: Real-time Integration</span>
-    <span class="hl-kw">return new ThreeJS_App(code, assets); </span>
-}
-
-<span class="hl-com">// EXECUTION:</span>
-<span class="hl-com">// --------------------</span>
-<span class="hl-com">// New_Workflow_Powered_By_AI()</span>
-<span class="hl-com">// Output: App running in milliseconds, cost: $0.00</span>
-                    </div>
-                </div>
-
-            </div>
+             <!-- Set 2 -->
+            <div class="led-item"><i class="fa-solid fa-circle-info"></i> הנחיות: גלול או החלק למעבר</div>
+            <div class="led-item">/// לחיצה כפולה לדילוג מהיר ///</div>
+            <div class="led-item">תוכן: גלריית פרויקטים אינטראקטיבית</div>
+            <div class="led-item">השוואת טכנולוגיות: LEGACY vs AI</div>
+            <div class="led-item">/// יצירת קשר: orengamchi@gmail.com ///</div>
+            <div class="led-item"><i class="fa-brands fa-linkedin"></i> LinkedIn: Oren Gamchi</div>
+            <div class="led-item">יוצר: אורן גמצ'י - ארכיטקט טכני ומפתח AI</div>
+            <div class="led-item">/// גלול כדי להתחיל ///</div>
         </div>
-        <!-- END NEW ENHANCED PIVOT DASHBOARD -->
-
-        <!-- 4. FACEBOOK POST -->
-        <div class="card reveal-on-scroll">
-            <div class="card-header">
-                <div class="card-title"><i class="fa-brands fa-facebook"></i> <span class="typing-reveal">POST_02: THE_ASSET</span></div>
-                <span class="tag tag-code">Social</span>
-            </div>
-            <!-- UPDATED CARD BODY FOR SIDE-BY-SIDE LAYOUT -->
-            <div class="card-body post-body-flex">
-                <div class="post-text-content">
-                    <div class="terminal reveal-on-scroll">
-                        <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">rebellion.txt</div></div>
-                        <!-- Added data-text for typewriter and cleaned content -->
-                        <div class="terminal-content" id="post2-txt" data-text="Report: דוח רווח והפסד: חשיפת המודל החדש. 📉🍏
-
-זוכרים שפיטרנו את כולם?
-בלי מנועים ובלי עמלות – בנינו את הדבר הבא.
-תכירו את DafkaZe.com
-
-אנחנו לא בונים אתרים, אנחנו בונים תודעה דיגיטלית.
-המרחק בין מחשבה לביצוע התקצר לאפס.
-
-Dev Costs:
-> מתכנתים: 0 ש&quot;ח (הוחלפו ב-AI).
-> רישיונות: 0 ש&quot;ח (Open Source).
-> זמן: צנח ב-90%.
-
-השורה התחתונה: החופש האמנותי מעולם לא היה רווחי יותר.">
-                            <span class="hl-kw">Report:</span> דוח רווח והפסד: חשיפת המודל החדש. 📉🍏
-
-                            זוכרים שפיטרנו את כולם?
-                            בלי מנועים ובלי עמלות – בנינו את הדבר הבא.
-                            תכירו את <span class="hl-str">DafkaZe.com</span>
-
-                            אנחנו לא בונים אתרים, אנחנו בונים תודעה דיגיטלית.
-                            המרחק בין מחשבה לביצוע התקצר לאפס.
-
-                            <span class="hl-kw">Dev Costs:</span>
-                            > מתכנתים: 0 ש"ח (הוחלפו ב-AI).
-                            > רישיונות: 0 ש"ח (Open Source).
-                            > זמן: צנח ב-90%.
-
-                            השורה התחתונה: החופש האמנותי מעולם לא היה רווחי יותר.
-                        </div>
-                    </div>
-                    <div class="action-bar">
-                        <button class="btn" onclick="copyToClipboard('post2-txt')"><i class="fa-regular fa-copy"></i> Copy Text</button>
-                    </div>
-                </div>
-                
-                <div class="post-visual-content reveal-on-scroll delay-200">
-                    <!-- Facebook Graphic -->
-                    <div class="graphic-box" style="margin-top:20px;">
-                         <div class="graphic-facebook">
-                            <div class="fb-bg-blur"></div>
-                            <div class="invoice-card fb-invoice">
-                                <div class="inv-header">
-                                    <h2 style="margin:0; color:#333; font-size:1.2rem;">Monthly Subscriptions</h2>
-                                    <span style="color:#888; font-size:0.8rem;">Date: Today</span>
-                                </div>
-                                <div class="inv-items">
-                                    <div class="fb-row"><span>Adobe Creative Cloud</span><span>$59.99/mo</span></div>
-                                    <div class="fb-row"><span>WIX Premium Plan</span><span>$29.00/mo</span></div>
-                                    <div class="fb-row"><span>Legacy Assets</span><span>$150.00</span></div>
-                                </div>
-                                <div class="canceled-stamp">CANCELED</div>
-                                <hr style="border:none; border-top:2px dashed #ddd; margin:20px 0;">
-                                <div style="display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:1.1rem; color:#111;">
-                                    <span>My Brain + AI Code</span>
-                                    <span style="background:#10b981; color:white; padding:4px 12px; border-radius:12px; font-size:0.8rem;">FREE</span>
-                                </div>
-                                <div style="text-align:center; margin-top:15px; color:#333; font-weight:bold; font-size:0.9rem;">Total Savings: Infinite Possibilities</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. PROJECT GALLERY -->
-        <div class="card reveal-on-scroll">
-            <div class="card-header">
-                <div class="card-title"><i class="fa-solid fa-layer-group"></i> <span class="typing-reveal">PROJECT_GALLERY</span></div>
-                <span class="tag tag-live">Interactive</span>
-            </div>
-            <div class="card-body">
-                
-                <!-- NEW TEXT BANNER ADDED HERE -->
-                <div class="terminal reveal-on-scroll" style="margin-bottom: 20px;">
-                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">info.txt</div></div>
-                    <div 
-                        class="terminal-content type-this" 
-                        data-text="// גלריית פרויקטי ליבה: קוד פתוח, תוצאות מהירות
-
-/* תוצרים */
-הפרויקטים האלה הם תוצאה ישירה של איחוד קוד, פיזיקה (Three.js/Cannon.js) ו-AI גנרטיבי. כל תוצר הוא אפליקציה אינטראקטיבית שרצה בזמן אמת בדפדפן, ללא שימוש בשרתי רקע כבדים או רישיונות יקרים. זו הוכחה לכך שמהירות הפיתוח שווה לאפס.
-
-/* תהליך עבודה */
-אני מפתח את כל הפרויקטים תוך כדי נסיעה ברכבת (Commute Coding). זה מתאפשר בזכות השימוש ב-AI לכתיבת שלד הקוד ובניית אבטיפוסים מיידית. אני חושב - ה-AI כותב - הקוד רץ.
-
-/* חשיבות */
-הגישה הזו מוכיחה שסטודיו יכול לחסוך 99.9% עלויות ולהגיע לתוצר חזותי וטכנולוגי מתקדם פי 10, רק על ידי מעבר מחשיבה מבוססת 'כלי' לחשיבה מבוססת 'קוד וחזון'.">
-                        <!-- Initial Content (will be typed over) -->
-                        <span class="hl-com">// גלריית פרויקטי ליבה: קוד פתוח, תוצאות מהירות</span>
-
-                        <span class="hl-kw">/* תוצרים */</span>
-                        הפרויקטים האלה הם תוצאה ישירה של איחוד קוד, פיזיקה (Three.js/Cannon.js) ו-AI גנרטיבי. כל תוצר הוא אפליקציה אינטראקטיבית שרצה בזמן אמת בדפדפן, ללא שימוש בשרתי רקע כבדים או רישיונות יקרים. זו הוכחה לכך שמהירות הפיתוח שווה לאפס.
-
-                        <span class="hl-kw">/* תהליך עבודה */</span>
-                        אני מפתח את כל הפרויקטים תוך כדי נסיעה ברכבת (Commute Coding). זה מתאפשר בזכות השימוש ב-AI לכתיבת שלד הקוד ובניית אבטיפוסים מיידית. אני חושב - ה-AI כותב - הקוד רץ.
-
-                        <span class="hl-kw">/* חשיבות */</span>
-                        הגישה הזו מוכיחה שסטודיו יכול לחסוך 99.9% עלויות ולהגיע לתוצר חזותי וטכנולוגי מתקדם פי 10, רק על ידי מעבר מחשיבה מבוססת 'כלי' לחשיבה מבוססת 'קוד וחזון'.
-                    </div>
-                </div>
-                <!-- END NEW TEXT BANNER -->
-                
-                <div style="margin-bottom:10px; text-align:center;">
-                    <span class="tag tag-code" style="font-size: 0.9rem;">PURE CODE <i class="fa-solid fa-code"></i></span>
-                </div>
-                <div style="background:rgba(245,158,11,0.1); border:1px solid var(--accent-warning); color:var(--accent-warning); padding:10px; border-radius:6px; font-size:0.85rem; margin-bottom:20px; display:flex; align-items:center; gap:10px; font-family:var(--font-mono);">
-                    <i class="fa-solid fa-camera"></i> <span>Camera Required for Motion Sensors</span>
-                </div>
-
-                <div id="gallery-container" class="gallery-scroll">
-                    <!-- Gallery items will be injected here by JS -->
-                </div>
-                
-                <div style="text-align:center; font-size:0.8rem; color:var(--text-secondary); margin-top:10px;">
-                    <i class="fa-solid fa-arrow-right"></i> SCROLL FOR MORE
-                </div>
-            </div>
-        </div>
-        
-        <!-- 7. THE FAREWELL -->
-        <div class="card reveal-on-scroll">
-            <div class="card-header">
-                <div class="card-title"><i class="fa-solid fa-hand-holding-heart"></i> <span class="typing-reveal">THE_FAREWELL: Acknowledgment</span></div>
-                <span class="tag tag-thanks">Legacy</span>
-            </div>
-            
-            <!-- NOTE: Reverting the structure to the version before the trophy addition (simple terminal) -->
-            <div class="card-body">
-                <div class="terminal">
-                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">thank_you.txt</div></div>
-                    <!-- Added data-text for typewriter and cleaned content -->
-                    <div class="terminal-content" data-text="/* תודה והוקרה לשותפים לדרך */
-
-לפני שמכבים את האור, מילה טובה לענקים שעל כתפיהם עמדנו:
-
-To Adobe: תודה שלימדתם אותי את שפת הפיקסלים. הכלים שלכם היו הבית שלי במשך עשור.
-To Unity: תודה שהראיתם לי מה זה פיזיקה, גם אם המנוע היה כבד מידי למטען היד שלי.
-To WIX: תודה על הפשטות בימים שהיינו צריכים אותה.
-
-אנחנו נפרדים לא כי אתם לא טובים, אלא כי הדרך שלי השתנתה.
-העתיד הוא קוד פתוח, מהיר ואישי.
-
-&quot;היה שלום, ותודה על הדגים.&quot; 🐬">
-                        <span class="hl-com">/* תודה והוקרה לשותפים לדרך */</span>
-
-                        לפני שמכבים את האור, מילה טובה לענקים שעל כתפיהם עמדנו:
-
-                        <span class="hl-kw">To Adobe:</span> תודה שלימדתם אותי את שפת הפיקסלים. הכלים שלכם היו הבית שלי במשך עשור.
-                        <span class="hl-kw">To Unity:</span> תודה שהראיתם לי מה זה פיזיקה, גם אם המנוע היה כבד מידי למטען היד שלי.
-                        <span class="hl-kw">To WIX:</span> תודה על הפשטות בימים שהיינו צריכים אותה.
-
-                        אנחנו נפרדים לא כי אתם לא טובים, אלא כי הדרך שלי השתנתה.
-                        העתיד הוא קוד פתוח, מהיר ואישי.
-
-                        <span class="hl-str">"היה שלום, ותודה על הדגים."</span> 🐬
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        
-        <!-- FOOTER / CONTACT SECTION (Updated to place links over the video) -->
-        <div class="contact-footer reveal-on-scroll">
-            <!-- Video Background -->
-            <video autoplay loop muted playsinline class="footer-video-bg">
-                <source src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2FTrain_dev_vid_master.mp4?alt=media" type="video/mp4">
-            </video>
-            
-            <div class="footer-content">
-                <h3 class="typing-reveal">READY TO PIVOT?</h3>
-                <div class="contact-links">
-                    <a href="mailto:orengamchi@gmail.com" target="_blank" class="btn"><i class="fa-solid fa-envelope"></i> Email: Let's Talk</a>
-                    <a href="https://www.linkedin.com/in/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-linkedin"></i> LinkedIn Message</a>
-                    <a href="https://www.facebook.com/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-facebook-f"></i> Facebook Profile</a>
-                    <a href="#" onclick="openModal('cv-modal'); return false;" class="btn"><i class="fa-solid fa-file-pdf"></i> View CV (Timeline)</a>
-                </div>
-                <p style="margin-top:20px; font-size:0.8rem; color:rgba(255,255,255,0.7); text-shadow: 0 1px 4px black;">© 2025 DAFKAZE. The future is code, not overhead.</p>
-            </div>
-        </div>
-
     </div>
 
-    <div id="toast">TEXT COPIED</div>
+    <!-- --- 3D SCROLL VIEWPORT --- -->
+    <div class="viewport-3d">
+        <div class="stage-3d" id="stage-3d">
+            <!-- Slides injected by JS -->
+        </div>
+    </div>
 
-    <!-- --- CV MODAL OVERLAY --- -->
+    <!-- --- UI --- -->
+    <div class="ui-overlay">
+        <header>
+            <h1 class="font-mono text-emerald-400 text-lg tracking-wider glitch-text" data-text="CAMPAIGN_MASTER_KIT_V3">CAMPAIGN_MASTER_KIT_V3</h1>
+            <div class="font-mono text-slate-400 text-xs">Oren Gamchi // Infinite Pivot</div>
+        </header>
+    </div>
+    
+    <div class="scroll-indicator">
+        SCROLL <i class="fa-solid fa-angles-down"></i>
+    </div>
+    
+    <div class="nav-buttons">
+        <a href="https://dafkaze.com" target="_blank" class="btn" style="background:var(--accent-secondary); color:#000; border:none;"><i class="fa-solid fa-bolt"></i> DAFKAZE</a>
+        <a href="#" onclick="openModal('cv-modal'); return false;" class="btn" style="background:var(--accent-primary); color:#fff;"><i class="fa-solid fa-file-pdf"></i> CV FILE</a>
+    </div>
+
+    <!-- --- CV MODAL --- -->
     <div id="cv-modal" class="modal-overlay" onclick="if(event.target.id === 'cv-modal') closeModal('cv-modal')">
-        <div class="modal-content">
+        <div class="modal-content" dir="rtl">
             <div class="modal-close" onclick="closeModal('cv-modal')"><i class="fa-solid fa-xmark"></i></div>
-            <h2 style="font-family:var(--font-display); font-size:2rem; color:var(--accent-primary); border-bottom:1px solid var(--border-color); padding-bottom:10px;">
-                <i class="fa-solid fa-file-code" style="margin-left:10px;"></i>
-                Oren Gamchi // Technical Artist CV
-            </h2>
-            
-            <!-- CV Structure -->
-            <div class="cv-section">
-                <h3 style="color:var(--accent-secondary);"><i class="fa-solid fa-briefcase"></i> ניסיון מקצועי (שכיר ופרילאנסר)</h3>
-                
-                <div class="cv-timeline">
-                    <!-- CV Item: 2025 (New: Pivot Focus) -->
-                    <div class="cv-item" onclick="this.classList.toggle('expanded')">
-                        <div class="cv-dot" style="background: var(--accent-secondary); box-shadow: 0 0 10px var(--accent-secondary);"></div>
-                        <div class="cv-header">
-                            <div class="cv-header-left">
-                                <div class="cv-year">2025</div>
-                                <div class="cv-title">Technical Artist / AI & Physics (Pivot)</div>
-                            </div>
-                            <i class="fa-solid fa-chevron-down cv-toggle-icon"></i>
-                        </div>
-                        <div class="cv-details">
-                            <div class="cv-subtitle">פיתוח וארכיטקטורת חזון (DafkaZe.com)</div>
-                            <div class="cv-description">התמקדות מלאה בפיתוח אינטראקטיבי מבוסס קוד (JS, Three.js) וייצור נכסים חזותיים בעזרת כלי AI (Midjourney, Gen-2). שיפור דרמטי במהירות פיתוח וצמצום עלויות ל-0.</div>
-                        </div>
-                    </div>
-                    
-                    <!-- CV Item: 2024 -->
-                    <div class="cv-item" onclick="this.classList.toggle('expanded')">
-                        <div class="cv-dot"></div>
-                        <div class="cv-header">
-                            <div class="cv-header-left">
-                                <div class="cv-year">2024</div>
-                                <div class="cv-title">ערוץ הקניות</div>
-                            </div>
-                            <i class="fa-solid fa-chevron-down cv-toggle-icon"></i>
-                        </div>
-                        <div class="cv-details">
-                            <div class="cv-subtitle">מנהל ברודקאסט, אריזה גרפית, אנימציות קריאטיב ועריכת וידאו</div>
-                            <div class="cv-description">תפקיד שכיר. ניהול שידורים, פיתוח חומרים גרפיים ואנימטיביים כולל עריכת וידאו.</div>
-                        </div>
-                    </div>
-                    
-                     <!-- CV Item: 2023 -->
-                    <div class="cv-item" onclick="this.classList.toggle('expanded')">
-                        <div class="cv-dot"></div>
-                        <div class="cv-header">
-                            <div class="cv-header-left">
-                                <div class="cv-year">2023</div>
-                                <div class="cv-title">Natural Intelligence / ארץ נהדרת / Bioxtreme</div>
-                            </div>
-                            <i class="fa-solid fa-chevron-down cv-toggle-icon"></i>
-                        </div>
-                        <div class="cv-details">
-                            <div class="cv-subtitle">עיצוב, עריכה, גרפיקה ותלת ממד (Unity3D)</div>
-                            <div class="cv-description">עריכת סרטוני פרסומות ל-Natural Intelligence. עבודה על גרפיקה ותלת ממד ב"ארץ נהדרת". פיתוח סביבת משחקים תלת ממדית עבור זרוע רובוטית בחברת הסטארטאפ Bioxtreme (רפואה).</div>
-                        </div>
-                    </div>
-
-                    <!-- CV Item: 2021-2023 (New: Freelance/Studio) -->
-                    <div class="cv-item" onclick="this.classList.toggle('expanded')">
-                        <div class="cv-dot"></div>
-                        <div class="cv-header">
-                            <div class="cv-header-left">
-                                <div class="cv-year">2021-23</div>
-                                <div class="cv-title">פרילאנס: Digital & Motion Design</div>
-                            </div>
-                            <i class="fa-solid fa-chevron-down cv-toggle-icon"></i>
-                        </div>
-                        <div class="cv-details">
-                            <div class="cv-subtitle">מגוון סטודיואים וחברות טכנולוגיה</div>
-                            <div class="cv-description">עיצוב חווית משתמש, יצירת נכסים ויזואליים, אנימציה מורכבת והפקת סרטוני הסבר לחברות קטנות ובינוניות. התמחות ב-WIX ו-Adobe Suite.</div>
-                        </div>
-                    </div>
-                    
-                    <!-- CV Item: 2018-2020 (New: Early Career) -->
-                    <div class="cv-item" onclick="this.classList.toggle('expanded')">
-                        <div class="cv-dot"></div>
-                        <div class="cv-header">
-                            <div class="cv-header-left">
-                                <div class="cv-year">2018-20</div>
-                                <div class="cv-title">מנהל סטודיו ומעצב גרפי</div>
-                            </div>
-                            <i class="fa-solid fa-chevron-down cv-toggle-icon"></i>
-                        </div>
-                        <div class="cv-details">
-                            <div class="cv-subtitle">חברת פרסום / משרד ממשלתי</div>
-                            <div class="cv-description">ניהול צוות מעצבים, יצירת קונספטים חזותיים לקמפיינים רחבים, ויצירת חומרי דפוס ודיגיטל.</div>
-                        </div>
-                    </div>
-
-                    <!-- CV Item: 2016-2017 (New: Education) -->
-                    <div class="cv-item" onclick="this.classList.toggle('expanded')">
-                        <div class="cv-dot"></div>
-                        <div class="cv-header">
-                            <div class="cv-header-left">
-                                <div class="cv-year">2016-17</div>
-                                <div class="cv-title">לימודי עיצוב חזותי ומומחה אפטר אפקטס</div>
-                            </div>
-                            <i class="fa-solid fa-chevron-down cv-toggle-icon"></i>
-                        </div>
-                        <div class="cv-details">
-                            <div class="cv-subtitle">קורסים מקצועיים והכשרה</div>
-                            <div class="cv-description">התמחות בעיצוב מותג, After Effects ו-Premiere Pro.</div>
-                        </div>
-                    </div>
-                    
-                    <!-- CV Item: 2010-2015 (New: Military/First steps) -->
-                    <div class="cv-item" onclick="this.classList.toggle('expanded')">
-                        <div class="cv-dot"></div>
-                        <div class="cv-header">
-                            <div class="cv-header-left">
-                                <div class="cv-year">2010-15</div>
-                                <div class="cv-title">שירות צבאי ושלבים מוקדמים</div>
-                            </div>
-                            <i class="fa-solid fa-chevron-down cv-toggle-icon"></i>
-                        </div>
-                        <div class="cv-details">
-                            <div class="cv-subtitle">שירות מלא ויציאה לאזרחות</div>
-                            <div class="cv-description">שירות צבאי מלא (3 שנים). התחלה של פרויקטים גרפיים אישיים.</div>
-                        </div>
-                    </div>
-                    
+            <h2 class="font-mono text-2xl text-indigo-400 border-b border-gray-800 pb-4 mb-4 glitch-text" data-text="TECHNICAL_RESUME" dir="ltr">TECHNICAL_RESUME_V3.0</h2>
+            <div class="cv-timeline">
+                <div class="cv-item">
+                    <div class="cv-dot"></div>
+                    <div class="text-emerald-400 font-bold text-xl">2025</div>
+                    <div class="text-white text-lg">Technical Artist / AI Architect</div>
+                    <div class="text-slate-400 text-sm mt-1">בניית מנועי פיזיקה (Three.js), אוטומציה של תהליכי קריאייטיב ושימוש ב-Generative AI ליצירת חוויות WebGL מתקדמות.</div>
+                </div>
+                <div class="cv-item">
+                    <div class="cv-dot"></div>
+                    <div class="text-emerald-400 font-bold text-xl">2024</div>
+                    <div class="text-white text-lg">UX/UI & Shopping Tech</div>
+                    <div class="text-slate-400 text-sm mt-1">פיתוח ממשקים אינטראקטיביים לערוץ הקניות, אופטימיזציה של חווית משתמש מבוססת דאטה.</div>
+                </div>
+                <div class="cv-item">
+                    <div class="cv-dot"></div>
+                    <div class="text-emerald-400 font-bold text-xl">2023</div>
+                    <div class="text-white text-lg">Natural Intelligence</div>
+                    <div class="text-slate-400 text-sm mt-1">Motion Design & Frontend Prototyping.</div>
+                </div>
+                <div class="cv-item">
+                    <div class="cv-dot"></div>
+                    <div class="text-emerald-400 font-bold text-xl">2021</div>
+                    <div class="text-white text-lg">Freelance Motion Expert</div>
+                    <div class="text-slate-400 text-sm mt-1">עבודה עם מותגי על (Microsoft, Playtika) ביצירת סרטוני תדמית ומוצר.</div>
                 </div>
             </div>
-            
-            <div class="cv-section">
-                <h3><i class="fa-solid fa-code-branch"></i> מיומנויות וכלים (Tools Stack)</h3>
-                
-                <div class="cv-skills-list">
-                    <span class="cv-skill-pill">Generative AI (Gemini, Midjourney, Gen-2)</span>
-                    <span class="cv-skill-pill">JavaScript / TypeScript</span>
-                    <span class="cv-skill-pill">Three.js & WebGL</span>
-                    <span class="cv-skill-pill">HTML5 & CSS3 (Tailwind)</span>
-                    <span class="cv-skill-pill">Web Physics (Cannon.js)</span>
-                    <span class="cv-skill-pill">AI Code Generation</span>
-                    <span class="cv-skill-pill">Adobe Creative Suite (Legacy)</span>
-                    <span class="cv-skill-pill">UX/UI Design Principles</span>
-                    <span class="cv-skill-pill">Creative Direction</span>
-                </div>
-            </div>
-            
-            <!-- NEW CLOSE BUTTON / FOOTER -->
-            <div class="modal-footer">
-                 <div class="btn-modal-close" onclick="closeModal('cv-modal')">
-                    <i class="fa-solid fa-square-xmark"></i> סגור חלונית
-                 </div>
+             <div style="text-align:center; margin-top:30px;">
+                 <div class="btn" style="border:1px solid var(--danger); color:var(--danger);" onclick="closeModal('cv-modal')">CLOSE TERMINAL</div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- Utility functions ---
-        function copyToClipboard(elementId) {
-            var text = document.getElementById(elementId).innerText;
-            var textArea = document.createElement("textarea");
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            try { document.execCommand('copy'); var t = document.getElementById("toast"); t.className = "show"; setTimeout(function(){ t.className = t.className.replace("show", ""); }, 3000); } catch (err) {}
-            document.body.removeChild(textArea);
-        }
-        function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; document.body.style.overflow = ''; }
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // --- Gallery Data Definition ---
+        // --- Data ---
         const galleryBaseUrl = "https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2Fthumbs_video%2F";
         const galleryFiles = [
-            // NEW item for Kishkashta
-            { filename: "THUMB__KISHKASHTA.mp4", title: "Kishkashta", url: "https://dafkaze.com/projects/kishkashta", desc: "פרויקט פיזיקה אינטראקטיבי - תזוזה, משיכה ואינרציה." },
-            
-            // Updated item: Fishy
-            { filename: "THUMB_fishy.mp4", title: "Fishy News", url: "https://dafkaze.com/projects/fishy-news", desc: "סימולציית דגים פיזיקלית והצגת נתונים." },
-            
-            // Updated item: City
-            { filename: "THUMB_CITY.mp4", title: "City Timelapse", url: "https://dafkaze.com/projects/city-timelapse", desc: "ויזואליזציית נתונים אורבנית דינמית." },
-            
-            { filename: "THUMB_knesset.mp4", title: "AI Knesset", url: "https://dafkaze.com/projects/ai-knesset", desc: "אנימציית כנסת אינטראקטיבית." },
-            
-            // Updated item: Globe
-            { filename: "thumb_globe.mp4", title: "Globe Ehaur", url: "https://dafkaze.com/projects/globe-gallery", desc: "מפת כדור גלובוס אינטראקטיבית." },
-            
-            // *** UPDATED ITEM ***: Grovebox
-            { filename: "THUMB_GROVEBOX.mp4", title: "Grovebox", url: "https://dafkaze.com/projects/grove-box", desc: "סימולציה תלת-ממדית של צמיחה." },
-            
-            // *** UPDATED ITEM ***: Eyeballs
-            { filename: "THUMB_eyeballs.mp4", title: "Eyeballs", url: "https://dafkaze.com/projects/interactive-eyeballs", desc: "מעקב מבט אינטראקטיבי." },
-            
-            // **UPDATED ITEM**: Blackhole
-            { filename: "thumb_blackhole.mp4", title: "Blackhole", url: "https://dafkaze.com/projects/black-hole-simulator", desc: "סימולציית חור שחור." },
-            
-            // *** UPDATED ITEM ***: Gallery
-            { filename: "thumb_gallery.mp4", title: "Gallery", url: "https://dafkaze.com/projects/cyber-gallery", desc: "גלריה דינמית עם אפקטים." },
-            
-            // **UPDATED ITEM**: Like Machine
-            { filename: "thumb_like_machine.mp4", title: "Like Machine", url: "https://dafkaze.com/projects/like-machine", desc: "מכונת לייקים חברתית." },
-            
-            // *** UPDATED ITEM ***: Segmentation
-            { filename: "thumb_segmentation.mp4", title: "Segmentation", url: "https://dafkaze.com/projects/rt-segmentation", desc: "כלי סגמנטציה ויזואלי." },
-            
-            // *** UPDATED ITEM ***: Wow Screen
-            { filename: "thumb_wow_screen.mp4", title: "Wow Screen", url: "https://dafkaze.com/projects/interactive-webcam", desc: "אפקטים ויזואליים מתקדמים." },
-            
-            // *** UPDATED ITEM ***: Ants
-            { filename: "THUMB__ANTS.mp4", title: "Ants", url: "https://dafkaze.com/projects/ant-colony-simulation", desc: "סימולציית נמלים." },
-            
-            // *** UPDATED ITEM ***: Pegs
-            { filename: "THUMB_pegs.mp4", title: "Pegs", url: "https://dafkaze.com/projects/peg-solitaire-game", desc: "משחק דומינו פיזיקלי." },
-            
-            // **UPDATED ITEM**: Bg Maker
-            { filename: "thumb_bg_maker.mp4", title: "Bg Maker", url: "https://dafkaze.com/projects/blue-white-app", desc: "כלי ליצירת רקעים." },
-            
-            // **UPDATED ITEM**: Newspaper
-            { filename: "thumb_newspaper.mp4", title: "Newspaper", url: "https://dafkaze.com/projects/cinematic-tool", desc: "כלי ליצירת אפקטים קולנועיים." },
-            
-            // **UPDATED ITEM**: Video Node
-            { filename: "thumb_video_node.mp4", title: "Video Node", url: "https://dafkaze.com/projects/video-node-editor", desc: "מערכת עריכה מבוססת צמתים (Nodes)." }
+            { f: "THUMB__KISHKASHTA.mp4", t: "Kishkashta", u: "https://dafkaze.com/projects/kishkashta" },
+            { f: "THUMB_fishy.mp4", t: "Fishy News", u: "https://dafkaze.com/projects/fishy-news" },
+            { f: "THUMB_CITY.mp4", t: "City Timelapse", u: "https://dafkaze.com/projects/city-timelapse" },
+            { f: "THUMB_knesset.mp4", t: "AI Knesset", u: "https://dafkaze.com/projects/ai-knesset" },
+            { f: "thumb_globe.mp4", t: "Globe", u: "https://dafkaze.com/projects/globe-gallery" },
+            { f: "THUMB_GROVEBOX.mp4", t: "Grovebox", u: "https://dafkaze.com/projects/grove-box" },
+            { f: "thumb_blackhole.mp4", t: "Blackhole", u: "https://dafkaze.com/projects/black-hole-simulator" },
+            { f: "thumb_gallery.mp4", t: "Cyber Gallery", u: "https://dafkaze.com/projects/cyber-gallery" },
+            { f: "thumb_like_machine.mp4", t: "Like Machine", u: "https://dafkaze.com/projects/like-machine" },
+            { f: "thumb_segmentation.mp4", t: "Segmentation", u: "https://dafkaze.com/projects/rt-segmentation" },
+            { f: "thumb_wow_screen.mp4", t: "Wow Screen", u: "https://dafkaze.com/projects/interactive-webcam" },
+            { f: "THUMB__ANTS.mp4", t: "Ants", u: "https://dafkaze.com/projects/ant-colony-simulation" },
+            { f: "THUMB_pegs.mp4", t: "Pegs", u: "https://dafkaze.com/projects/peg-solitaire-game" },
+            { f: "thumb_bg_maker.mp4", t: "Bg Maker", u: "https://dafkaze.com/projects/blue-white-app" },
+            { f: "thumb_newspaper.mp4", t: "Newspaper", u: "https://dafkaze.com/projects/cinematic-tool" },
+            { f: "thumb_video_node.mp4", t: "Video Node", u: "https://dafkaze.com/projects/video-node-editor" }
         ];
 
-        // --- Gallery Generation Function ---
-        function generateGallery() {
-            const container = document.getElementById('gallery-container');
-            if (!container) return;
-            container.innerHTML = '';
-            
-            galleryFiles.forEach(project => {
-                // Constructing the full URL from the filename. 
-                const firebasePublicUrl = `https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2Fthumbs_video%2F${project.filename}?alt=media`;
-                
-                // Determine the correct video source URL 
-                let fullUrl = firebasePublicUrl;
-                
-                // Use default titles/descriptions if missing (though they shouldn't be now)
-                const title = project.title || project.filename.replace(/THUMB_+|thumb_+|__+/i, '').replace('.mp4', '').replace(/_/g, ' ').charAt(0).toUpperCase() + project.filename.slice(1).toLowerCase();
-                const desc = project.desc || `תיאור הפרויקט ${title}...`;
-                const linkUrl = project.url || '#';
+        const pageSlides = [
+            // SLIDE 0
+            {
+                title: "00_ALERT: SYSTEM_MSG",
+                content: `
+                    <div class="fired-container">
+                        <svg class="graphic-flame flame-left" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="flameGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#ffeb3b;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#ff9800;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#f44336;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path fill="url(#flameGrad)" d="M50,150 C20,130 0,100 0,70 C0,40 20,10 50,0 C80,10 100,40 100,70 C100,100 80,130 50,150 Z M50,150 Q70,120 70,80 Q70,40 50,20 Q30,40 30,80 Q30,120 50,150 Z" />
+                            <path fill="#fff" opacity="0.6" d="M50,120 Q60,100 60,70 Q60,40 50,30 Q40,40 40,70 Q40,100 50,120 Z" />
+                        </svg>
+                        
+                        <div class="fired-text">YOU'RE<br>FIRED</div>
+                        <div class="fired-subtitle">// PREVIOUS_VERSION_TERMINATED //</div>
+                        
+                        <svg class="graphic-flame flame-right" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="flameGrad2" x1="0%" y1="100%" x2="0%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#ffeb3b;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#ff9800;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#f44336;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path fill="url(#flameGrad2)" d="M50,150 C20,130 0,100 0,70 C0,40 20,10 50,0 C80,10 100,40 100,70 C100,100 80,130 50,150 Z M50,150 Q70,120 70,80 Q70,40 50,20 Q30,40 30,80 Q30,120 50,150 Z" />
+                            <path fill="#fff" opacity="0.6" d="M50,120 Q60,100 60,70 Q60,40 50,30 Q40,40 40,70 Q40,100 50,120 Z" />
+                        </svg>
+                    </div>
+                `
+            },
+            // SLIDE 1
+            {
+                title: "01_INIT: RESIGNATION",
+                stamp: "DEPRECATED",
+                content: `
+                    <div class="resignation-letter">
+                        <strong class="type-me" style="color:#555;">לכבוד:</strong> אורן גמצ'י (Legacy v2.0)<br>
+                        <strong class="type-me" style="color:#555;">מאת:</strong> הדירקטוריון (האני החדש)<br><br>
+                        <p class="type-me">אורן שלום,</p>
+                        <p class="type-me">לאחר בחינה מעמיקה, הגענו למסקנה שהזזת פיקסלים ידנית ב-Photoshop היא נחלת העבר. זה לא סקיילבילי.</p>
+                        <p class="type-me">החל מהבוקר, תפקידך כ"ביצועיסט" מבוטל. אתה מקודם לתפקיד "Technical Architect".</p>
+                        <p class="type-me">העכבר שלך הוחרם. מעתה אתה כותב קוד ומאמן מודלים.</p>
+                        <div style="margin-top:30px; text-align:left;" class="type-me">בברכה,<br>System Admin.</div>
+                    </div>
+                `
+            },
+            // SLIDE 2
+            {
+                title: "02_CONFLICT: EVOLUTION",
+                content: `
+                    <div class="vs-container" dir="ltr">
+                        <div class="vs-half vs-left">
+                            <i class="fa-solid fa-chair vs-bg-icon"></i>
+                            <h4 class="vs-title" style="color:var(--danger)">LEGACY</h4>
+                            <ul class="vs-list">
+                                <li>Adobe After Effects</li>
+                                <li>Adobe Premiere</li>
+                                <li>Manual Physics</li>
+                                <li>Render Times: High</li>
+                                <li>Sleep: Low</li>
+                            </ul>
+                        </div>
+                        <div class="vs-half vs-right">
+                            <i class="fa-solid fa-train-subway vs-bg-icon"></i>
+                            <h4 class="vs-title" style="color:var(--success)">AI / WEBGL</h4>
+                            <ul class="vs-list">
+                                <li>Runway / Midjourney</li>
+                                <li>Three.js / React</li>
+                                <li>Real-time Physics</li>
+                                <li>Render Times: Zero</li>
+                                <li>Velocity: Max</li>
+                            </ul>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                    </div>
+                `
+            },
+            // SLIDE 3
+            {
+                title: "03_DATA: COST_ANALYSIS",
+                stamp: "OPTIMIZED",
+                content: `
+                    <h3 class="type-me" style="color:var(--accent-highlight); margin-bottom:15px; font-family:var(--font-mono); font-size:1rem;">MANUAL VS AI COST EFFICIENCY</h3>
+                    <div class="terminal" style="padding:20px; border:1px solid #333; background:rgba(0,0,0,0.5);">
+                        <table class="cost-table">
+                            <thead><tr><th>TOOL</th><th>LEGACY ($)</th><th>AI ($)</th></tr></thead>
+                            <tbody>
+                                <tr><td>Adobe Cloud</td><td class="legacy-cost" data-val="720" data-prefix="$">$720</td><td class="ai-cost" data-val="0" data-prefix="$">$0</td></tr>
+                                <tr><td>WIX Premium</td><td class="legacy-cost" data-val="348" data-prefix="$">$348</td><td class="ai-cost" data-val="0" data-prefix="$">$0</td></tr>
+                                <tr><td>Unity Assets</td><td class="legacy-cost" data-val="4000" data-prefix="$" data-suffix="+">$4000+</td><td class="ai-cost" data-val="0" data-prefix="$">$0</td></tr>
+                                <tr class="total-row"><td style="color:white; padding-top:20px; font-weight:bold;">TOTAL / YEAR</td><td class="legacy-cost blink-infinite" data-val="5500" data-prefix="~$" style="border-radius:0 0 0 12px; margin-top:10px;">~$5.5k</td><td class="ai-cost" data-val="0" data-prefix="$" style="border-radius:0 0 12px 0; margin-top:10px;">$0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                `
+            },
+            // SLIDE 4
+            {
+                title: "04_STATUS: ONLINE",
+                stamp: "VERIFIED",
+                content: `
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
+                        <div class="slide-profile-img"><img src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Foren_pics_masters%2Foren%20blue.png?alt=media" alt="Oren"></div>
+                        <h2 class="glitch-text" data-text="אורן גמצ'י" style="text-align:center; font-size:2.5rem; font-weight:800; margin:10px 0; font-family:var(--font-display);">אורן גמצ'י</h2>
+                        <div class="type-me" style="text-align:center; color:#888; font-family:var(--font-mono); margin-bottom:15px;">Web Designer <span style="color:var(--accent-primary); margin:0 10px;">➜</span> Technical Artist</div>
+                        <p class="type-me" style="text-align:center; font-size:1.1rem; max-width:600px; line-height:1.6; color:#ccc;">
+                            בונה מנועי פיזיקה ברכבת התחתית. שובר את הקיר שבין עיצוב לקוד.<br>
+                            הופך רעיונות למציאות אינטראקטיבית באמצעות AI ו-WebGL.
+                        </p>
+                    </div>
+                `
+            },
+            // SLIDE 5
+            {
+                title: "05_STRATEGY: INVENTORY",
+                stamp: "UPGRADED",
+                content: `
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; text-align:left; height:100%;" dir="ltr">
+                        <div style="border:1px solid rgba(239, 68, 68, 0.3); padding:20px; background:rgba(239, 68, 68, 0.05);">
+                            <h4 style="color:var(--danger); margin-bottom:20px; font-family:var(--font-display); border-bottom:1px solid var(--danger); padding-bottom:5px;">LEGACY STACK</h4>
+                            <ul style="font-family:var(--font-mono); color:var(--text-secondary); font-size:0.9rem; list-style:none; padding:0;">
+                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Adobe Creative Cloud</span> <span style="color:var(--danger);">$60/mo</span></li>
+                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Cinema 4D / Maya</span> <span style="color:var(--danger);">$200/mo</span></li>
+                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Wix Premium</span> <span style="color:var(--danger);">$30/mo</span></li>
+                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Stock Assets</span> <span style="color:var(--danger);">$50/mo</span></li>
+                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Render Farm</span> <span style="color:var(--danger);">$100+</span></li>
+                            </ul>
+                        </div>
+                        <div style="border:1px solid rgba(16, 185, 129, 0.3); padding:20px; background:rgba(16, 185, 129, 0.05);">
+                            <h4 style="color:var(--success); margin-bottom:20px; font-family:var(--font-display); border-bottom:1px solid var(--success); padding-bottom:5px;">AI / CODE STACK</h4>
+                            <ul style="font-family:var(--font-mono); color:var(--text-secondary); font-size:0.9rem; list-style:none; padding:0;">
+                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>VS Code + Cursor</span> <span style="color:var(--success);">$20/mo</span></li>
+                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Three.js / React</span> <span style="color:var(--success);">OPEN SRC</span></li>
+                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Midjourney</span> <span style="color:var(--success);">$30/mo</span></li>
+                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Runway Gen-2</span> <span style="color:var(--success);">$15/mo</span></li>
+                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Google Firebase</span> <span style="color:var(--success);">FREE TIER</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            // SLIDE 6
+            {
+                title: "06_OUTPUT: GALLERY",
+                stamp: "APPROVED",
+                content: `
+                    <p class="type-me" style="color:#888; margin-bottom:10px; font-family:var(--font-mono); font-size:0.9rem;">Interactive WebGL & Physics Experiments</p>
+                    <div class="gallery-scroll-hint">
+                        <i class="fa-solid fa-angles-right"></i>
+                        <span>SCROLL / DRAG</span>
+                        <i class="fa-solid fa-angles-left"></i>
+                    </div>
+                    <div id="project-slide-grid" class="project-slide-grid"></div>
+                `
+            },
+            // SLIDE 7
+            {
+                title: "07_LOG: INVOICE",
+                stamp: "CANCELED",
+                content: `
+                    <div style="background:#fff; color:#000; padding:30px; position:relative; max-width:400px; margin:0 auto; direction:ltr; box-shadow:0 10px 30px rgba(0,0,0,0.5); transform:rotate(2deg);">
+                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #000; padding-bottom:10px; margin-bottom:20px;">
+                            <h4 style="margin:0; font-weight:bold; font-size:1.2rem;">Monthly Invoice</h4>
+                            <span style="font-family:var(--font-mono);">#00942</span>
+                        </div>
+                        <div style="margin:15px 0; color:#555; font-family:var(--font-mono);">
+                            <div class="type-me" style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Adobe Creative Cloud</span><span style="text-decoration:line-through;">$59.99</span></div>
+                            <div class="type-me" style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Wix Premium</span><span style="text-decoration:line-through;">$29.00</span></div>
+                            <div class="type-me" style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Stock Assets</span><span style="text-decoration:line-through;">$150.00</span></div>
+                        </div>
+                        <div style="border-top:2px dashed #000; padding-top:15px; font-weight:bold; display:flex; justify-content:space-between; font-size:1.2rem;">
+                            <span>AI BRAIN</span><span>FREE</span>
+                        </div>
+                    </div>
+                `
+            },
+            // SLIDE 8
+            {
+                title: "08_END: CONTACT",
+                stamp: "HIRE_ME",
+                content: `
+                    <div style="background:#111; padding:25px; border-left:4px solid var(--accent-primary); margin-bottom:30px; border-radius:0 12px 12px 0;">
+                        <span class="type-me" style="color:#6a9955; font-family:var(--font-mono);">/* תודה לשותפים: Adobe, Unity, Wix. */</span><br>
+                        <p class="type-me" style="margin:10px 0; line-height:1.6;">אנחנו נפרדים לא כי אתם לא טובים, אלא כי הדרך שלי השתנתה.<br>
+                        העתיד הוא קוד פתוח, מהיר ואישי.</p>
+                    </div>
+                    <div style="border-top:1px solid #333; padding-top:30px; position:relative; min-height:200px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                        <h3 class="glitch-text" data-text="READY TO PIVOT?" style="font-size:2rem; margin-bottom:25px; color:#fff; font-family:var(--font-display); z-index:2; text-shadow:0 2px 10px rgba(0,0,0,0.8);">READY TO PIVOT?</h3>
+                         <!-- Video BG -->
+                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; opacity:0.3; overflow:hidden; border-radius:12px;">
+                            <video autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2FTrain_dev_vid_master.mp4?alt=media"></video>
+                        </div>
+                        <div style="position:relative; z-index:2; display:flex; gap:15px; flex-wrap:wrap; justify-content:center;">
+                            <a href="mailto:orengamchi@gmail.com" class="btn" style="background:rgba(0,0,0,0.8); border-color:#fff; backdrop-filter:blur(4px);"><i class="fa-solid fa-envelope"></i> Email</a>
+                            <a href="https://www.linkedin.com/in/orengamchi/" class="btn" style="background:rgba(0,0,0,0.8); border-color:#0077b5; color:#0077b5; backdrop-filter:blur(4px);"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                        </div>
+                        <p class="type-me" style="margin-top:20px; font-size:0.7rem; color:#888; position:relative; z-index:2; font-family:var(--font-mono);">© 2025 DAFKAZE</p>
+                    </div>
+                `
+            }
+        ];
 
+        // --- INFINITE SCROLL ENGINE ---
+        let virtualScroll = 0;
+        let currentSlideIndex = 0; // Integer index tracking
+        const spacing = 1500;
+        const totalSlides = pageSlides.length;
+        const loopDistance = spacing * totalSlides;
+        
+        let isScrollLocked = false;
+        let lastTouchTime = 0;
 
-                const card = document.createElement('div');
-                card.className = 'gallery-card reveal-on-scroll';
+        function setupSlides() {
+            const stage = document.getElementById('stage-3d');
+            stage.innerHTML = '';
+
+            pageSlides.forEach((slide, index) => {
+                const el = document.createElement('div');
+                el.className = 'page-slide-3d';
                 
-                // Add tabindex to make it focusable for touch/keyboard interaction
-                card.setAttribute('tabindex', '0'); 
+                // JAGGED GRID OVERLAY (Behind)
+                const grid = document.createElement('div');
+                grid.className = 'cyber-grid-overlay';
+                el.appendChild(grid);
 
-                card.innerHTML = `
-                    <video autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;">
-                        <source src="${fullUrl}" type="video/mp4">
-                    </video>
-                    <a href="${linkUrl}" target="_blank" class="g-overlay">
-                        <span class="g-title">${title}</span>
-                        <div class="g-desc">${desc}</div>
-                        <span class="g-btn">View Project <i class="fa-solid fa-arrow-right"></i></span>
-                    </a>
-                `;
-                container.appendChild(card);
+                // Stamp Container (Random Positioning Logic)
+                if (slide.stamp) {
+                    const stamp = document.createElement('div');
+                    stamp.className = 'stamp-overlay';
+                    stamp.innerText = slide.stamp;
+                    
+                    if (slide.stamp === "OPTIMIZED") {
+                        // Special positioning for Optimized stamp - Right, slight diagonal
+                        stamp.style.right = "10%";
+                        stamp.style.left = "auto";
+                        stamp.style.top = "10%";
+                        stamp.style.transform = "rotate(-15deg)";
+                        stamp.style.removeProperty('--rotate');
+                    } else if (slide.stamp === "VERIFIED") {
+                        // Left
+                        stamp.style.left = "10%";
+                        stamp.style.right = "auto";
+                        stamp.style.top = "20%"; // default height
+                        stamp.style.transform = "rotate(-5deg)";
+                        stamp.style.removeProperty('--rotate');
+                    } else if (slide.stamp === "APPROVED") {
+                        // Top Right
+                        stamp.style.top = "5%";
+                        stamp.style.right = "10%";
+                        stamp.style.left = "auto";
+                        stamp.style.transform = "rotate(10deg)";
+                        stamp.style.removeProperty('--rotate');
+                    } else if (slide.stamp === "CANCELED") {
+                        // Right
+                        stamp.style.right = "10%";
+                        stamp.style.left = "auto";
+                        stamp.style.top = "40%";
+                        stamp.style.transform = "rotate(20deg)";
+                        stamp.style.removeProperty('--rotate');
+                    } else {
+                        // Randomize Position (between 10% and 70% to avoid edges)
+                        const randTop = Math.floor(Math.random() * 60) + 15; 
+                        const randLeft = Math.floor(Math.random() * 60) + 15;
+                        const randRotate = Math.floor(Math.random() * 40) - 20; // -20 to 20 deg
+                        
+                        stamp.style.top = randTop + '%';
+                        stamp.style.left = randLeft + '%';
+                        stamp.style.setProperty('--rotate', randRotate + 'deg');
+                    }
+                    
+                    el.appendChild(stamp);
+                }
+
+                // Inner Content
+                const contentWrap = document.createElement('div');
+                contentWrap.className = 'slide-content-wrap';
+
+                let html = "";
+                // Use standard header logic unless it's the pure Fired slide
+                if (!slide.content.includes('fired-container') && !slide.content.includes('vs-container')) {
+                     html += `<h3 class="slide-header">${slide.title}</h3>`;
+                } else if (slide.content.includes('vs-container')) {
+                    // Small header for VS
+                    html += `<h3 class="slide-header" style="font-size:1rem; opacity:0.5; border:none; margin-bottom:5px;">${slide.title}</h3>`;
+                }
+                
+                html += slide.content;
+                
+                if (slide.title.includes("GALLERY")) {
+                    const galHtml = galleryFiles.map(p => `
+                        <div class="gallery-item-3d" onclick="window.open('${p.u}', '_blank')">
+                            <video autoplay loop muted playsinline><source src="${galleryBaseUrl}${p.f}?alt=media"></video>
+                            <h5>${p.t}</h5>
+                        </div>
+                    `).join('');
+                    html = html.replace('<div id="project-slide-grid" class="project-slide-grid"></div>', `<div class="project-slide-grid">${galHtml}</div>`);
+                }
+                
+                contentWrap.innerHTML = html;
+                el.appendChild(contentWrap);
+                
+                stage.appendChild(el);
+                el._baseIndex = index;
+                
+                // Typewriter Prep
+                const textElements = contentWrap.querySelectorAll('.type-me');
+                textElements.forEach(elem => {
+                    elem.dataset.originalHtml = elem.innerHTML;
+                    elem.innerHTML = ''; 
+                    elem.classList.add('pre-type-hidden');
+                });
             });
         }
 
-        // --- SCROLL ANIMATIONS & TYPING OBSERVER ---
+        // --- ANIMATIONS ---
         
-        // Function to handle typing for terminal content with HTML tags
-        function typeTerminalContent(el, fullHtml) {
-            const textContent = el.getAttribute('data-text');
-            el.classList.add('typewriter-cursor');
+        function typeWriter(element) {
+            if(element.dataset.typing === "true" || element.dataset.typing === "finished") return;
+            element.dataset.typing = "true";
             
-            el.innerText = ''; 
-            let i = 0;
-
-            function typeWriter() {
-                 if (i < textContent.length) {
-                     el.innerHTML = el.innerHTML.slice(0, -1) + textContent.charAt(i) + '|';
-                     i++;
-                     setTimeout(typeWriter, 30); 
-                 } else {
-                     el.classList.remove('typewriter-cursor');
-                     el.innerHTML = fullHtml; // Restore full HTML structure (with syntax highlighting tags)
-                 }
-            }
-             
-            // Save current HTML structure before clearing for typing
-            el.dataset.originalHtml = el.innerHTML;
+            const fullHtml = element.dataset.originalHtml;
+            element.innerHTML = '';
+            element.classList.remove('pre-type-hidden');
+            element.classList.add('typing-cursor');
             
-            // Temporarily replace content with raw text for typing effect
-            typeWriter();
-        }
-        
-        // Generic typing (used for p elements and simplified terminal output)
-        function typeGenericText(el, fullText) {
-             el.classList.add('typewriter-cursor');
-             
-             // Clear the content for typing effect
-             if (!el.classList.contains('terminal-content')) {
-                 el.innerText = '';
-             }
-
-             let i = 0;
-             function typeWriter() {
-                 if (i < fullText.length) {
-                     el.innerHTML = el.innerHTML.slice(0, -1) + fullText.charAt(i) + '|';
-                     i++;
-                     setTimeout(typeWriter, 30); // Typing speed
-                 } else {
-                     el.classList.remove('typewriter-cursor');
-                     el.innerText = fullText;
-                 }
-             }
-             
-             // If it's terminal content, we need a special way to restore the full HTML:
-             if (el.classList.contains('terminal-content')) {
-                // If it was observed/typed before, restore saved HTML
-                const originalHtml = el.dataset.originalHtml || el.innerHTML;
-                el.innerHTML = ""; // Clear
-                typeWriter();
-             } else {
-                typeWriter();
-             }
-        }
-
-
-        // ** STEP 1: Execute generateGallery immediately **
-        generateGallery();
-
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15 // Trigger when 15% of element is visible
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const el = entry.target;
-                        
-                        // Add general visibility class
-                        el.classList.add('in-view');
-                        el.classList.add('active'); // For simple fades
-
-                        // Typewriter logic for specific elements
-                        if (el.classList.contains('type-this') && !el.dataset.typed) {
-                             el.dataset.typed = "true";
-                             const originalContent = el.getAttribute('data-text');
-                             
-                             // Terminal content needs special handling due to HTML tags
-                             if (el.classList.contains('terminal-content')) {
-                                 const originalHtml = el.innerHTML;
-                                 typeTerminalContent(el, originalHtml);
-                             } else if (el.tagName === 'P' || el.tagName === 'DIV' || el.tagName === 'H1') {
-                                 // Simple paragraph/header typing
-                                 typeGenericText(el, originalContent);
-                             }
-                        }
-                        
-                        // Stop observing general elements after they appear
-                        if (!el.classList.contains('stat-item') && !el.classList.contains('pie-visual')) {
-                            observer.unobserve(el);
+            const parts = fullHtml.split(/(<[^>]*>)/g).filter(x => x !== "");
+            let partIndex = 0;
+            let charIndex = 0;
+            
+            function typeLoop() {
+                if(!element.closest('.active')) {
+                    element.innerHTML = ''; 
+                    element.classList.add('pre-type-hidden');
+                    element.dataset.typing = "false";
+                    element.classList.remove('typing-cursor');
+                    return;
+                }
+                
+                if (partIndex < parts.length) {
+                    const part = parts[partIndex];
+                    if (part.startsWith('<')) {
+                        element.innerHTML += part;
+                        partIndex++;
+                        requestAnimationFrame(typeLoop);
+                    } else {
+                        if (charIndex < part.length) {
+                            element.innerHTML += part.charAt(charIndex);
+                            charIndex++;
+                            setTimeout(typeLoop, 10); 
+                        } else {
+                            partIndex++;
+                            charIndex = 0;
+                            requestAnimationFrame(typeLoop);
                         }
                     }
-                });
-            }, observerOptions);
+                } else {
+                    element.classList.remove('typing-cursor');
+                    element.dataset.typing = "finished";
+                    
+                    const slide = element.closest('.page-slide-3d');
+                    const allText = slide.querySelectorAll('.type-me');
+                    const lastText = allText[allText.length - 1];
+                    
+                    if (element === lastText) {
+                        const stamp = slide.querySelector('.stamp-overlay');
+                        if (stamp) {
+                            setTimeout(() => {
+                                stamp.classList.add('stamp-animate');
+                            }, 200);
+                        }
+                    }
+                }
+            }
+            typeLoop();
+        }
 
-            // Observe all relevant elements
-            document.querySelectorAll('.reveal-on-scroll, .typing-reveal, .type-this, .profile-img-box, .stat-item, .pie-visual').forEach(el => observer.observe(el));
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const currentVal = Math.floor(progress * (end - start) + start);
+                
+                const prefix = obj.dataset.prefix || "";
+                const suffix = obj.dataset.suffix || "";
+                obj.innerText = prefix + currentVal + suffix;
+
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        function startNumberAnimations(slide) {
+            const numericElements = slide.querySelectorAll('[data-val]');
+            numericElements.forEach(el => {
+                if(el.dataset.animated === "true") return;
+                el.dataset.animated = "true";
+                const targetVal = parseInt(el.dataset.val);
+                animateValue(el, 0, targetVal, 1500); 
+            });
+        }
+
+        function triggerSlideAnimations(slide) {
+            // Header
+            const header = slide.querySelector('.slide-header');
+            if (header) {
+                header.classList.remove('header-anim-enter');
+                void header.offsetWidth;
+                header.classList.add('header-anim-enter');
+            }
             
-            // Son of Man Loader (REMOVED - Not needed anymore)
-            // const iframe = document.getElementById('live-preview');
-            // const oldGitHubUrl = "https://raw.githubusercontent.com/orengamchi/landing_page_test/main/sonofman_v7.html";
-            // iframe.src = oldGitHubUrl;
+            // Text Typewriter
+            const textElements = slide.querySelectorAll('.type-me');
+            textElements.forEach((elem, index) => {
+                setTimeout(() => { typeWriter(elem); }, index * 150 + 300);
+            });
+            
+            // Numbers
+            setTimeout(() => { startNumberAnimations(slide); }, 500);
+        }
+
+        function resetSlideAnimations(slide) {
+            const header = slide.querySelector('.slide-header');
+            if (header) {
+                header.classList.remove('header-anim-enter');
+                header.style.opacity = 0;
+            }
+            const textElements = slide.querySelectorAll('.type-me');
+            textElements.forEach(elem => {
+                elem.dataset.typing = "false";
+                elem.innerHTML = '';
+                elem.classList.add('pre-type-hidden');
+                elem.classList.remove('typing-cursor');
+            });
+            
+            const numericElements = slide.querySelectorAll('[data-val]');
+            numericElements.forEach(el => {
+                el.dataset.animated = "false";
+                el.innerText = (el.dataset.prefix||"") + "0" + (el.dataset.suffix||"");
+            });
+
+            const stamp = slide.querySelector('.stamp-overlay');
+            if (stamp) {
+                stamp.classList.remove('stamp-animate');
+            }
+        }
+
+        // --- RENDER LOOP ---
+        function update() {
+            const slides = document.querySelectorAll('.page-slide-3d');
+            slides.forEach(slide => {
+                let z = (slide._baseIndex * spacing) + virtualScroll;
+                const offset = 50000 * loopDistance; 
+                z = (z + offset) % loopDistance;
+                if (z > spacing) z -= loopDistance;
+                
+                const distance = Math.abs(z);
+                
+                let opacity = 1;
+                let rotateX = 0;
+                let rotateY = 0;
+
+                if (z > 200) opacity = 0; 
+                else if (z < -2500) opacity = 0; 
+                else {
+                    opacity = 1 - Math.min(1, Math.max(0, (distance - 400) / 1800));
+                    if (z < -100) {
+                        rotateX = Math.min(20, distance / 50); 
+                        if (slide._baseIndex % 2 === 0) rotateY = Math.min(10, distance / 100);
+                        else rotateY = Math.max(-10, -distance / 100);
+                    }
+                }
+                
+                let scale = 1;
+                slide.style.transform = `translate3d(-50%, -50%, ${z}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+                slide.style.opacity = opacity;
+                slide.style.zIndex = 10000 - Math.floor(distance);
+                
+                // ACTIVE STATE
+                if (z > -100 && z < 100) {
+                    if (!slide.classList.contains('active')) {
+                        slide.classList.add('active');
+                        slide.style.pointerEvents = 'auto';
+                        triggerSlideAnimations(slide);
+                    }
+                } else {
+                    if (slide.classList.contains('active')) {
+                        slide.classList.remove('active');
+                        slide.style.pointerEvents = 'none';
+                        resetSlideAnimations(slide);
+                    }
+                }
+            });
+            requestAnimationFrame(update);
+        }
+
+        // --- SCROLL LOGIC ---
+        function handleScroll(direction) {
+            if (isScrollLocked) return;
+            isScrollLocked = true;
+            currentSlideIndex += direction;
+            setTimeout(() => { isScrollLocked = false; }, 800); 
+        }
+
+        window.addEventListener('wheel', (e) => { 
+            if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && e.target.closest('.project-slide-grid')) return;
+            if (e.deltaY > 0) handleScroll(1);
+            else handleScroll(-1);
         });
+        
+        let touchStartX = 0, touchStartY = 0;
+        window.addEventListener('touchstart', e => {
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+            
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTouchTime;
+            if (tapLength < 300 && tapLength > 0) {
+                handleScroll(1); 
+                e.preventDefault();
+            }
+            lastTouchTime = currentTime;
+        }, {passive: false});
+        
+        window.addEventListener('touchmove', e => {
+            const deltaY = touchStartY - e.touches[0].clientY;
+            const deltaX = touchStartX - e.touches[0].clientX;
+            if (Math.abs(deltaX) > Math.abs(deltaY) && e.target.closest('.project-slide-grid')) return;
+            if (Math.abs(deltaY) > 50) {
+                if (deltaY > 0) handleScroll(1);
+                else handleScroll(-1);
+                touchStartY = e.touches[0].clientY; 
+            }
+        }, {passive: false});
+
+        function animateScroll() {
+            const targetVirtualScroll = -currentSlideIndex * spacing;
+            virtualScroll += (targetVirtualScroll - virtualScroll) * 0.08;
+            requestAnimationFrame(animateScroll);
+        }
+
+        // --- RANDOM GLITCH/NOISE LOGIC (Strengthened) ---
+        function triggerRandomGlitch() {
+            const noise = document.getElementById('broadcast-noise');
+            const duration = Math.random() * 200 + 100;
+            // Increased opacity range: 0.2 to 0.7
+            const opacity = Math.random() * 0.5 + 0.2; 
+            noise.style.opacity = opacity;
+            
+            // More frequent shift
+            if (Math.random() > 0.5) {
+                const shiftX = Math.random() * 6 - 3; // stronger shift
+                const shiftY = Math.random() * 6 - 3;
+                document.body.style.transform = `translate(${shiftX}px, ${shiftY}px)`;
+            }
+            setTimeout(() => {
+                noise.style.opacity = 0;
+                document.body.style.transform = 'none';
+                // More frequent glitches: 1s to 5s
+                const nextGlitch = Math.random() * 4000 + 1000;
+                setTimeout(triggerRandomGlitch, nextGlitch);
+            }, duration);
+        }
+
+        window.onload = () => {
+            setupSlides();
+            animateScroll(); 
+            update();
+            setTimeout(triggerRandomGlitch, 2000);
+        };
 
     </script>
-
 </body>
 </html>
