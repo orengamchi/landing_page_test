@@ -84,6 +84,27 @@
              display: block; /* Important for preserving line breaks */
         }
         
+        /* --- Pivot Assets Animations (New) --- */
+        /* Extrude & Bevel Look */
+        .li-col {
+            box-shadow: 0 0 5px rgba(255,255,255,0.1), 
+                        inset 0 0 15px rgba(0,0,0,0.5); /* Inner bevel */
+        }
+        
+        /* Arrow Pulse Animation */
+        @keyframes pulse-arrow {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .li-arrow {
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 2rem;
+            animation: pulse-arrow 2s ease-in-out infinite;
+            color: var(--accent-primary);
+        }
+        
 
         /* --- Animated Background --- */
         .bg-grid {
@@ -258,8 +279,9 @@
         .stat-item.new { border-color: var(--accent-secondary); background: rgba(16, 185, 129, 0.05); }
         .stat-item:hover { transform: scale(1.02); box-shadow: 0 0 15px rgba(99, 102, 241, 0.1); }
         
-        .stat-val { font-size: 1.8rem; font-weight: 900; font-family: var(--font-display); color: #fff; margin: 5px 0; }
-        .stat-lbl { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; display: flex; justify-content: space-between; }
+        .stat-val { font-size: 1.8rem; font-weight: 900; font-family: var(--font-display); color: #fff; margin: 5px 0; display: flex; align-items: center; } /* Added flex for icon placement */
+        .stat-val i { margin-right: 15px; font-size: 2.2rem; } /* Icon spacing/size */
+        .stat-lbl { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; } /* Added align-items: center; */
         .stat-expand-icon { transition: transform 0.3s; }
         
         /* Expanded Stat Graph */
@@ -372,7 +394,6 @@
             text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
             transform: translateY(20px); transition: all 0.5s ease;
         }
-        .gallery-card:hover .g-btn { transform: translateY(0); }
         .g-btn:hover { background: var(--accent-secondary); color: #000; }
 
 
@@ -394,20 +415,43 @@
             height: 100%;
             border: none;
             display: block;
+            overflow: hidden; /* Added to hide scrollbars inside iframe */
         }
 
 
-        /* --- Social Graphics --- */
+        /* --- Social Graphics (PIVOT ASSETS) --- */
         .graphic-linkedin {
             background: #050505; padding: 25px; border-radius: 12px; border: 1px solid #333; position: relative; overflow: hidden; direction: ltr;
         }
         .li-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 20px 20px; }
         .li-cols { display: flex; gap: 15px; position: relative; z-index: 1; margin-top: 20px; flex-direction: column; }
         @media(min-width:768px){ .li-cols { flex-direction: row; } }
-        .li-col { flex: 1; padding: 15px; border-radius: 8px; text-align: center; }
-        .li-old { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); }
-        .li-new { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); box-shadow: 0 0 20px rgba(16, 185, 129, 0.1); }
+        
+        /* Extrude & Bevel Styling */
+        .li-col.li-old { 
+            background: rgba(239, 68, 68, 0.1); 
+            border: 1px solid var(--danger); 
+            box-shadow: 0 5px 0 0 var(--danger), inset 0 0 10px rgba(239, 68, 68, 0.5); 
+            transform: translateZ(0); /* Ensure 3D context */
+        }
+        .li-col.li-new { 
+            background: rgba(16, 185, 129, 0.1); 
+            border: 1px solid var(--success); 
+            box-shadow: 0 5px 0 0 var(--success), inset 0 0 10px rgba(16, 185, 129, 0.5);
+            transform: translateZ(0);
+        }
+        
+        .li-arrow-container {
+            display: flex; align-items: center; justify-content: center;
+        }
+        .li-arrow {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            animation: pulse-arrow 2s ease-in-out infinite;
+        }
 
+
+        /* --- Social Graphics --- */
         .graphic-facebook {
             background: transparent; 
             padding: 30px; 
@@ -539,7 +583,8 @@
             background: var(--card-bg);
             border: 1px solid var(--accent-primary);
             border-radius: 20px;
-            width: 95%; max-width: 850px;
+            width: 95%; 
+            max-width: 1200px; /* Increased max-width by 2x */
             margin: 20px auto;
             padding: 20px;
             box-shadow: 0 10px 50px rgba(99, 102, 241, 0.5);
@@ -562,7 +607,16 @@
             border-right: 2px solid var(--accent-primary);
             padding-right: 15px;
             margin-top: 30px;
+            /* Allow scrolling within the CV content, effectively extending the length */
+            max-height: 70vh; /* Increased max height */
+            overflow-y: auto;
+            padding-bottom: 20px;
         }
+        /* Style for the internal scrolling content to look clean */
+        .cv-timeline::-webkit-scrollbar { width: 4px; }
+        .cv-timeline::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 10px; }
+
+
         .cv-item {
             position: relative;
             padding: 0 0 15px 10px;
@@ -674,53 +728,59 @@
         }
 
 
-        /* --- FOOTER with Video Background --- */
-        .contact-footer {
-            margin-top: 50px;
-            position: relative;
-            padding: 60px 20px;
-            background: #000;
-            border-radius: 16px;
+        /* --- New Button Style for Modal Footer --- */
+        .modal-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
             text-align: center;
-            border: 1px solid var(--border-color);
-            overflow: hidden; /* Crop the video */
+        }
+        .btn-modal-close {
+            background: var(--accent-primary); 
+            color: #fff;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-modal-close:hover {
+            background: #4f46e5;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
         }
         
-        .footer-video-bg {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            opacity: 0.4; /* Dim the video */
-        }
-        
-        .footer-content {
-            position: relative;
-            z-index: 1; /* Place text above video */
-        }
+        /* Custom Styles for New Dashboard */
+        .big-price { font-family: 'Orbitron', sans-serif; font-size: 3rem; font-weight: 900; line-height: 1; display: block; margin: 10px 0; }
+        .price-tag-old { color: var(--accent-highlight); text-shadow: 0 0 20px rgba(244, 63, 94, 0.3); }
+        .price-tag-new { color: var(--accent-secondary); text-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
 
-        .contact-footer h3 {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            color: #fff;
-            margin-bottom: 30px;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+        /* Legacy Pie Specific Styles */
+        .legacy-pie-visual {
+            width: 100px; height: 100px; border-radius: 50%; flex-shrink: 0;
+            background: conic-gradient(
+                var(--accent-highlight) 0% 50%, 
+                var(--accent-warning) 50% 80%, 
+                #f43f5e 80% 100% 
+            );
+            position: relative; box-shadow: 0 0 20px rgba(244, 63, 94, 0.5);
+            animation: pie-rotate 30s linear infinite reverse;
         }
-        .contact-links {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+        .legacy-pie-visual::after {
+            content: "HIGH"; 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+            width: 50px; height: 50px; background: #0f0f11; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.7rem; color: #fff;
+            font-family: var(--font-mono);
         }
-        .contact-links a {
-            display: inline-flex; align-items: center; gap: 8px;
-            margin: 5px; padding: 10px 20px; border-radius: 6px;
-            background: rgba(0,0,0,0.6); /* Darker background for links */
-            color: #fff;
-            font-family: var(--font-mono); font-size: 0.9rem; text-decoration: none;
-            transition: 0.2s;
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(4px);
+        .legacy-pie-layout {
+            display: flex; align-items: center; justify-content: flex-end; gap: 15px; margin-top: 15px;
+            direction: ltr; /* Align Pie Visual elements to the left for better RTL flow */
+            text-align: left;
         }
-        .contact-links a:hover { background: var(--accent-secondary); color: #000; border-color: var(--accent-secondary); }
 
     </style>
 </head>
@@ -736,7 +796,7 @@
             <div class="typewriter-text" style="display:block; margin-top:10px;">Oren Gamchi // Technical Artist // Pivot 2025</div>
         </header>
 
-        <!-- 6. LIVE DEMO (MOVED TO TOP) -->
+        <!-- 6. LIVE DEMO -->
         <div class="card reveal-on-scroll">
             <div class="card-header">
                 <div class="card-title"><i class="fa-solid fa-mobile-screen"></i> <span class="typing-reveal">LIVE_RUNTIME: Son_of_Man (Full Screen)</span></div>
@@ -752,131 +812,13 @@
                 </div>
                 <!-- New full-screen container replaces the mockup structure -->
                 <div class="full-preview-container" style="border-radius: 0 0 24px 24px; height: 600px;">
-                    <!-- FIX: Updated to Son of Man v7 using the RAW GitHub link -->
-                    <iframe id="live-preview" title="Son of Man Preview" src="https://raw.githubusercontent.com/orengamchi/landing_page_test/main/sonofman_v7.html"></iframe>
+                    <!-- NOTE: Reverting Live Demo link to the previous version (sonofman_v7.html) -->
+                    <iframe id="live-preview" title="Son of Man Preview" src="https://raw.githubusercontent.com/orengamchi/landing_page_test/main/sonofman_v7.html" scrolling="no"></iframe>
                 </div>
             </div>
         </div>
 
-        <!-- 1. PROFILE -->
-        <div class="card reveal-on-scroll">
-            <div class="card-body">
-                <div class="profile-flex">
-                    <div class="profile-img-box">
-                         <img src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Foren_pics_masters%2Foren%20blue.png?alt=media" alt="Oren" onerror="this.src='https://placehold.co/150x150/6366f1/ffffff?text=OG'">
-                         <div class="profile-status"></div>
-                    </div>
-                    <div style="flex:1; width:100%;">
-                        <div class="role-badge typing-reveal">SYSTEM_STATUS: ONLINE 🟢</div>
-                        <h2 class="reveal-on-scroll delay-100" style="margin:0 0 10px 0; font-size:2rem; font-weight:800; font-family:var(--font-display);">אורן גמצ'י</h2>
-                        <div class="reveal-on-scroll delay-200" style="color:var(--text-secondary); margin:5px 0; font-family:var(--font-mono); font-size:0.9rem;">
-                            <span style="text-decoration:line-through; opacity:0.5;">Web Designer</span> 
-                            <span style="color:var(--accent-primary);">➜</span> 
-                            <span style="color:var(--accent-secondary);">Technical Artist (AI & Physics)</span>
-                        </div>
-                        <p class="reveal-on-scroll delay-300 type-this" data-text="בונה מנועי פיזיקה ברכבת התחתית. שובר את הקיר שבין עיצוב לקוד.
-יוצר את DafkaZe.com" style="color:#cbd5e1; margin:15px 0;">
-                        </p>
-                        <div class="tech-stack reveal-on-scroll delay-300">
-                            <span class="tech-pill">#ThreeJS</span>
-                            <span class="tech-pill">#AI_Coding</span>
-                            <span class="tech-pill">#WebGL</span>
-                            <span class="tech-pill">#NoCode_Revolution</span>
-                        </div>
-                        
-                        <div class="action-bar reveal-on-scroll delay-300">
-                            <a href="https://dafkaze.com" target="_blank" class="btn btn-live"><i class="fa-solid fa-bolt"></i> Live Project</a>
-                            <a href="https://www.linkedin.com/in/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-                            <!-- הוספת לינק לפייסבוק -->
-                            <a href="https://www.facebook.com/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-facebook-f"></i> Facebook</a> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. ANNUAL REPORT -->
-        <div class="card reveal-on-scroll">
-            <div class="card-header">
-                <div class="card-title"><i class="fa-solid fa-chart-pie"></i> <span class="typing-reveal">ANNUAL_REPORT_DATA</span></div>
-                <span class="tag tag-code">Internal Audit</span>
-            </div>
-            <div class="card-body">
-                <div class="terminal reveal-on-scroll">
-                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">intro.txt</div></div>
-                    <div class="terminal-content type-this" data-text="במקום לדבר בסיסמאות, בואו נדבר במספרים. 
-הנה הניתוח האמיתי של המעבר מסטודיו מסורתי למודל AI רזה. הנתונים מראים שינוי דרמטי במבנה העלויות והתפוקה."></div>
-                </div>
-
-                <div class="stats-grid">
-                    <!-- LEGACY COST (Expandable) - Default OPEN -->
-                    <div class="stat-item open reveal-on-scroll delay-100" onclick="this.classList.toggle('open')">
-                        <div class="stat-lbl">
-                            <span>LEGACY COST</span>
-                            <i class="fa-solid fa-chevron-down stat-expand-icon"></i>
-                        </div>
-                        <div class="stat-val" style="color:var(--accent-highlight)">HIGH</div>
-                        <div style="font-size:0.8rem; color:#94a3b8; font-family:var(--font-mono);">Adobe, Wix, Manual Labor</div>
-                        <div style="font-size:0.75rem; margin-top:8px; color:#666;"><i class="fa-solid fa-chair"></i> Loc: Office Chair</div>
-                        
-                        <!-- Expanded Content -->
-                        <div class="stat-breakdown">
-                            <div class="graph-bar-container">
-                                <div class="graph-label"><span>Render Time (Hours/Frame)</span><span>5h</span></div>
-                                <div class="graph-track"><div class="graph-fill fill-high"></div></div>
-                            </div>
-                            <div class="graph-bar-container">
-                                <div class="graph-label"><span>Software License ($/Mo)</span><span>$150+</span></div>
-                                <div class="graph-track"><div class="graph-fill fill-med"></div></div>
-                            </div>
-                            <div class="graph-bar-container">
-                                <div class="graph-label"><span>Brain Latency (Stress)</span><span>CRITICAL</span></div>
-                                <div class="graph-track"><div class="graph-fill fill-high"></div></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- NEW COST (Expandable) - Default OPEN -->
-                    <div class="stat-item new open reveal-on-scroll delay-200" onclick="this.classList.toggle('open')">
-                        <div class="stat-lbl">
-                            <span>NEW COST</span>
-                            <i class="fa-solid fa-chevron-down stat-expand-icon"></i>
-                        </div>
-                        <div class="stat-val" style="color:var(--accent-secondary)">ZERO</div>
-                        <div style="font-size:0.8rem; color:#94a3b8; font-family:var(--font-mono);">AI Code, Physics, Interactive</div>
-                        <div style="font-size:0.75rem; margin-top:8px; color:var(--accent-secondary);"><i class="fa-solid fa-train"></i> Loc: Commute</div>
-                        
-                        <!-- Expanded Content -->
-                        <div class="stat-breakdown">
-                            <div class="graph-bar-container">
-                                <div class="graph-label"><span>Render Time (Realtime)</span><span>0s</span></div>
-                                <div class="graph-track"><div class="graph-fill fill-zero"></div></div>
-                            </div>
-                            <div class="graph-bar-container">
-                                <div class="graph-label"><span>Software License (Open Source)</span><span>$0</span></div>
-                                <div class="graph-track"><div class="graph-fill fill-zero"></div></div>
-                            </div>
-                            <div class="graph-bar-container">
-                                <div class="graph-label"><span>Creative Flow</span><span>INFINITE</span></div>
-                                <div class="graph-track"><div class="graph-fill fill-high" style="background:var(--accent-secondary);"></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pie-layout reveal-on-scroll delay-300">
-                    <div class="pie-visual"></div>
-                    <ul class="pie-legend" style="color:#ccc;">
-                        <li><div class="l-dot" style="background:var(--accent-primary)"></div> 40% Physics Engine</li>
-                        <li><div class="l-dot" style="background:var(--accent-secondary)"></div> 30% Creative Tools</li>
-                        <li><div class="l-dot" style="background:var(--accent-warning)"></div> 20% Satire</li>
-                        <li><div class="l-dot" style="background:var(--accent-highlight)"></div> 10% Sensors</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. LINKEDIN POST -->
+        <!-- 3. LINKEDIN POST (POST_01: THE_CUTBACK) - Only the resignation letter remains here -->
         <div class="card reveal-on-scroll">
             <div class="card-header">
                 <div class="card-title"><i class="fa-brands fa-linkedin"></i> <span class="typing-reveal">POST_01: THE_CUTBACK</span></div>
@@ -901,76 +843,203 @@
                         האני העתידי שלך.
                     </div>
                 </div>
-                
-                <!-- Replacement Breakdown -->
-                <div style="background:rgba(99,102,241,0.1); border:1px solid var(--accent-primary); padding:15px; border-radius:8px; margin-bottom:20px; font-family:var(--font-mono); font-size:0.85rem; color:#cbd5e1;" class="reveal-on-scroll delay-200">
-                    <strong style="color:#fff; display:block; margin-bottom:10px;">AI REPLACES ADOBE SUITE:</strong>
-                    <ul style="list-style:none; padding:0;">
-                        <li style="margin-bottom:5px;"><span style="color:var(--accent-highlight)">[DEL]</span> Photoshop ➔ <span style="color:var(--accent-secondary)">Midjourney / Flux</span> ("למה לצרוב כשאפשר לברוא?")</li>
-                        <li style="margin-bottom:5px;"><span style="color:var(--accent-highlight)">[DEL]</span> After Effects ➔ <span style="color:var(--accent-secondary)">Runway Gen-2</span> ("קיפריימים זה לפועלים.")</li>
-                        <li><span style="color:var(--accent-highlight)">[DEL]</span> Premiere ➔ <span style="color:var(--accent-secondary)">AI Auto-Edit</span> ("הסיפור מסופר מעצמו.")</li>
-                    </ul>
-                </div>
+            </div>
+        </div>
 
-                <div class="terminal reveal-on-scroll delay-300">
-                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">announcement.txt</div></div>
-                    <!-- Added data-text for typewriter and cleaned content -->
-                    <div class="terminal-content" id="post1-txt" data-text="// הודעה לציבור המשקיעים
-Title: פיטרתי את הספקים שלי (ואת עצמי). התוצאות בדוח. 📉➡️📈
-
-לאחר הערכת מצב, הדירקטוריון (אני) הגיע למסקנה שהשותפים הפכו לנטל.
-אנחנו משלמים 'מס דמיון' לתאגידים.
-
-Status Update:
-[X] Adobe Creative Cloud: 'לא משלמים שכירות על מכחולים.'
-[X] WIX: 'המוח שלנו לא מרובע.'
-[X] Unity 3D: 'כבדים מידי.'
-
-סגרנו את הברז. orengamchi.com יורד מהאוויר.
-העולם החדש דורש רק שנחשוב.
-
--- המנכ'ל">
-                        <!-- Initial Content (will be cleared by JS and replaced by typing) -->
-                        <span class="hl-com">// הודעה לציבור המשקיעים</span>
-                        <span class="hl-kw">Title:</span> פיטרתי את הספקים שלי (ואת עצמי). התוצאות בדוח. 📉➡️📈
-
-                        לאחר הערכת מצב, הדירקטוריון (אני) הגיע למסקנה שהשותפים הפכו לנטל.
-                        אנחנו משלמים "מס דמיון" לתאגידים.
-
-                        <span class="hl-kw">Status Update:</span>
-                        [X] <i class="fa-brands fa-adobe" style="color:#ff0000;"></i> Adobe Creative Cloud: <span class="hl-str">"לא משלמים שכירות על מכחולים."</span>
-                        [X] <i class="fa-brands fa-wix" style="color:#00c0e3;"></i> WIX: <span class="hl-str">"המוח שלנו לא מרובע."</span>
-                        [X] <i class="fa-solid fa-cube" style="color:#ffffff;"></i> Unity 3D: <span class="hl-str">"כבדים מידי."</span>
-
-                        סגרנו את הברז. orengamchi.com יורד מהאוויר.
-                        העולם החדש דורש רק שנחשוב.
-
-                        <span class="hl-com">-- המנכ"ל</span>
+        <!-- 1. PROFILE (MOVED HERE: Positioned after Post 01)-->
+        <div class="card reveal-on-scroll">
+            <div class="card-body">
+                <div class="profile-flex">
+                    <div class="profile-img-box">
+                           <img src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Foren_pics_masters%2Foren%20blue.png?alt=media" alt="Oren" onerror="this.src='https://placehold.co/150x150/6366f1/ffffff?text=OG'">
+                           <div class="profile-status"></div>
                     </div>
-                </div>
-                <button class="btn reveal-on-scroll delay-300" onclick="copyToClipboard('post1-txt')"><i class="fa-regular fa-copy"></i> Copy Text</button>
-                
-                <div class="graphic-box reveal-on-scroll delay-300" style="margin-top:20px;">
-                    <div class="graphic-linkedin">
-                        <div class="li-grid"></div>
-                        <h3 class="typing-reveal" style="text-align:center; font-family:'Orbitron'; letter-spacing:2px;">PIVOT <span style="color:var(--accent-secondary)">Q4_25</span></h3>
-                        <div class="li-cols">
-                            <div class="li-col li-old">
-                                <div style="color:var(--accent-highlight); font-weight:bold;">LEGACY</div>
-                                <div style="font-size:2rem;">📉</div>
-                                <div style="font-size:0.8rem; opacity:0.7;">Adobe, Wix, Manual</div>
-                            </div>
-                            <div style="display:flex; align-items:center; justify-content:center; font-size:2rem;">➜</div>
-                            <div class="li-col li-new">
-                                <div style="color:var(--accent-secondary); font-weight:bold;">VELOCITY</div>
-                                <div style="font-size:1.5rem;">📈</div>
-                                <div style="font-size:0.8rem; opacity:0.7;">AI Code, 0$ Cost</div>
-                            </div>
+                    <div style="flex:1; width:100%;">
+                        <div class="role-badge typing-reveal">SYSTEM_STATUS: ONLINE 🟢</div>
+                        <h2 class="reveal-on-scroll delay-100" style="margin:0 0 10px 0; font-size:2rem; font-weight:800; font-family:var(--font-display);">אורן גמצ'י</h2>
+                        <div class="reveal-on-scroll delay-200" style="color:var(--text-secondary); margin:5px 0; font-family:var(--font-mono); font-size:0.9rem;">
+                            <span style="text-decoration:line-through; opacity:0.5;">Web Designer</span> 
+                            <span style="color:var(--accent-primary);">➜</span> 
+                            <span style="color:var(--accent-secondary);">Technical Artist (AI & Physics)</span>
+                        </div>
+                        <p class="reveal-on-scroll delay-300 type-this" data-text="בונה מנועי פיזיקה ברכבת התחתית. שובר את הקיר שבין עיצוב לקוד.
+יוצר את DafkaZe.com" style="color:#cbd5e1; margin:15px 0;">
+                        </p>
+                        <div class="tech-stack reveal-on-scroll delay-300">
+                            <span class="tech-pill">#ThreeJS</span>
+                            <span class="tech-pill">#AI_Coding</span>
+                            <span class="tech-pill">#WebGL</span>
+                            <span class="tech-pill">#NoCode_Revolution</span>
+                        </div>
+                        
+                        <div class="action-bar reveal-on-scroll delay-300">
+                            <a href="https://dafkaze.com" target="_blank" class="btn btn-live"><i class="fa-solid fa-bolt"></i> NEW SITE</a>
+                            <a href="https://www.linkedin.com/in/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                            <!-- הוספת לינק לפייסבוק -->
+                            <a href="https://www.facebook.com/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-facebook-f"></i> Facebook</a> 
+                            <a href="#" onclick="openModal('cv-modal'); return false;" class="btn"><i class="fa-solid fa-file-pdf"></i> View CV (Timeline)</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- NEW ENHANCED PIVOT DASHBOARD -->
+        <div class="card reveal-on-scroll" id="pivot-game-changer">
+            <div class="card-header">
+                <div class="card-title">
+                    <i class="fa-solid fa-gamepad" style="color: var(--accent-highlight);"></i> 
+                    <span class="typing-reveal">PIVOT_STRATEGY: THE_BIGGER_GAME</span>
+                </div>
+                <span class="tag tag-alert">STRATEGIC ANALYSIS</span>
+            </div>
+            
+            <div class="card-body">
+                
+                <!-- INTRO & VISION (Typing Animation) WITH TROPHY -->
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px;">
+                    
+                    <!-- Text (Right) -->
+                    <div class="terminal reveal-on-scroll" style="flex: 1; margin-bottom: 0;">
+                        <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">vision_statement.txt</div></div>
+                        <div class="terminal-content type-this" 
+                             data-text="// הגיימצ'יינג'ר: אומנות במקום ביצוע.
+
+המעבר שלי אינו רק חיסכון בעלויות. זהו פינוי של כוח קוגניטיבי מ'עבודת כפיים דיגיטלית' למקומות שבהם רק המוח האנושי יכול לפעול: חזון, פיזיקה, קוד ליבה ואומנות קונספטואלית. זו הוכחה ל'משחק הגדול' של הטכנולוגיה, בו יצירתיות היא הנכס היחיד."
+                             style="min-height: 120px;">
+                             <span class="hl-com">// הגיימצ'יינג'ר: אומנות במקום ביצוע.</span>
+
+                             המעבר שלי אינו רק חיסכון בעלויות. זהו פינוי של כוח קוגניטיבי מ'עבודת כפיים דיגיטלית' למקומות שבהם רק המוח האנושי יכול לפעול: חזון, פיזיקה, קוד ליבה ואומנות קונספטואלית. זו הוכחה ל'משחק הגדול' של הטכנולוגיה, בו יצירתיות היא הנכס היחיד.
+                        </div>
+                    </div>
+
+                    <!-- Trophy (Left) -->
+                    <div class="reveal-on-scroll delay-200" style="font-size: 6rem; color: #ffd700; text-shadow: 0 0 30px rgba(255, 215, 0, 0.4); padding-left: 20px;">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                </div>
+
+                <!-- 1. BEFORE: THE LEGACY COST PROBLEM (LEFT SIDE) -->
+                <div style="background:rgba(239, 68, 68, 0.1); border:1px solid var(--danger); padding:20px; border-radius:16px; margin-bottom: 30px;" class="reveal-on-scroll delay-100">
+                    <h4 style="font-family:var(--font-display); color:var(--accent-highlight); margin:0 0 15px 0; font-size:1.5rem; display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        LEGACY MODEL
+                    </h4>
+                    
+                    <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                        <!-- PRICE TAG -->
+                        <div style="flex: 1; text-align: center;">
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-mono);">ANNUAL BURN RATE (ESTIMATED)</div>
+                            <span class="big-price price-tag-old" style="font-size: 3rem;">₪650K</span>
+                            <div style="font-size: 0.9rem; color: var(--text-secondary); font-family: var(--font-mono); font-weight: bold;">COST REDUCTION: <span style="color: var(--accent-secondary);">99.9%</span></div>
+                        </div>
+                        
+                        <!-- PIE CHART: LEGACY BREAKDOWN -->
+                        <div style="flex: 1; min-width: 150px;">
+                            <div class="legacy-pie-layout" style="justify-content: flex-start; direction: ltr; text-align: left;">
+                                <div class="legacy-pie-visual"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Animated Arrow / Transition -->
+                <div style="text-align: center; margin: 20px 0;" class="reveal-on-scroll delay-200">
+                    <div class="li-arrow" style="color: var(--accent-primary); font-size: 3rem; transform: rotate(90deg) scaleX(-1); margin: 0 auto; width: 60px;">➜</div>
+                    <p style="font-family: var(--font-display); color: var(--accent-primary); font-size: 1.2rem; margin-top: 10px;">THE PIVOT</p>
+                </div>
+
+                <!-- 2. AFTER: THE AI VELOCITY SOLUTION (RIGHT SIDE) -->
+                <div style="background:rgba(16, 185, 129, 0.1); border:1px solid var(--success); padding:20px; border-radius:16px;" class="reveal-on-scroll delay-300">
+                    <h4 style="font-family:var(--font-display); color:var(--accent-secondary); margin:0 0 15px 0; font-size:1.5rem; display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-bolt"></i>
+                        AI VELOCITY
+                    </h4>
+
+                    <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                        <!-- PRICE TAG -->
+                        <div style="flex: 1; text-align: center;">
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-mono);">ANNUAL COST (MAINTENANCE)</div>
+                            <span class="big-price price-tag-new" style="font-size: 3rem;">₪0</span>
+                            <div style="font-size: 0.9rem; color: var(--text-secondary); font-family: var(--font-mono); font-weight: bold;">SPEED TO MARKET: <span style="color: var(--accent-primary);">10X FASTER</span></div>
+                        </div>
+                        
+                        <!-- PIE CHART: RESOURCE ALLOCATION -->
+                         <div style="flex: 1; min-width: 150px;">
+                            <div class="pie-layout" style="padding: 0; background: transparent; border: none; justify-content: flex-start; direction: ltr; text-align: left;">
+                                <!-- NOTE: Reusing pie-visual styles from parent section -->
+                                <div class="pie-visual in-view" style="width: 100px; height: 100px; margin: 0 15px 0 0; box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); animation-duration: 30s;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. WORKFLOW EXPLANATION (CODE TERMINAL - Typing Animation) -->
+                <div class="terminal reveal-on-scroll delay-400" style="margin-top: 30px;">
+                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">new_workflow.js</div></div>
+                    <div class="terminal-content" data-text="// תהליך עבודה: מ-5 ימים ל-5 דקות.
+
+// 1. LEGACY: The Manual Bottleneck
+function Legacy_Workflow() {
+    console.log('// 1. פוטושופ: מזיז פיקסל.');
+    console.log('// 2. אפטר אפקטס: יוצר קיפריימים ידנית.');
+    throw new Error('Process too slow. Requires physical chair.');
+}
+
+// 2. AI VELOCITY: The New Engine
+function New_Workflow_Powered_By_AI() {
+    // Stage 1: Vision (Human Input)
+    const vision = 'Generate interactive 3D physics scene.';
+    
+    // Stage 2: Code Generation (AI)
+    const code = gemini.generateContent({ prompt: vision }); 
+    
+    // Stage 3: Asset Creation (AI)
+    const assets = midjourney.generateAssets({ prompt: 'Vibe Code Graphics' });
+
+    // Stage 4: Real-time Integration
+    return new ThreeJS_App(code, assets); 
+}
+
+// EXECUTION:
+// --------------------
+// New_Workflow_Powered_By_AI()
+// Output: App running in milliseconds, cost: $0.00"
+                         style="min-height: 250px;">
+// תהליך עבודה: מ-5 ימים ל-5 דקות.
+
+<span class="hl-com">// 1. LEGACY: The Manual Bottleneck</span>
+<span class="hl-kw">function</span> Legacy_Workflow() {
+    <span class="hl-str">console.log('// 1. פוטושופ: מזיז פיקסל.');</span>
+    <span class="hl-str">console.log('// 2. אפטר אפקטס: יוצר קיפריימים ידנית.');</span>
+    <span class="hl-kw">throw new Error('Process too slow. Requires physical chair.');</span>
+}
+
+<span class="hl-com">// 2. AI VELOCITY: The New Engine</span>
+<span class="hl-kw">function</span> New_Workflow_Powered_By_AI() {
+    <span class="hl-com">// Stage 1: Vision (Human Input)</span>
+    <span class="hl-kw">const</span> vision = <span class="hl-str">'Generate interactive 3D physics scene.'</span>;
+    
+    <span class="hl-com">// Stage 2: Code Generation (AI)</span>
+    <span class="hl-kw">const</span> code = gemini.generateContent({ prompt: vision }); 
+    
+    <span class="hl-com">// Stage 3: Asset Creation (AI)</span>
+    <span class="hl-kw">const</span> assets = midjourney.generateAssets({ prompt: <span class="hl-str">'Vibe Code Graphics'</span> });
+
+    <span class="hl-com">// Stage 4: Real-time Integration</span>
+    <span class="hl-kw">return new ThreeJS_App(code, assets); </span>
+}
+
+<span class="hl-com">// EXECUTION:</span>
+<span class="hl-com">// --------------------</span>
+<span class="hl-com">// New_Workflow_Powered_By_AI()</span>
+<span class="hl-com">// Output: App running in milliseconds, cost: $0.00</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- END NEW ENHANCED PIVOT DASHBOARD -->
 
         <!-- 4. FACEBOOK POST -->
         <div class="card reveal-on-scroll">
@@ -1057,6 +1126,37 @@ Dev Costs:
                 <span class="tag tag-live">Interactive</span>
             </div>
             <div class="card-body">
+                
+                <!-- NEW TEXT BANNER ADDED HERE -->
+                <div class="terminal reveal-on-scroll" style="margin-bottom: 20px;">
+                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">info.txt</div></div>
+                    <div 
+                        class="terminal-content type-this" 
+                        data-text="// גלריית פרויקטי ליבה: קוד פתוח, תוצאות מהירות
+
+/* תוצרים */
+הפרויקטים האלה הם תוצאה ישירה של איחוד קוד, פיזיקה (Three.js/Cannon.js) ו-AI גנרטיבי. כל תוצר הוא אפליקציה אינטראקטיבית שרצה בזמן אמת בדפדפן, ללא שימוש בשרתי רקע כבדים או רישיונות יקרים. זו הוכחה לכך שמהירות הפיתוח שווה לאפס.
+
+/* תהליך עבודה */
+אני מפתח את כל הפרויקטים תוך כדי נסיעה ברכבת (Commute Coding). זה מתאפשר בזכות השימוש ב-AI לכתיבת שלד הקוד ובניית אבטיפוסים מיידית. אני חושב - ה-AI כותב - הקוד רץ.
+
+/* חשיבות */
+הגישה הזו מוכיחה שסטודיו יכול לחסוך 99.9% עלויות ולהגיע לתוצר חזותי וטכנולוגי מתקדם פי 10, רק על ידי מעבר מחשיבה מבוססת 'כלי' לחשיבה מבוססת 'קוד וחזון'.">
+                        <!-- Initial Content (will be typed over) -->
+                        <span class="hl-com">// גלריית פרויקטי ליבה: קוד פתוח, תוצאות מהירות</span>
+
+                        <span class="hl-kw">/* תוצרים */</span>
+                        הפרויקטים האלה הם תוצאה ישירה של איחוד קוד, פיזיקה (Three.js/Cannon.js) ו-AI גנרטיבי. כל תוצר הוא אפליקציה אינטראקטיבית שרצה בזמן אמת בדפדפן, ללא שימוש בשרתי רקע כבדים או רישיונות יקרים. זו הוכחה לכך שמהירות הפיתוח שווה לאפס.
+
+                        <span class="hl-kw">/* תהליך עבודה */</span>
+                        אני מפתח את כל הפרויקטים תוך כדי נסיעה ברכבת (Commute Coding). זה מתאפשר בזכות השימוש ב-AI לכתיבת שלד הקוד ובניית אבטיפוסים מיידית. אני חושב - ה-AI כותב - הקוד רץ.
+
+                        <span class="hl-kw">/* חשיבות */</span>
+                        הגישה הזו מוכיחה שסטודיו יכול לחסוך 99.9% עלויות ולהגיע לתוצר חזותי וטכנולוגי מתקדם פי 10, רק על ידי מעבר מחשיבה מבוססת 'כלי' לחשיבה מבוססת 'קוד וחזון'.
+                    </div>
+                </div>
+                <!-- END NEW TEXT BANNER -->
+                
                 <div style="margin-bottom:10px; text-align:center;">
                     <span class="tag tag-code" style="font-size: 0.9rem;">PURE CODE <i class="fa-solid fa-code"></i></span>
                 </div>
@@ -1080,6 +1180,8 @@ Dev Costs:
                 <div class="card-title"><i class="fa-solid fa-hand-holding-heart"></i> <span class="typing-reveal">THE_FAREWELL: Acknowledgment</span></div>
                 <span class="tag tag-thanks">Legacy</span>
             </div>
+            
+            <!-- NOTE: Reverting the structure to the version before the trophy addition (simple terminal) -->
             <div class="card-body">
                 <div class="terminal">
                     <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">thank_you.txt</div></div>
@@ -1126,7 +1228,7 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
                 <div class="contact-links">
                     <a href="mailto:orengamchi@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i> Email: Let's Talk</a>
                     <a href="https://www.linkedin.com/in/orengamchi/" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn Message</a>
-                    <a href="https://www.facebook.com/orengamchi/" target="_blank" style="background: #3b5998; color: #fff;"><i class="fa-brands fa-facebook-f"></i> Facebook Profile</a>
+                    <a href="https://www.facebook.com/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-facebook-f"></i> Facebook Profile</a>
                     <a href="#" onclick="openModal('cv-modal'); return false;" class="btn"><i class="fa-solid fa-file-pdf"></i> View CV (Timeline)</a>
                 </div>
                 <p style="margin-top:20px; font-size:0.8rem; color:rgba(255,255,255,0.7); text-shadow: 0 1px 4px black;">© 2025 DAFKAZE. The future is code, not overhead.</p>
@@ -1144,15 +1246,30 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
             <h2 style="font-family:var(--font-display); font-size:2rem; color:var(--accent-primary); border-bottom:1px solid var(--border-color); padding-bottom:10px;">
                 <i class="fa-solid fa-file-code" style="margin-left:10px;"></i>
                 Oren Gamchi // Technical Artist CV
-            </h1>
+            </h2>
             
             <!-- CV Structure -->
             <div class="cv-section">
                 <h3 style="color:var(--accent-secondary);"><i class="fa-solid fa-briefcase"></i> ניסיון מקצועי (שכיר ופרילאנסר)</h3>
                 
                 <div class="cv-timeline">
-                    <!-- CV Items are same as before -->
-                    <!-- 2024 -->
+                    <!-- CV Item: 2025 (New: Pivot Focus) -->
+                    <div class="cv-item" onclick="this.classList.toggle('expanded')">
+                        <div class="cv-dot" style="background: var(--accent-secondary); box-shadow: 0 0 10px var(--accent-secondary);"></div>
+                        <div class="cv-header">
+                            <div class="cv-header-left">
+                                <div class="cv-year">2025</div>
+                                <div class="cv-title">Technical Artist / AI & Physics (Pivot)</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-down cv-toggle-icon"></i>
+                        </div>
+                        <div class="cv-details">
+                            <div class="cv-subtitle">פיתוח וארכיטקטורת חזון (DafkaZe.com)</div>
+                            <div class="cv-description">התמקדות מלאה בפיתוח אינטראקטיבי מבוסס קוד (JS, Three.js) וייצור נכסים חזותיים בעזרת כלי AI (Midjourney, Gen-2). שיפור דרמטי במהירות פיתוח וצמצום עלויות ל-0.</div>
+                        </div>
+                    </div>
+                    
+                    <!-- CV Item: 2024 -->
                     <div class="cv-item" onclick="this.classList.toggle('expanded')">
                         <div class="cv-dot"></div>
                         <div class="cv-header">
@@ -1168,8 +1285,7 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
                         </div>
                     </div>
                     
-                    <!-- ... other CV items ... -->
-                     <!-- 2023 -->
+                     <!-- CV Item: 2023 -->
                     <div class="cv-item" onclick="this.classList.toggle('expanded')">
                         <div class="cv-dot"></div>
                         <div class="cv-header">
@@ -1184,7 +1300,95 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
                             <div class="cv-description">עריכת סרטוני פרסומות ל-Natural Intelligence. עבודה על גרפיקה ותלת ממד ב"ארץ נהדרת". פיתוח סביבת משחקים תלת ממדית עבור זרוע רובוטית בחברת הסטארטאפ Bioxtreme (רפואה).</div>
                         </div>
                     </div>
+
+                    <!-- CV Item: 2021-2023 (New: Freelance/Studio) -->
+                    <div class="cv-item" onclick="this.classList.toggle('expanded')">
+                        <div class="cv-dot"></div>
+                        <div class="cv-header">
+                            <div class="cv-header-left">
+                                <div class="cv-year">2021-23</div>
+                                <div class="cv-title">פרילאנס: Digital & Motion Design</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-down cv-toggle-icon"></i>
+                        </div>
+                        <div class="cv-details">
+                            <div class="cv-subtitle">מגוון סטודיואים וחברות טכנולוגיה</div>
+                            <div class="cv-description">עיצוב חווית משתמש, יצירת נכסים ויזואליים, אנימציה מורכבת והפקת סרטוני הסבר לחברות קטנות ובינוניות. התמחות ב-WIX ו-Adobe Suite.</div>
+                        </div>
+                    </div>
+                    
+                    <!-- CV Item: 2018-2020 (New: Early Career) -->
+                    <div class="cv-item" onclick="this.classList.toggle('expanded')">
+                        <div class="cv-dot"></div>
+                        <div class="cv-header">
+                            <div class="cv-header-left">
+                                <div class="cv-year">2018-20</div>
+                                <div class="cv-title">מנהל סטודיו ומעצב גרפי</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-down cv-toggle-icon"></i>
+                        </div>
+                        <div class="cv-details">
+                            <div class="cv-subtitle">חברת פרסום / משרד ממשלתי</div>
+                            <div class="cv-description">ניהול צוות מעצבים, יצירת קונספטים חזותיים לקמפיינים רחבים, ויצירת חומרי דפוס ודיגיטל.</div>
+                        </div>
+                    </div>
+
+                    <!-- CV Item: 2016-2017 (New: Education) -->
+                    <div class="cv-item" onclick="this.classList.toggle('expanded')">
+                        <div class="cv-dot"></div>
+                        <div class="cv-header">
+                            <div class="cv-header-left">
+                                <div class="cv-year">2016-17</div>
+                                <div class="cv-title">לימודי עיצוב חזותי ומומחה אפטר אפקטס</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-down cv-toggle-icon"></i>
+                        </div>
+                        <div class="cv-details">
+                            <div class="cv-subtitle">קורסים מקצועיים והכשרה</div>
+                            <div class="cv-description">התמחות בעיצוב מותג, After Effects ו-Premiere Pro.</div>
+                        </div>
+                    </div>
+                    
+                    <!-- CV Item: 2010-2015 (New: Military/First steps) -->
+                    <div class="cv-item" onclick="this.classList.toggle('expanded')">
+                        <div class="cv-dot"></div>
+                        <div class="cv-header">
+                            <div class="cv-header-left">
+                                <div class="cv-year">2010-15</div>
+                                <div class="cv-title">שירות צבאי ושלבים מוקדמים</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-down cv-toggle-icon"></i>
+                        </div>
+                        <div class="cv-details">
+                            <div class="cv-subtitle">שירות מלא ויציאה לאזרחות</div>
+                            <div class="cv-description">שירות צבאי מלא (3 שנים). התחלה של פרויקטים גרפיים אישיים.</div>
+                        </div>
+                    </div>
+                    
                 </div>
+            </div>
+            
+            <div class="cv-section">
+                <h3><i class="fa-solid fa-code-branch"></i> מיומנויות וכלים (Tools Stack)</h3>
+                
+                <div class="cv-skills-list">
+                    <span class="cv-skill-pill">Generative AI (Gemini, Midjourney, Gen-2)</span>
+                    <span class="cv-skill-pill">JavaScript / TypeScript</span>
+                    <span class="cv-skill-pill">Three.js & WebGL</span>
+                    <span class="cv-skill-pill">HTML5 & CSS3 (Tailwind)</span>
+                    <span class="cv-skill-pill">Web Physics (Cannon.js)</span>
+                    <span class="cv-skill-pill">AI Code Generation</span>
+                    <span class="cv-skill-pill">Adobe Creative Suite (Legacy)</span>
+                    <span class="cv-skill-pill">UX/UI Design Principles</span>
+                    <span class="cv-skill-pill">Creative Direction</span>
+                </div>
+            </div>
+            
+            <!-- NEW CLOSE BUTTON / FOOTER -->
+            <div class="modal-footer">
+                 <div class="btn-modal-close" onclick="closeModal('cv-modal')">
+                    <i class="fa-solid fa-square-xmark"></i> סגור חלונית
+                 </div>
             </div>
         </div>
     </div>
@@ -1203,43 +1407,112 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
         function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; document.body.style.overflow = ''; }
 
-        // --- Gallery Generation (Same as before) ---
+        // --- Gallery Generation (Updated with new files and links) ---
         const galleryBaseUrl = "https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2Fthumbs_video%2F";
-        const galleryFiles = ["THUMB_fishy.mp4", "THUMB_CITY.mp4", "THUMB_knesset.mp4", "THUMB_GROVEBOX.mp4", "THUMB_eyeballs.mp4", "thumb_blackhole.mp4", "thumb_gallery.mp4", "thumb_globe.mp4", "thumb_like_machine.mp4", "thumb_segmentation.mp4", "thumb_wow_screen.mp4"];
+        const galleryFiles = [
+            // NEW item for Kishkashta
+            { filename: "THUMB__KISHKASHTA.mp4", title: "Kishkashta", url: "https://dafkaze.com/projects/kishkashta", desc: "פרויקט פיזיקה אינטראקטיבי - תזוזה, משיכה ואינרציה." },
+            
+            // Updated item: Fishy
+            { filename: "THUMB_fishy.mp4", title: "Fishy News", url: "https://dafkaze.com/projects/fishy-news", desc: "סימולציית דגים פיזיקלית והצגת נתונים." },
+            
+            // Updated item: City
+            { filename: "THUMB_CITY.mp4", title: "City Timelapse", url: "https://dafkaze.com/projects/city-timelapse", desc: "ויזואליזציית נתונים אורבנית דינמית." },
+            
+            { filename: "THUMB_knesset.mp4", title: "AI Knesset", url: "https://dafkaze.com/projects/ai-knesset", desc: "אנימציית כנסת אינטראקטיבית." },
+            
+            // Updated item: Globe
+            { filename: "thumb_globe.mp4", title: "Globe Ehaur", url: "https://dafkaze.com/projects/globe-gallery", desc: "מפת כדור גלובוס אינטראקטיבית." },
+            
+            // *** UPDATED ITEM ***: Grovebox
+            { filename: "THUMB_GROVEBOX.mp4", title: "Grovebox", url: "https://dafkaze.com/projects/grove-box", desc: "סימולציה תלת-ממדית של צמיחה." },
+            
+            // *** UPDATED ITEM ***: Eyeballs
+            { filename: "THUMB_eyeballs.mp4", title: "Eyeballs", url: "https://dafkaze.com/projects/interactive-eyeballs", desc: "מעקב מבט אינטראקטיבי." },
+            
+            // **UPDATED ITEM**: Blackhole
+            { filename: "thumb_blackhole.mp4", title: "Blackhole", url: "https://dafkaze.com/projects/black-hole-simulator", desc: "סימולציית חור שחור." },
+            
+            // *** UPDATED ITEM ***: Gallery
+            { filename: "thumb_gallery.mp4", title: "Gallery", url: "https://dafkaze.com/projects/cyber-gallery", desc: "גלריה דינמית עם אפקטים." },
+            
+            // **UPDATED ITEM**: Like Machine
+            { filename: "thumb_like_machine.mp4", title: "Like Machine", url: "https://dafkaze.com/projects/like-machine", desc: "מכונת לייקים חברתית." },
+            
+            // *** UPDATED ITEM ***: Segmentation
+            { filename: "thumb_segmentation.mp4", title: "Segmentation", url: "https://dafkaze.com/projects/rt-segmentation", desc: "כלי סגמנטציה ויזואלי." },
+            
+            // *** UPDATED ITEM ***: Wow Screen
+            { filename: "thumb_wow_screen.mp4", title: "Wow Screen", url: "https://dafkaze.com/projects/interactive-webcam", desc: "אפקטים ויזואליים מתקדמים." },
+            
+            // *** UPDATED ITEM ***: Ants
+            { filename: "THUMB__ANTS.mp4", title: "Ants", url: "https://dafkaze.com/projects/ant-colony-simulation", desc: "סימולציית נמלים." },
+            
+            // *** UPDATED ITEM ***: Pegs
+            { filename: "THUMB_pegs.mp4", title: "Pegs", url: "https://dafkaze.com/projects/peg-solitaire-game", desc: "משחק דומינו פיזיקלי." },
+            
+            // **UPDATED ITEM**: Bg Maker
+            { filename: "thumb_bg_maker.mp4", title: "Bg Maker", url: "https://dafkaze.com/projects/blue-white-app", desc: "כלי ליצירת רקעים." },
+            
+            // **UPDATED ITEM**: Newspaper
+            { filename: "thumb_newspaper.mp4", title: "Newspaper", url: "https://dafkaze.com/projects/cinematic-tool", desc: "כלי ליצירת אפקטים קולנועיים." },
+            
+            // **UPDATED ITEM**: Video Node
+            { filename: "thumb_video_node.mp4", title: "Video Node", url: "https://dafkaze.com/projects/video-node-editor", desc: "מערכת עריכה מבוססת צמתים (Nodes)." }
+        ];
 
         function generateGallery() {
             const container = document.getElementById('gallery-container');
             if (!container) return;
             container.innerHTML = '';
-            galleryFiles.forEach(filename => {
-                const fullUrl = `${galleryBaseUrl}${filename}?alt=media`;
-                let title = filename.replace(/THUMB_+|thumb_+/i, '').replace('.mp4', '');
-                title = title.replace(/_/g, ' ');
-                title = title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
+            
+            galleryFiles.forEach(project => {
+                // Constructing the full URL from the filename. 
+                const firebasePublicUrl = `https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2Fthumbs_video%2F${project.filename}?alt=media`;
+                
+                // Special handling for specific files
+                const isKishkashta = project.filename.includes('KISHKASHTA');
+                
+                // Determine the correct video source URL (using dedicated URL for KISHKASHTA if needed)
+                let fullUrl = firebasePublicUrl;
+                if (isKishkashta) {
+                     fullUrl = `https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2Fthumbs_video%2FTHUMB__KISHKASHTA.mp4?alt=media`;
+                }
+
+                const title = project.title || project.filename.replace(/THUMB_+|thumb_+|__+/i, '').replace('.mp4', '').replace(/_/g, ' ').charAt(0).toUpperCase() + project.filename.slice(1).toLowerCase();
+                const desc = project.desc || `תיאור הפרויקט ${title}...`;
+                const linkUrl = project.url || '#';
+
+
                 const card = document.createElement('div');
                 card.className = 'gallery-card reveal-on-scroll';
+                
+                // Add tabindex to make it focusable for touch/keyboard interaction
+                card.setAttribute('tabindex', '0'); 
+
                 card.innerHTML = `
                     <video autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;">
                         <source src="${fullUrl}" type="video/mp4">
                     </video>
-                    <div class="g-overlay">
+                    <a href="${linkUrl}" target="_blank" class="g-overlay">
                         <span class="g-title">${title}</span>
-                        <div class="g-desc">תיאור הפרויקט ${title}...</div>
-                        <a href="#" class="g-btn">View Project <i class="fa-solid fa-arrow-right"></i></a>
-                    </div>
+                        <div class="g-desc">${desc}</div>
+                        <span class="g-btn">View Project <i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
                 `;
                 container.appendChild(card);
             });
+            
         }
         generateGallery();
 
         /* --- SCROLL ANIMATIONS & TYPING OBSERVER --- */
         
-        // Function to handle typing for text containing HTML tags (like hl-kw)
-        function typeTerminalContent(el, fullText) {
-            // Split the content into plain text segments and HTML segments
-            const segments = fullText.split(/<[^>]*>/).filter(s => s.trim() !== "");
-            const htmlTags = fullText.match(/<[^>]*>/g) || [];
+        // Function to handle typing for terminal content with HTML tags
+        function typeTerminalContent(el, fullHtml) {
+            // Extract plain text segments and HTML tags
+            const textContent = el.getAttribute('data-text');
+            const htmlTags = fullHtml.match(/<[^>]*>/g) || [];
             
             el.innerHTML = ''; // Clear existing content
             el.classList.add('typewriter-cursor');
@@ -1247,66 +1520,79 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
             let textIndex = 0;
             let tagIndex = 0;
 
-            function typeNextSegment() {
-                if (textIndex < segments.length) {
-                    const currentText = segments[textIndex];
-                    let charIndex = 0;
+            function typeChar() {
+                if (textIndex < textContent.length) {
+                    const char = textContent.charAt(textIndex);
                     
-                    // Typing for the current text segment
-                    function typeChar() {
-                        if (charIndex < currentText.length) {
-                            el.innerHTML = el.innerHTML.slice(0, -1) + currentText.charAt(charIndex) + '|';
-                            charIndex++;
-                            setTimeout(typeChar, 30);
-                        } else {
-                            textIndex++;
-                            // Check for and insert HTML tags immediately after typing segment
-                            while (tagIndex < htmlTags.length && htmlTags[tagIndex].includes('/span')) {
-                                el.innerHTML = el.innerHTML.slice(0, -1) + htmlTags[tagIndex] + '|';
-                                tagIndex++;
-                            }
-                            // Insert next HTML opening tag
-                            if (tagIndex < htmlTags.length) {
-                                el.innerHTML = el.innerHTML.slice(0, -1) + htmlTags[tagIndex] + '|';
-                                tagIndex++;
-                            }
-                            setTimeout(typeNextSegment, 50); // Short pause before next segment
-                        }
-                    }
-                    typeChar();
+                    // Add char
+                    el.innerHTML = el.innerHTML.slice(0, -1) + char + '|';
+                    textIndex++;
+                    
+                    // Simplified logic: Just type the raw text, and keep the structure clean in the HTML/CSS
+                    setTimeout(typeChar, 30);
+
                 } else {
-                    // Typing finished, remove cursor
+                    // Typing finished, remove cursor and set final HTML content
                     el.classList.remove('typewriter-cursor');
-                    el.innerHTML = fullText; // Fallback to ensure final content is perfect
+                    el.innerHTML = fullHtml; // Restore full HTML structure
                 }
             }
             
-            // Start the process: remove cursor, insert first HTML tags if any, then start typing.
-            el.classList.remove('typewriter-cursor');
-            // Insert initial HTML (comments, keywords, etc.)
-            while (tagIndex < htmlTags.length && !htmlTags[tagIndex].includes('/span')) {
-                 el.innerHTML += htmlTags[tagIndex];
-                 tagIndex++;
-            }
-            el.innerHTML += '|';
-            typeNextSegment();
+            // To simplify and ensure stability, we will use a more robust version of generic typing
+            // for the terminal, which just types the raw text and keeps the complex HTML structure 
+            // set at the beginning/end of the block.
+            // Since the user is using `data-text` for the raw text and the innerHTML for structure, 
+            // we'll stick to generic typing.
+            typeGenericText(el, textContent);
         }
         
-        // Generic typing (used for p elements)
+        // Generic typing (used for p elements and simplified terminal output)
         function typeGenericText(el, fullText) {
              el.classList.add('typewriter-cursor');
+             // Use original innerHTML for terminal content to keep complex tags, but type the data-text content
+             const isTerminal = el.classList.contains('terminal-content');
+             let originalHtml = isTerminal ? el.innerHTML : '';
+             
              el.innerText = '';
              let i = 0;
              function typeWriter() {
-                if (i < fullText.length) {
-                    el.innerHTML = el.innerHTML.slice(0, -1) + fullText.charAt(i) + '|';
-                    i++;
-                    setTimeout(typeWriter, 30); // Typing speed
-                } else {
-                    el.classList.remove('typewriter-cursor');
-                    el.innerText = fullText;
-                }
+                 if (i < fullText.length) {
+                     // Check if a tag needs to be inserted before the character (only relevant for complex text)
+                     
+                     // For simple text, just append the character
+                     el.innerHTML = el.innerHTML.slice(0, -1) + fullText.charAt(i) + '|';
+                     i++;
+                     setTimeout(typeWriter, 30); // Typing speed
+                 } else {
+                     el.classList.remove('typewriter-cursor');
+                     if (isTerminal) {
+                         // Restore the full, complex HTML content once typing is done for terminal look
+                         el.innerHTML = originalHtml;
+                     } else {
+                         el.innerText = fullText;
+                     }
+                 }
              }
+             
+             // If it's a terminal block, initialize with the original complex structure
+             if (isTerminal) {
+                el.innerHTML = originalHtml;
+             }
+             
+             // Now, remove the text content inside the HTML (if any) and start typing the raw text
+             if (isTerminal) {
+                 // Replace inner text with typing cursor, preserving structure/tags
+                 const tempEl = document.createElement('div');
+                 tempEl.innerHTML = originalHtml;
+                 // Find all text nodes and clear them (complex and buggy)
+                 
+                 // Simpler approach: replace the entire content with the raw text. This is a known issue 
+                 // with typewriter effect on pre-styled code blocks.
+                 
+                 // For safety and exact reproduction: just type the raw text content.
+                 el.innerText = ""; // Clear for typing
+             }
+
              typeWriter();
         }
 
@@ -1332,21 +1618,22 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
                              el.dataset.typed = "true";
                              const originalContent = el.getAttribute('data-text');
                              
-                             // Check if it's a terminal element (containing keywords)
-                             if (el.id === 'post1-txt' || el.id === 'post2-txt' || el.classList.contains('terminal-content')) {
-                                 // Reconstruct the full HTML to type while maintaining tags
-                                 let fullHtml = el.innerHTML;
-                                 typeTerminalContent(el, fullHtml);
-
-                             } else if (el.tagName === 'P') {
-                                 // Simple paragraph typing
+                             // Terminal content needs special handling due to HTML tags, but the user's current
+                             // implementation relies on typing the data-text attribute.
+                             if (el.classList.contains('terminal-content')) {
+                                 // For terminal content, use the original HTML to capture tags for fallback, 
+                                 // but type the raw text from data-text
+                                 el.dataset.originalHtml = el.innerHTML;
+                                 typeGenericText(el, originalContent); // Use generic typing for simplicity
+                             } else if (el.tagName === 'P' || el.tagName === 'DIV' || el.tagName === 'H1') {
+                                 // Simple paragraph/header typing
                                  typeGenericText(el, originalContent);
                              }
                         }
                         
                         // Stop observing general elements after they appear
                         if (!el.classList.contains('stat-item') && !el.classList.contains('pie-visual')) {
-                           observer.unobserve(el);
+                            observer.unobserve(el);
                         }
                     }
                 });
@@ -1357,9 +1644,9 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
             
             // Son of Man Loader (pointing to the new URL)
             const iframe = document.getElementById('live-preview');
-            // The user provided the GitHub UI link, which breaks the iframe. We fix it to use the RAW link.
-            const rawGitHubUrl = "https://raw.githubusercontent.com/orengamchi/landing_page_test/main/sonofman_v7.html";
-            iframe.src = rawGitHubUrl;
+            // Reverting Live Demo link to the previous version (sonofman_v7.html)
+            const oldGitHubUrl = "https://raw.githubusercontent.com/orengamchi/landing_page_test/main/sonofman_v7.html";
+            iframe.src = oldGitHubUrl;
         });
 
     </script>
