@@ -253,6 +253,59 @@
         }
         .hl-kw { color: #c586c0; } .hl-str { color: #ce9178; } .hl-com { color: #6a9955; font-style: italic; }
 
+        /* --- Cost Table Styling --- */
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-align: right;
+        }
+        .cost-table th, .cost-table td {
+            padding: 10px 5px;
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+        .cost-table th {
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .cost-table .legacy-cost {
+            color: var(--accent-highlight);
+            font-weight: bold;
+        }
+        .cost-table .ai-cost {
+            color: var(--accent-secondary);
+            font-weight: bold;
+        }
+        .cost-table tr:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+        .cost-table .total-row {
+            border-top: 2px solid var(--accent-primary);
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        /* Mobile adjustments for table */
+        @media (max-width: 600px) {
+            .cost-table thead { display: none; }
+            .cost-table, .cost-table tbody, .cost-table tr, .cost-table td { display: block; width: 100%; }
+            .cost-table tr { margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 8px; }
+            .cost-table td { text-align: right; border-bottom: none; position: relative; padding-right: 50%; }
+            .cost-table td:before {
+                content: attr(data-label);
+                position: absolute;
+                right: 6px;
+                width: 45%;
+                font-weight: 700;
+                color: var(--text-secondary);
+                text-align: left;
+            }
+            .cost-table .total-row td { padding-right: 6px; }
+        }
+
         /* --- Buttons --- */
         .action-bar { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 20px; flex-wrap: wrap; }
         .btn {
@@ -362,7 +415,7 @@
         /* Updated Overlay Styles for Hover Effect */
         .g-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; /* Full Cover */
-            background: rgba(0, 0, 0, 0.85); /* Darker background for text readability */
+            background: rgba(0, 0, 0, 0.85); /* Dark overlay for text readability */
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             opacity: 0; /* Hidden by default */
             transition: opacity 0.3s ease;
@@ -781,6 +834,48 @@
             direction: ltr; /* Align Pie Visual elements to the left for better RTL flow */
             text-align: left;
         }
+        
+        /* --- FOOTER with Video Background (UPDATED STYLES) --- */
+        .contact-footer {
+            margin-top: 50px;
+            position: relative;
+            /* Removed fixed padding to allow content to position absolutely/flex */
+            padding: 0; 
+            background: #000;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            overflow: hidden; /* Crop the video */
+            min-height: 250px; /* Ensure space for video */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .footer-content {
+            position: absolute; /* Changed to absolute to float over video */
+            z-index: 2; /* Place content above video */
+            width: 100%;
+            padding: 40px 20px; /* Add internal padding */
+            background: rgba(0, 0, 0, 0.4); /* Dark overlay for better text contrast */
+            backdrop-filter: blur(2px);
+        }
+
+        .contact-links {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+            margin-top: 30px; /* Added spacing after title */
+        }
+        .contact-links a {
+            /* Kept existing button styles for consistency */
+            border: 1px solid var(--accent-secondary); 
+            color: var(--accent-secondary);
+            background: rgba(0,0,0,0.7); 
+            backdrop-filter: blur(8px);
+        }
+        .contact-links a:hover {
+            background: var(--accent-secondary);
+            color: #000;
+        }
 
     </style>
 </head>
@@ -797,12 +892,13 @@
         </header>
 
         <!-- 6. LIVE DEMO -->
+        <!-- ******* REMOVED LIVE_RUNTIME: Son_of_Man (Full Screen) AS REQUESTED ******* -->
+        <!--
         <div class="card reveal-on-scroll">
             <div class="card-header">
                 <div class="card-title"><i class="fa-solid fa-mobile-screen"></i> <span class="typing-reveal">LIVE_RUNTIME: Son_of_Man (Full Screen)</span></div>
                 <span class="tag tag-live">App 🍏</span>
             </div>
-            <!-- REMOVED PADDING FOR FULL WIDTH EXPERIENCE IN THIS CARD -->
             <div class="card-body" style="padding: 0; position: relative;">
                 <div style="padding: 20px 30px; position:absolute; z-index:10; pointer-events:none; width:100%;">
                     <p class="typing-reveal" style="margin-bottom:0; font-size:0.9rem; color:rgba(255,255,255,0.7); font-family:var(--font-mono); text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
@@ -810,13 +906,12 @@
                         > Initializing Physics Engine...
                     </p>
                 </div>
-                <!-- New full-screen container replaces the mockup structure -->
                 <div class="full-preview-container" style="border-radius: 0 0 24px 24px; height: 600px;">
-                    <!-- NOTE: Reverting Live Demo link to the previous version (sonofman_v7.html) -->
                     <iframe id="live-preview" title="Son of Man Preview" src="https://raw.githubusercontent.com/orengamchi/landing_page_test/main/sonofman_v7.html" scrolling="no"></iframe>
                 </div>
             </div>
         </div>
+        -->
 
         <!-- 3. LINKEDIN POST (POST_01: THE_CUTBACK) - Only the resignation letter remains here -->
         <div class="card reveal-on-scroll">
@@ -841,6 +936,59 @@
                     <div style="font-size:0.9rem; margin-top:40px; text-align:left;">
                         בברכה,<br>
                         האני העתידי שלך.
+                    </div>
+                </div>
+
+                <!-- NEW COST COMPARISON TABLE -->
+                <div class="terminal reveal-on-scroll delay-200" style="margin-top: 30px;">
+                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">cost_reduction_table.csv</div></div>
+                    <div class="terminal-content">
+                        <h4 style="margin-top:0; color:var(--accent-primary); font-family:var(--font-display); font-size:1.1rem; text-align:center;">
+                            BEFORE & AFTER: ANNUAL SOFTWARE COSTS
+                        </h4>
+                        
+                        <table class="cost-table">
+                            <thead>
+                                <tr>
+                                    <th>כלי עבודה (TOOL)</th>
+                                    <th>BEFORE (שנתי - דולר)</th>
+                                    <th>AFTER (שנתי - דולר)</th>
+                                    <th>הערות</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="כלי עבודה">Adobe Creative Cloud (Full)</td>
+                                    <td data-label="BEFORE" class="legacy-cost">$720</td>
+                                    <td data-label="AFTER" class="ai-cost">$0</td>
+                                    <td data-label="הערות">הוחלף על ידי Midjourney / Gen-2 ו-AI Coding</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="כלי עבודה">WIX Premium Business</td>
+                                    <td data-label="BEFORE" class="legacy-cost">$348</td>
+                                    <td data-label="AFTER" class="ai-cost">$0</td>
+                                    <td data-label="הערות">הוחלף על ידי קוד פתוח (HTML/JS/Three.js)</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="כלי עבודה">Unity Pro / 3D Asset Store</td>
+                                    <td data-label="BEFORE" class="legacy-cost">$4,000+</td>
+                                    <td data-label="AFTER" class="ai-cost">$0</td>
+                                    <td data-label="הערות">הוחלף על ידי Three.js / Cannon.js (קוד פתוח)</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="כלי עבודה">הוצאות תפעול (שרתים קנייניים)</td>
+                                    <td data-label="BEFORE" class="legacy-cost">$500</td>
+                                    <td data-label="AFTER" class="ai-cost">$0</td>
+                                    <td data-label="הערות">הוחלף בפתרונות אירוח רזים/חינמיים</td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td data-label="סה"כ" style="color:white; font-size:1.1rem;">TOTAL ESTIMATED SAVINGS</td>
+                                    <td data-label="BEFORE" class="legacy-cost" style="font-size:1.1rem;">~$5,568</td>
+                                    <td data-label="AFTER" class="ai-cost" style="font-size:1.1rem;">~$0</td>
+                                    <td data-label="הערות" style="color:var(--accent-secondary);">מחשבה במקום רישיונות!</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -1216,7 +1364,7 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
         </div>
 
         
-        <!-- FOOTER / CONTACT SECTION -->
+        <!-- FOOTER / CONTACT SECTION (Updated to place links over the video) -->
         <div class="contact-footer reveal-on-scroll">
             <!-- Video Background -->
             <video autoplay loop muted playsinline class="footer-video-bg">
@@ -1226,8 +1374,8 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
             <div class="footer-content">
                 <h3 class="typing-reveal">READY TO PIVOT?</h3>
                 <div class="contact-links">
-                    <a href="mailto:orengamchi@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i> Email: Let's Talk</a>
-                    <a href="https://www.linkedin.com/in/orengamchi/" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn Message</a>
+                    <a href="mailto:orengamchi@gmail.com" target="_blank" class="btn"><i class="fa-solid fa-envelope"></i> Email: Let's Talk</a>
+                    <a href="https://www.linkedin.com/in/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-linkedin"></i> LinkedIn Message</a>
                     <a href="https://www.facebook.com/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-facebook-f"></i> Facebook Profile</a>
                     <a href="#" onclick="openModal('cv-modal'); return false;" class="btn"><i class="fa-solid fa-file-pdf"></i> View CV (Timeline)</a>
                 </div>
@@ -1407,7 +1555,7 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
         function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; document.body.style.overflow = ''; }
 
-        // --- Gallery Generation (Updated with new files and links) ---
+        // --- Gallery Data Definition ---
         const galleryBaseUrl = "https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2Fthumbs_video%2F";
         const galleryFiles = [
             // NEW item for Kishkashta
@@ -1461,6 +1609,7 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
             { filename: "thumb_video_node.mp4", title: "Video Node", url: "https://dafkaze.com/projects/video-node-editor", desc: "מערכת עריכה מבוססת צמתים (Nodes)." }
         ];
 
+        // --- Gallery Generation Function ---
         function generateGallery() {
             const container = document.getElementById('gallery-container');
             if (!container) return;
@@ -1470,15 +1619,10 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
                 // Constructing the full URL from the filename. 
                 const firebasePublicUrl = `https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2Fthumbs_video%2F${project.filename}?alt=media`;
                 
-                // Special handling for specific files
-                const isKishkashta = project.filename.includes('KISHKASHTA');
-                
-                // Determine the correct video source URL (using dedicated URL for KISHKASHTA if needed)
+                // Determine the correct video source URL 
                 let fullUrl = firebasePublicUrl;
-                if (isKishkashta) {
-                     fullUrl = `https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2Fthumbs_video%2FTHUMB__KISHKASHTA.mp4?alt=media`;
-                }
-
+                
+                // Use default titles/descriptions if missing (though they shouldn't be now)
                 const title = project.title || project.filename.replace(/THUMB_+|thumb_+|__+/i, '').replace('.mp4', '').replace(/_/g, ' ').charAt(0).toUpperCase() + project.filename.slice(1).toLowerCase();
                 const desc = project.desc || `תיאור הפרויקט ${title}...`;
                 const linkUrl = project.url || '#';
@@ -1502,99 +1646,71 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
                 `;
                 container.appendChild(card);
             });
-            
         }
-        generateGallery();
 
-        /* --- SCROLL ANIMATIONS & TYPING OBSERVER --- */
+        // --- SCROLL ANIMATIONS & TYPING OBSERVER ---
         
         // Function to handle typing for terminal content with HTML tags
         function typeTerminalContent(el, fullHtml) {
-            // Extract plain text segments and HTML tags
             const textContent = el.getAttribute('data-text');
-            const htmlTags = fullHtml.match(/<[^>]*>/g) || [];
-            
-            el.innerHTML = ''; // Clear existing content
             el.classList.add('typewriter-cursor');
             
-            let textIndex = 0;
-            let tagIndex = 0;
+            el.innerText = ''; 
+            let i = 0;
 
-            function typeChar() {
-                if (textIndex < textContent.length) {
-                    const char = textContent.charAt(textIndex);
-                    
-                    // Add char
-                    el.innerHTML = el.innerHTML.slice(0, -1) + char + '|';
-                    textIndex++;
-                    
-                    // Simplified logic: Just type the raw text, and keep the structure clean in the HTML/CSS
-                    setTimeout(typeChar, 30);
-
-                } else {
-                    // Typing finished, remove cursor and set final HTML content
-                    el.classList.remove('typewriter-cursor');
-                    el.innerHTML = fullHtml; // Restore full HTML structure
-                }
+            function typeWriter() {
+                 if (i < textContent.length) {
+                     el.innerHTML = el.innerHTML.slice(0, -1) + textContent.charAt(i) + '|';
+                     i++;
+                     setTimeout(typeWriter, 30); 
+                 } else {
+                     el.classList.remove('typewriter-cursor');
+                     el.innerHTML = fullHtml; // Restore full HTML structure (with syntax highlighting tags)
+                 }
             }
+             
+            // Save current HTML structure before clearing for typing
+            el.dataset.originalHtml = el.innerHTML;
             
-            // To simplify and ensure stability, we will use a more robust version of generic typing
-            // for the terminal, which just types the raw text and keeps the complex HTML structure 
-            // set at the beginning/end of the block.
-            // Since the user is using `data-text` for the raw text and the innerHTML for structure, 
-            // we'll stick to generic typing.
-            typeGenericText(el, textContent);
+            // Temporarily replace content with raw text for typing effect
+            typeWriter();
         }
         
         // Generic typing (used for p elements and simplified terminal output)
         function typeGenericText(el, fullText) {
              el.classList.add('typewriter-cursor');
-             // Use original innerHTML for terminal content to keep complex tags, but type the data-text content
-             const isTerminal = el.classList.contains('terminal-content');
-             let originalHtml = isTerminal ? el.innerHTML : '';
              
-             el.innerText = '';
+             // Clear the content for typing effect
+             if (!el.classList.contains('terminal-content')) {
+                 el.innerText = '';
+             }
+
              let i = 0;
              function typeWriter() {
                  if (i < fullText.length) {
-                     // Check if a tag needs to be inserted before the character (only relevant for complex text)
-                     
-                     // For simple text, just append the character
                      el.innerHTML = el.innerHTML.slice(0, -1) + fullText.charAt(i) + '|';
                      i++;
                      setTimeout(typeWriter, 30); // Typing speed
                  } else {
                      el.classList.remove('typewriter-cursor');
-                     if (isTerminal) {
-                         // Restore the full, complex HTML content once typing is done for terminal look
-                         el.innerHTML = originalHtml;
-                     } else {
-                         el.innerText = fullText;
-                     }
+                     el.innerText = fullText;
                  }
              }
              
-             // If it's a terminal block, initialize with the original complex structure
-             if (isTerminal) {
-                el.innerHTML = originalHtml;
+             // If it's terminal content, we need a special way to restore the full HTML:
+             if (el.classList.contains('terminal-content')) {
+                // If it was observed/typed before, restore saved HTML
+                const originalHtml = el.dataset.originalHtml || el.innerHTML;
+                el.innerHTML = ""; // Clear
+                typeWriter();
+             } else {
+                typeWriter();
              }
-             
-             // Now, remove the text content inside the HTML (if any) and start typing the raw text
-             if (isTerminal) {
-                 // Replace inner text with typing cursor, preserving structure/tags
-                 const tempEl = document.createElement('div');
-                 tempEl.innerHTML = originalHtml;
-                 // Find all text nodes and clear them (complex and buggy)
-                 
-                 // Simpler approach: replace the entire content with the raw text. This is a known issue 
-                 // with typewriter effect on pre-styled code blocks.
-                 
-                 // For safety and exact reproduction: just type the raw text content.
-                 el.innerText = ""; // Clear for typing
-             }
-
-             typeWriter();
         }
+
+
+        // ** STEP 1: Execute generateGallery immediately **
+        generateGallery();
 
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -1618,13 +1734,10 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
                              el.dataset.typed = "true";
                              const originalContent = el.getAttribute('data-text');
                              
-                             // Terminal content needs special handling due to HTML tags, but the user's current
-                             // implementation relies on typing the data-text attribute.
+                             // Terminal content needs special handling due to HTML tags
                              if (el.classList.contains('terminal-content')) {
-                                 // For terminal content, use the original HTML to capture tags for fallback, 
-                                 // but type the raw text from data-text
-                                 el.dataset.originalHtml = el.innerHTML;
-                                 typeGenericText(el, originalContent); // Use generic typing for simplicity
+                                 const originalHtml = el.innerHTML;
+                                 typeTerminalContent(el, originalHtml);
                              } else if (el.tagName === 'P' || el.tagName === 'DIV' || el.tagName === 'H1') {
                                  // Simple paragraph/header typing
                                  typeGenericText(el, originalContent);
@@ -1642,11 +1755,10 @@ To WIX: תודה על הפשטות בימים שהיינו צריכים אותה
             // Observe all relevant elements
             document.querySelectorAll('.reveal-on-scroll, .typing-reveal, .type-this, .profile-img-box, .stat-item, .pie-visual').forEach(el => observer.observe(el));
             
-            // Son of Man Loader (pointing to the new URL)
-            const iframe = document.getElementById('live-preview');
-            // Reverting Live Demo link to the previous version (sonofman_v7.html)
-            const oldGitHubUrl = "https://raw.githubusercontent.com/orengamchi/landing_page_test/main/sonofman_v7.html";
-            iframe.src = oldGitHubUrl;
+            // Son of Man Loader (REMOVED - Not needed anymore)
+            // const iframe = document.getElementById('live-preview');
+            // const oldGitHubUrl = "https://raw.githubusercontent.com/orengamchi/landing_page_test/main/sonofman_v7.html";
+            // iframe.src = oldGitHubUrl;
         });
 
     </script>
