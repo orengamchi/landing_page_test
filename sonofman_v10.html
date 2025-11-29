@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>בן האנוש - אינטראקטיבי</title>
+    <!-- Preload critical images -->
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fapple.png?alt=media&token=85c0edb4-5d11-43fd-8ceb-88731253a828" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fapple%20red.png?alt=media&token=f4000d4b-51c1-4650-a8f5-0e5b563d64a3" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fbg.png?alt=media&token=f527f9b1-3bc4-48e9-9af2-e7d6f42e72c0" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman.png?alt=media&token=8da1ff64-f319-49fa-91de-28ec3d5f4976" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fhands.png?alt=media&token=61201388-702e-4999-86b3-771149f433bd" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fwall%20%20move.png?alt=media&token=bbc568bc-b380-4c47-91fd-f987916e101e" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Ftie.png?alt=media&token=c9d88174-b999-42f8-8fd6-afeb06500d3f" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fhead.png?alt=media&token=b2516d34-8a4d-4b6f-87fe-0540de7260bb" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fhat.png?alt=media&token=d71697e7-7ef1-478d-9cd9-8679d75e3bad" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Feat.png?alt=media&token=4b5bcb6b-2487-4b1c-b0f2-fae65eb72b97" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman%20front.png?alt=media&token=a8697195-2c8c-4235-961d-72124578b9e6" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman%20back.png?alt=media&token=37b406ff-353e-4f8e-9de1-90460c1bb841" as="image">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap" rel="stylesheet">
+    <!-- Added new font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Assistant', sans-serif;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            /* Center the art container */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f1f5f9; /* bg-slate-100 */
+        }
+        
+        #art-container {
+            position: relative;
+            width: 1326px; /* Increased by 30% */
+            height: 926px; /* Shortened by 10px */
+            margin: 2rem;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            touch-action: none;
+            border: 12px solid #2c3e50;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0,0,0,0.2);
+        }
+
+        #bg {
+            object-fit: cover;
+            width: 300%; /* Make wider for parallax */
+            left: 50%; /* Center the element */
+            transform: translateX(-50%); /* Center the element */
+        }
+
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+        
+        #man, #head, #hands { cursor: grab; }
+        #man:active, #head:active, #hands:active { cursor: grabbing; }
+
+        #character-container {
+             z-index: 80;
+            transform-origin: 50% 180%; /* Adjusted for landscape */
+            pointer-events: none; /* Events pass through container */
+        }
+
+        #head-container {
+            z-index: 85; /* Above other body parts */
+            pointer-events: none;
+            transform-origin: 50% 100%; /* Pivot from the top of the tie */
+        }
+        #head { pointer-events: auto; }
+        
+        #man { 
+            z-index: 2; /* Relative to parent */
+            pointer-events: auto; /* Man is draggable */
+            transition: opacity 0.2s ease-in-out;
+        }
+        
+        #permission-request {
+            display: none; 
+            position: fixed; 
+            bottom: 20px;
+            left: 50%; 
+            transform: translateX(-50%); 
+            z-index: 2000;
+        }
+
+        #text-overlay {
+            z-index: 30;
+            pointer-events: none; /* Allows clicks to pass through container */
+            display: flex;
+            align-items: center; /* Changed to center */
+            justify-content: center;
+            text-align: center;
+            line-height: 1.1;
+            color: white;
+            font-family: 'Gilda Display', serif; /* New font */
+            font-size: 3.23rem; /* Reduced by 15% */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+            transform-origin: 50% 180%; /* Adjusted for landscape */
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.5s ease-in-out; /* Smooth fade-in */
+        }
+
+        .sub-headline {
+            font-family: 'Assistant', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: 0.1em;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        @keyframes blink-animation {
+          0%, 49.9% { opacity: 1; }
+          50%, 100% { opacity: 0; }
+        }
+
+        #eat {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #eat.is-blinking {
+            animation: blink-animation 0.3s infinite;
+        }
+        
+        /* Particle styles */
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #84cc16; /* Apple green */
+            border-radius: 50%;
+            opacity: 0; /* Start invisible */
+        }
+
+        .man-particle {
+            background-color: #334155; /* Man's suit color */
+        }
+
+        @keyframes fly-out {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                /* These vars are set by JS for random direction */
+                transform: translate(var(--x), var(--y)) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        #wall {
+            transition: top 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 280%; /* Make wider for parallax */
+            left: 50%;   /* Center the element */
+            transform: translateX(-50%); /* Center the element */
+        }
+
+        #wall.raised {
+            top: 25% !important; /* Covers 3/4 of the screen */
+        }
+
+        #wall-header {
+            z-index: 40;
+            display: flex;
+            align-items: flex-start;
+            padding-top: 2%; /* Fine-tune vertical position */
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif; /* Changed font */
+            font-size: 4.5rem; /* Adjusted font size */
+            font-weight: 700;
+            color: #dfe3e8;
+            pointer-events: none;
+            top: -50%; /* Start off-screen */
+            transition: top 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            animation: extrude-bevel-anim 4s infinite alternate;
+        }
+
+        @keyframes extrude-bevel-anim {
+            0% {
+                text-shadow: 
+                    /* Bevel Highlight (top-left) */
+                    -1px -1px 1px #fff,
+                    /* Extrusion (bottom-right) */
+                    1px 1px 0px #2c3e50,
+                    2px 2px 0px #2c3e50,
+                    3px 3px 0px #2c3e50,
+                    4px 4px 0px #2c3e50,
+                    5px 5px 0px #2c3e50,
+                    6px 6px 0px #2c3e50,
+                    7px 7px 0px #2c3e50,
+                    8px 8px 0px #2c3e50,
+                    /* Drop Shadow */
+                    9px 9px 15px rgba(0,0,0,0.5);
+            }
+            100% {
+                text-shadow: 
+                    /* Bevel Highlight (bottom-right) */
+                    1px 1px 1px #fff,
+                    /* Extrusion (top-left) */
+                    -1px -1px 0px #2c3e50,
+                    -2px -2px 0px #2c3e50,
+                    -3px -3px 0px #2c3e50,
+                    -4px -4px 0px #2c3e50,
+                    -5px -5px 0px #2c3e50,
+                    -6px -6px 0px #2c3e50,
+                    -7px -7px 0px #2c3e50,
+                    -8px -8px 0px #2c3e50,
+                      /* Drop Shadow */
+                    9px 9px 15px rgba(0,0,0,0.5);
+            }
+        }
+
+        #wall-header > span {
+            position: relative;
+        }
+
+        #wall-header > span.glitching {
+            animation: glitch-main 0.5s linear;
+        }
+
+        #wall-header > span.glitching::before,
+        #wall-header > span.glitching::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #wall-header > span.glitching::before {
+            left: 3px;
+            text-shadow: -3px 0 #ff00c1, 0 2px #00fff9;
+            animation: glitch-clip-1 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+        }
+
+        #wall-header > span.glitching::after {
+            left: -3px;
+            text-shadow: -3px 0 #00fff9, 3px 3px #ff00c1;
+            animation: glitch-clip-2 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+        }
+
+        @keyframes glitch-main {
+            0% { transform: skewX(0deg); }
+            10% { transform: skewX(-15deg); }
+            20% { transform: skewX(10deg); }
+            30% { transform: skewX(-10deg); }
+            40% { transform: skewX(8deg); }
+            50% { transform: skewX(-5deg); }
+            60% { transform: skewX(5deg); }
+            70% { transform: skewX(-2deg); }
+            80% { transform: skewX(2deg); }
+            90% { transform: skewX(0deg); }
+            100% { transform: skewX(0deg); }
+        }
+
+        @keyframes glitch-clip-1 {
+            0% { clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%); }
+            10% { clip-path: polygon(0 78%, 100% 78%, 100% 80%, 0 80%); }
+            20% { clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%); }
+            30% { clip-path: polygon(0 25%, 100% 25%, 100% 30%, 0 30%); }
+            40% { clip-path: polygon(0 15%, 100% 15%, 100% 17%, 0 17%); }
+            50% { clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%); }
+            60% { clip-path: polygon(0 40%, 100% 40%, 100% 42%, 0 42%); }
+            70% { clip-path: polygon(0 90%, 100% 90%, 100% 95%, 0 95%); }
+            80% { clip-path: polygon(0 5%, 100% 5%, 100% 8%, 0 8%); }
+            90% { clip-path: polygon(0 33%, 100% 33%, 100% 35%, 0 35%); }
+            100% { clip-path: polygon(0 70%, 100% 70%, 100% 75%, 0 75%); }
+        }
+
+        @keyframes glitch-clip-2 {
+            0% { clip-path: polygon(0 45%, 100% 45%, 100% 47%, 0 47%); }
+            10% { clip-path: polygon(0 10%, 100% 10%, 100% 15%, 0 15%); }
+            20% { clip-path: polygon(0 85%, 100% 85%, 100% 88%, 0 88%); }
+            30% { clip-path: polygon(0 55%, 100% 55%, 100% 60%, 0 60%); }
+            40% { clip-path: polygon(0 1%, 100% 1%, 100% 5%, 0 5%); }
+            50% { clip-path: polygon(0 95%, 100% 95%, 100% 98%, 0 98%); }
+            60% { clip-path: polygon(0 20%, 100% 20%, 100% 25%, 0 25%); }
+            70% { clip-path: polygon(0 75%, 100% 75%, 100% 80%, 0 80%); }
+            80% { clip-path: polygon(0 40%, 100% 40%, 100% 43%, 0 43%); }
+            90% { clip-path: polygon(0 65%, 100% 65%, 100% 68%, 0 68%); }
+            100% { clip-path: polygon(0 28%, 100% 28%, 100% 32%, 0 32%); }
+        }
+
+        #wall.raised ~ #wall-header {
+            top: calc(18% - 120px); /* Position just above the raised wall, raised by 120px */
+        }
+        
+        #wall-text-overlay {
+            z-index: 60;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.1; /* Adjusted line height for 3 lines */
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem; /* Adjusted font size for 3 lines */
+            font-weight: 700;
+            transform-origin: 50% 180%;
+            opacity: 0; /* Hidden by default */
+            transition: opacity 0.8s ease-in-out 0.5s;
+            color: #fff;
+            animation: neon-flicker 1.5s infinite alternate;
+        }
+        
+        @keyframes neon-flicker {
+            0%, 100% {
+                text-shadow:
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 20px #ff00ff,
+                    0 0 30px #ff00ff,
+                    0 0 40px #ff00ff;
+                color: #fce1fb;
+            }
+            50% {
+                text-shadow:
+                    0 0 2px #fff,
+                    0 0 5px #fff,
+                    0 0 10px #ff00de,
+                    0 0 15px #ff00de;
+                color: #fff;
+            }
+        }
+
+        #wall.raised ~ #wall-text-overlay {
+            opacity: 1;
+        }
+
+        #contact-card {
+            z-index: 4; /* Behind tie */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #3a3a3a;
+            font-family: 'Gilda Display', serif;
+        }
+
+        .contact-content {
+            position: relative;
+            top: calc(12% + 1cm); 
+            text-align: center;
+        }
+
+        .contact-header {
+            font-size: 2.2rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.8rem;
+        }
+
+        .contact-detail {
+            font-family: 'Assistant', sans-serif;
+            font-size: 1.4rem;
+            line-height: 2;
+        }
+
+        #wall-toggle-btn {
+            z-index: 110; /* Above apple, below portfolio buttons */
+            position: absolute;
+            top: calc(52% - 6.5cm); /* Raised by 1cm for desktop */
+            left: 50%;
+            width: 65px; /* Increased by 30% */
+            height: 65px; /* Increased by 30% */
+            background-color: transparent; 
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+        }
+
+        #wall-toggle-btn:hover {
+            background-color: transparent;
+        }
+
+        /* Apple pulse animation */
+        @keyframes apple-pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        #apple-container.is-pulsing {
+            animation: apple-pulse 1.2s infinite ease-in-out;
+        }
+
+        /* Added for apple clickability */
+        .apple-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.3s ease;
+            transform: scaleX(1.62); /* Shrunk by 10% for desktop */
+        }
+
+        #apple {
+            opacity: 1; /* Green apple is visible by default */
+        }
+
+        #apple-red {
+            opacity: 0; /* Red apple is hidden by default */
+            pointer-events: none;
+        }
+
+        #apple-container.clickable {
+            pointer-events: auto;
+            cursor: pointer;
+        }
+        
+        /* Green glow on the green apple when hovered */
+        #apple-container.clickable:hover #apple {
+            filter: drop-shadow(0 0 15px #a3e635);
+        }
+        
+        /* New style for when wall button is hovered */
+        #apple-container.flicker-red #apple-red {
+            animation: blink-animation 0.4s step-end infinite; /* Make red apple blink */
+            opacity: 1; /* Ensure it starts visible for animation */
+        }
+        
+        #social-links-container {
+            z-index: 120;
+            pointer-events: none;
+        }
+        
+        .social-canvas {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 30%; /* Start position above the final position, but behind wall */
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.5s ease-out 0.8s, top 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.6s;
+            pointer-events: none; /* Not clickable when hidden/animating */
+            cursor: pointer;
+        }
+
+        #wall.raised ~ #social-links-container .social-canvas {
+            top: calc(78% - 0.5cm); /* End position */
+            opacity: 1;
+            pointer-events: auto; /* Clickable when visible */
+        }
+
+
+        #github-canvas { left: calc(20% - 0.5cm); }
+        #linkedin-canvas { left: calc(80% + 0.5cm); }
+
+        /* Lamp and Lens Flare Styles */
+        #lamp-fx {
+            position: absolute;
+            top: calc(25% - 1.5cm); /* Lowered by 0.5cm */
+            left: 50%;
+            width: 53px;
+            height: 53px;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 1; /* Set behind man/hands */
+            --light-intensity: 1.0; /* Custom property for brightness */
+            --flare-hue: 60; /* Initial hue (yellow) */
+            --flare-saturation: 50%; /* Initial saturation */
+            --sparkle-intensity: 0;
+        }
+
+        #lamp-fx::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: none; /* בוטלה המנורה */
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: none; /* הוסר הבהוב */
+        }
+
+        #lamp-fx::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500%;
+            height: 500%;
+            background: none; /* בוטלה המנורה */
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: none; /* הוסר הבהוב */
+            opacity: var(--light-intensity);
+        }
+        
+        #sun-effect-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            transform: translate(-50%, -50%);
+            opacity: var(--sparkle-intensity);
+            transition: opacity 1.5s ease-out; /* Slow fade-out for the rays */
+            pointer-events: none;
+        }
+
+        #sun-core {
+            display: none; /* העיגול הוסר */
+        }
+
+        #sun-rays {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: sun-ray-spin 10s linear infinite;
+        }
+
+        .sun-ray {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, hsla(var(--flare-hue), 100%, 90%, 0.7) 40%, hsla(var(--flare-hue), 100%, 90%, 0.7) 60%, transparent);
+            transform-origin: center;
+            transform: translateX(-50%);
+        }
+
+        .sun-ray:nth-child(2) { transform: translateX(-50%) rotate(15deg); }
+        .sun-ray:nth-child(3) { transform: translateX(-50%) rotate(30deg); }
+        .sun-ray:nth-child(4) { transform: translateX(-50%) rotate(45deg); }
+        .sun-ray:nth-child(5) { transform: translateX(-50%) rotate(60deg); }
+        .sun-ray:nth-child(6) { transform: translateX(-50%) rotate(75deg); }
+        .sun-ray:nth-child(7) { transform: translateX(-50%) rotate(90deg); }
+        .sun-ray:nth-child(8) { transform: translateX(-50%) rotate(105deg); }
+        .sun-ray:nth-child(9) { transform: translateX(-50%) rotate(120deg); }
+        .sun-ray:nth-child(10) { transform: translateX(-50%) rotate(135deg); }
+        .sun-ray:nth-child(11) { transform: translateX(-50%) rotate(150deg); }
+        .sun-ray:nth-child(12) { transform: translateX(-50%) rotate(165deg); }
+        .sun-ray:nth-child(13) { transform: translateX(-50%) rotate(180deg); }
+        .sun-ray:nth-child(14) { transform: translateX(-50%) rotate(195deg); }
+        .sun-ray:nth-child(15) { transform: translateX(-50%) rotate(210deg); }
+        .sun-ray:nth-child(16) { transform: translateX(-50%) rotate(225deg); }
+        .sun-ray:nth-child(17) { transform: translateX(-50%) rotate(240deg); }
+        .sun-ray:nth-child(18) { transform: translateX(-50%) rotate(255deg); }
+        .sun-ray:nth-child(19) { transform: translateX(-50%) rotate(270deg); }
+        .sun-ray:nth-child(20) { transform: translateX(-50%) rotate(285deg); }
+        .sun-ray:nth-child(21) { transform: translateX(-50%) rotate(300deg); }
+        .sun-ray:nth-child(22) { transform: translateX(-50%) rotate(315deg); }
+        .sun-ray:nth-child(23) { transform: translateX(-50%) rotate(330deg); }
+        .sun-ray:nth-child(24) { transform: translateX(-50%) rotate(345deg); }
+
+
+        @keyframes sun-ray-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(0.9);
+                box-shadow: 0 0 calc(90px * var(--light-intensity)) calc(40px * var(--light-intensity)) hsla(var(--flare-hue), var(--flare-saturation), 90%, calc(0.95 * var(--light-intensity)));
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                box-shadow: 0 0 calc(160px * var(--light-intensity)) calc(80px * var(--light-intensity)) hsla(var(--flare-hue), var(--flare-saturation), 90%, var(--light-intensity));
+            }
+        }
+
+        @keyframes flicker-flare {
+            from {
+                opacity: calc(0.7 * var(--light-intensity));
+                transform: translate(-50%, -50%) rotate(-5deg) scale(0.95);
+            }
+            to {
+                opacity: var(--light-intensity);
+                transform: translate(-50%, -50%) rotate(5deg) scale(1.05);
+            }
+        }
+
+        /* Hands Layer Style */
+        #hands {
+            opacity: 0;
+            z-index: 3; /* Relative to parent */
+            pointer-events: none;
+            transition: opacity 0.2s ease-in-out; 
+        }
+        
+        #tie {
+            opacity: 0;
+            z-index: 5; /* Above contact card */
+            pointer-events: none;
+            transform-origin: 50% 10%;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        #wall.raised ~ #character-container #man {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        #wall.raised ~ #character-container #hands,
+        #wall.raised ~ #character-container #tie,
+        #wall.raised ~ #character-container #contact-card {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+
+        /* --- Styles for Falling Men --- */
+        #falling-men-container {
+            z-index: 20;
+            perspective: 1000px;
+            pointer-events: none;
+        }
+
+        .falling-man {
+            position: absolute;
+            top: -50%; /* Start further above screen */
+            transform-style: preserve-3d;
+            animation: fall linear forwards;
+            pointer-events: auto;
+            cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='shadow'%3E%3CfeDropShadow dx='1' dy='1' stdDeviation='1' flood-color='%23000' flood-opacity='0.7'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23shadow)'%3E%3Cpath d='M 16 2 L 16 13 M 16 19 L 16 30 M 2 16 L 13 16 M 19 16 L 30 16' stroke='white' stroke-width='2' fill='none'/%3E%3C/g%3E%3C/svg%3E") 16 16, crosshair;
+        }
+
+        .falling-man-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spin linear infinite;
+        }
+
+        .falling-man-inner img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .falling-man-back {
+            transform: rotateY(180deg);
+        }
+
+        @keyframes fall {
+            to {
+                top: 120%; /* Fall below screen */
+            }
+        }
+
+        @keyframes spin {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+        
+        /* --- Mobile Responsive Styles --- */
+        @media (max-width: 800px) {
+            body {
+                padding: 1rem 0;
+            }
+
+            #art-container {
+                width: 95vw;
+                height: calc(95vw * (720 / 1020)); /* Maintain aspect ratio */
+                min-height: 400px; /* Ensure it's not too small on tall devices */
+                margin: auto;
+                border-width: 8px;
+            }
+            
+            #text-overlay {
+                font-size: 2rem;
+            }
+
+            .sub-headline {
+                font-size: 0.9rem;
+            }
+            
+            #wall {
+                width: 350%;
+            }
+
+            #wall-header {
+                font-size: 2.5rem;
+            }
+
+            #wall.raised ~ #wall-header {
+                top: calc(18% - 60px);
+            }
+
+            #wall-text-overlay {
+                font-size: 1.8rem;
+            }
+
+            #wall-toggle-btn {
+                top: calc(52% - 3.5cm); /* Keep original mobile position */
+            }
+            
+            .apple-img {
+                transform: scaleX(1.8); /* Revert to original size on mobile */
+            }
+            
+            .social-canvas {
+                width: 120px;
+                height: 120px;
+            }
+
+            #wall.raised ~ #social-links-container .social-canvas {
+                top: calc(80% - 0.5cm);
+            }
+            
+            #github-canvas { left: calc(20% - 0.5cm); }
+            #linkedin-canvas { left: calc(80% + 0.5cm); }
+
+            /* Adjust the main pendulum pivot for a better feel on portrait screens */
+            #character-container {
+                transform-origin: 50% 150%;
+            }
+
+            /* Fix character squashing on tall/narrow screens */
+            #man, #hands, #head, #hat, #eat {
+                object-fit: cover;
+                object-position: bottom;
+            }
+
+            .contact-header {
+                font-size: 1.5rem;
+                margin-bottom: 1.2rem;
+            }
+            .contact-detail {
+                font-size: 1rem;
+            }
+            .contact-content {
+                top: calc(16% + 1cm);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="art-container">
+        <img id="bg" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fbg.png?alt=media&token=f527f9b1-3bc4-48e9-9af2-e7d6f42e72c0" alt="רקע" class="layer">
+        
+        <div id="falling-men-container" class="layer"></div>
+
+        <div id="text-overlay" class="layer">
+            <div>
+                <span>OREN<br>GAMCHI</span>
+                <span class="sub-headline" id="sub-headline">TECHNICAL<br>ARTIST</span>
+            </div>
+        </div>
+
+        <img id="wall" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fwall%20%20move.png?alt=media&token=bbc568bc-b380-4c47-91fd-f987916e101e" alt="קיר" class="layer" style="z-index: 50; pointer-events: none; top: calc(68% + 1cm);">
+
+        <div id="wall-header" class="layer">
+            <span id="wall-header-text" data-text="DAFkaze">DAFkaze</span>
+        </div>
+
+        <div id="wall-text-overlay" class="layer">
+            <span>VISIT<br>MY<br>SITES</span>
+        </div>
+        
+        <div id="character-container" class="layer">
+            <div id="lamp-fx" class="layer">
+                <div id="sun-effect-container">
+                    <div id="sun-core"></div>
+                    <div id="sun-rays">
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                    </div>
+                </div>
+            </div>
+            <img id="man" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman.png?alt=media&token=8da1ff64-f319-49fa-91de-28ec3d5f4976" alt="איש" class="layer">
+            <img id="hands" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fhands.png?alt=media&token=61201388-702e-4999-86b3-771149f433bd" alt="ידיים" class="layer">
+            <div id="contact-card" class="layer">
+                <div class="contact-content">
+                    <h2 class="contact-header">GET IN TOUCH</h2>
+                    <p class="contact-detail">052-303-4888</p>
+                    <p class="contact-detail">DAFKAZE.COM</p>
+                    <p class="contact-detail">ORENREDE@GMAIL.COM</p>
+                    <div class="mt-8 flex justify-center space-x-6">
+                        <a href="https://www.facebook.com/orengamchi" target="_blank" class="text-gray-600 hover:text-gray-800 transition-colors">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                        </a>
+                        <a href="https://github.com/orengamchi" target="_blank" class="text-gray-600 hover:text-gray-800 transition-colors">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.942.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+                        </a>
+                        <a href="https://www.artstation.com/dafka" target="_blank" class="text-gray-600 hover:text-gray-800 transition-colors">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.22 10.37L12 15.35l-2.22-4.98H5l7 12 7-12h-4.78zM12 2L2 10h5l5-8 5 8h5L12 2z"/></svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/oren-gamchi/" target="_blank" class="text-gray-600 hover:text-gray-800 transition-colors">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <img id="tie" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Ftie.png?alt=media&token=c9d88174-b999-42f8-8fd6-afeb06500d3f" alt="עניבה" class="layer">
+
+            <div id="head-container" class="layer">
+                <img id="head" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fhead.png?alt=media&token=b2516d34-8a4d-4b6f-87fe-0540de7260bb" alt="ראש" class="layer">
+                <img id="hat" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fhat.png?alt=media&token=d71697e7-7ef1-478d-9cd9-8679d75e3bad" alt="כובע" class="layer" style="pointer-events: none;">
+                <img id="eat" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Feat.png?alt=media&token=4b5bcb6b-2487-4b1c-b0f2-fae65eb72b97" alt="eat" class="layer">
+            </div>
+        </div>
+        
+        <div id="particle-container" class="layer" style="z-index: 90; pointer-events: none;"></div>
+        
+        <div id="apple-container" class="layer" style="z-index: 100; pointer-events: none;">
+            <img id="apple" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fapple.png?alt=media&token=85c0edb4-5d11-43fd-8ceb-88731253a828" alt="תפוח" class="apple-img">
+            <img id="apple-red" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fapple%20red.png?alt=media&token=f4000d4b-51c1-4650-a8f5-0e5b563d64a3" alt="תפוח אדום" class="apple-img">
+        </div>
+        
+        <button id="wall-toggle-btn" class="layer"></button>
+        <div id="social-links-container" class="layer">
+             <canvas id="github-canvas" class="social-canvas"></canvas>
+             <canvas id="linkedin-canvas" class="social-canvas"></canvas>
+        </div>
+
+    </div>
+    
+    <div id="permission-request">
+        <button id="permission-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-indigo-700 transition-colors text-base">
+            הפעל חיישני תנועה
+        </button>
+    </div>
+
+    <script type="module">
+        // --- Elements ---
+        const artContainer = document.getElementById('art-container');
+        const characterContainer = document.getElementById('character-container');
+        const man = document.getElementById('man');
+        const hands = document.getElementById('hands');
+        const tie = document.getElementById('tie');
+        const headContainer = document.getElementById('head-container');
+        const lampFx = document.getElementById('lamp-fx');
+        const textOverlay = document.getElementById('text-overlay');
+        const subHeadline = document.getElementById('sub-headline');
+        const head = document.getElementById('head');
+        const hat = document.getElementById('hat');
+        const eat = document.getElementById('eat');
+        const appleContainer = document.getElementById('apple-container');
+        const apple = document.getElementById('apple');
+        const bg = document.getElementById('bg');
+        const particleContainer = document.getElementById('particle-container');
+        const wall = document.getElementById('wall');
+        const wallToggleBtn = document.getElementById('wall-toggle-btn');
+        const wallTextOverlay = document.getElementById('wall-text-overlay');
+        const wallHeaderText = document.getElementById('wall-header-text');
+        const fallingMenContainer = document.getElementById('falling-men-container');
+        const socialLinksContainer = document.getElementById('social-links-container');
+
+        // --- Preload Images ---
+        const imageUrls = [
+            'https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman%20front.png?alt=media&token=a8697195-2c8c-4235-961d-72124578b9e6',
+            'https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman%20back.png?alt=media&token=37b406ff-353e-4f8e-9de1-90460c1bb841'
+        ];
+        
+        // --- Pendulum Physics Logic ---
+        let isDraggingMan = false, angle = 0, velocity = 0, targetAngle = 0;
+        let angleHistory = []; // For delayed movement
+        const spring = 0.005, damping = 0.985;
+        let pivotX, pivotY;
+
+        // --- Head & Tie Physics Logic (for secondary motion) ---
+        let headAngle = 0, headVelocity = 0;
+        const headSpring = 0.025;
+        const headDamping = 0.96;
+        let tieAngle = 0, tieVelocity = 0;
+        const tieSpring = 0.03;
+        const tieDamping = 0.95;
+        
+        
+        // --- 3D Social Buttons ---
+        const socialLinks = [
+            { canvasId: 'github-canvas', texture: 'https://i.imgur.com/039Vw2p.png', url: 'https://studio--portfolioflow-8qrng.us-central1.hosted.app/' },
+            { canvasId: 'linkedin-canvas', texture: 'https://i.imgur.com/4l3A4YF.png', url: 'https://studio--portfolioflow-8qrng.us-central1.hosted.app/about' }
+        ];
+        const spheres = [];
+
+
+        // --- Particle Effect Logic ---
+        let particleIntervalId = null;
+
+        function createBiteEffect() {
+            const numParticles = 10 + Math.floor(Math.random() * 10); // 10 to 19 particles
+            const isMobile = window.innerWidth <= 800;
+            const topOffset = isMobile ? '3.5cm' : '6.5cm';
+
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particleContainer.appendChild(particle);
+
+                // Position particles exactly behind the apple (using the button's position as a reference)
+                const randomOffsetX = (Math.random() - 0.5) * 40; // pixel random offset
+                const randomOffsetY = (Math.random() - 0.5) * 40; // pixel random offset
+
+                particle.style.left = `calc(50% + ${randomOffsetX}px)`;
+                particle.style.top = `calc(52% - ${topOffset} + ${randomOffsetY}px)`;
+
+
+                // Random direction and distance
+                const p_angle = Math.random() * Math.PI * 2;
+                const distance = 50 + Math.random() * 50; // pixels
+                const endX = Math.cos(p_angle) * distance;
+                const endY = Math.sin(p_angle) * distance;
+                
+                particle.style.setProperty('--x', `${endX}px`);
+                particle.style.setProperty('--y', `${endY}px`);
+
+                // Random duration
+                const duration = 0.5 + Math.random() * 0.5; // 0.5 to 1.0 seconds
+                particle.style.animation = `fly-out ${duration}s ease-out forwards`;
+
+                setTimeout(() => {
+                    particle.remove();
+                }, duration * 1000);
+            }
+        }
+
+
+        function updatePivot() {
+            const containerRect = artContainer.getBoundingClientRect();
+            const isMobile = window.innerWidth <= 800;
+            const pivotYMultiplier = isMobile ? 1.5 : 1.8; // Lower pivot for mobile
+            pivotX = containerRect.left + containerRect.width / 2;
+            pivotY = containerRect.top + containerRect.height * pivotYMultiplier;
+        }
+
+        function manDragStart(e) {
+             // Prevent drag from starting on a link
+             if (e.target.closest('a')) {
+                return;
+            }
+
+            // Allow drag if starting on man, head, hands, or the contact form area
+            if(['man', 'head', 'hands'].includes(e.target.id)) {
+                isDraggingMan = true;
+                const cursorTarget = hands.style.opacity === '1' ? hands : man;
+                if(cursorTarget) {
+                    cursorTarget.style.cursor = 'grabbing';
+                    head.style.cursor = 'grabbing';
+                }
+                velocity = 0;
+            }
+        }
+
+        function manDrag(e) {
+            if (!isDraggingMan) return;
+            e.preventDefault();
+            const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type.startsWith('touch') ? e.touches[0].clientY : e.clientY;
+            let newAngle = Math.atan2((clientX - pivotX) * 0.6, -(clientY - pivotY));
+
+            // Clamp the angle symmetrically for both sides
+            const maxAngle = 0.349; // Approx 20 degrees
+            if (newAngle > maxAngle) {
+                newAngle = maxAngle;
+            } else if (newAngle < -maxAngle) {
+                newAngle = -maxAngle;
+            }
+            angle = newAngle;
+        }
+
+        function manDragEnd() {
+            if (isDraggingMan) {
+                isDraggingMan = false;
+                man.style.cursor = 'grab';
+                head.style.cursor = 'grab';
+                hands.style.cursor = 'grab';
+            }
+        }
+
+        // --- Device Orientation (Gyroscope) Logic ---
+        function handleOrientation(event) {
+            const gamma = event.gamma || 0;
+            const clampedGamma = Math.max(-60, Math.min(60, gamma));
+            targetAngle = (clampedGamma / 60) * 0.1745; // Map tilt to angle (max 20 deg), sensitivity halved
+        }
+
+        function requestMotionPermission() {
+            if (typeof DeviceMotionEvent?.requestPermission === 'function') {
+                DeviceMotionEvent.requestPermission().then(state => {
+                    if (state === 'granted') {
+                        window.addEventListener('deviceorientation', handleOrientation);
+                        document.getElementById('permission-request').style.display = 'none';
+                    }
+                }).catch(console.error);
+            } else {
+                // For non-iOS devices
+                window.addEventListener('deviceorientation', handleOrientation);
+            }
+        }
+
+        // Check if permission is needed (for iOS 13+)
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream && typeof DeviceMotionEvent?.requestPermission === 'function') {
+             document.getElementById('permission-request').style.display = 'block';
+             document.getElementById('permission-btn').addEventListener('click', requestMotionPermission);
+        } else {
+            window.addEventListener('deviceorientation', handleOrientation);
+        }
+
+        // --- Falling Men Logic (Optimized with Object Pooling) ---
+        const DESKTOP_POOL_SIZE = 25;
+        const MOBILE_POOL_SIZE = 10;
+        const fallingManPool = [];
+        let masterFrontImg, masterBackImg;
+
+        function initFallingManFeature() {
+            // Preload images for the pool
+            const frontImgPromise = new Promise(resolve => {
+                masterFrontImg = new Image();
+                masterFrontImg.onload = resolve;
+                masterFrontImg.src = 'https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman%20front.png?alt=media&token=a8697195-2c8c-4235-961d-72124578b9e6';
+            });
+            const backImgPromise = new Promise(resolve => {
+                masterBackImg = new Image();
+                masterBackImg.onload = resolve;
+                masterBackImg.className = 'falling-man-back';
+                masterBackImg.src = 'https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman%20back.png?alt=media&token=37b406ff-353e-4f8e-9de1-90460c1bb841';
+            });
+
+            // After images are loaded, create the object pool
+            Promise.all([frontImgPromise, backImgPromise]).then(() => {
+                const isMobile = window.innerWidth <= 800;
+                const poolSize = isMobile ? MOBILE_POOL_SIZE : DESKTOP_POOL_SIZE;
+
+                for (let i = 0; i < poolSize; i++) {
+                    const manContainer = document.createElement('div');
+                    manContainer.className = 'falling-man';
+                    manContainer.style.visibility = 'hidden';
+
+                    const innerSpinner = document.createElement('div');
+                    innerSpinner.className = 'falling-man-inner';
+
+                    const frontImg = masterFrontImg.cloneNode(true);
+                    const backImg = masterBackImg.cloneNode(true);
+
+                    innerSpinner.append(frontImg, backImg);
+                    manContainer.appendChild(innerSpinner);
+
+                    manContainer.addEventListener('animationend', () => {
+                        manContainer.style.visibility = 'hidden';
+                        // Remove animation to allow it to be reset
+                        manContainer.style.animation = 'none'; 
+                        fallingManPool.push(manContainer);
+                    }, {passive: true});
+
+                    fallingMenContainer.appendChild(manContainer);
+                    fallingManPool.push(manContainer);
+                }
+
+                startSpawningMen();
+            });
+        }
+
+        function spawnFallingMan(isBackground = false) {
+            if (fallingManPool.length === 0) return; // Wait for an object to become available
+
+            const manContainer = fallingManPool.pop();
+            const innerSpinner = manContainer.querySelector('.falling-man-inner');
+
+            // --- Set random properties ---
+            manContainer.style.zIndex = isBackground ? '15' : '25';
+
+            const size = (isBackground ? 3 + Math.random() * 4 : 6 + Math.random() * 7) * 1.3;
+            const aspectRatio = 288 / 757;
+            manContainer.style.width = `${size}%`;
+            manContainer.style.height = `calc(${size}% / ${aspectRatio})`;
+            manContainer.style.left = `${Math.random() * 95}%`;
+            manContainer.style.opacity = isBackground ? 0.7 : 1.0;
+
+            let fallDuration;
+            const baseSpeed = isBackground ? 20 : 10;
+            const randomSpeed = isBackground ? 15 : 10;
+            if (Math.random() < 0.3 && !isBackground) {
+                fallDuration = 5 + Math.random() * 5;
+            } else {
+                fallDuration = baseSpeed + Math.random() * randomSpeed;
+            }
+            
+            const spinDuration = 2 + Math.random() * 6;
+
+            // --- Trigger animations ---
+            // Force a reflow to restart the animation if it was already applied
+            void manContainer.offsetWidth; 
+            
+            manContainer.style.animation = `fall ${fallDuration}s linear forwards`;
+            innerSpinner.style.animation = `spin ${spinDuration}s linear infinite`;
+            manContainer.style.visibility = 'visible';
+        }
+
+        function startSpawningMen() {
+            const isMobile = window.innerWidth <= 800;
+
+            // Foreground Spawner
+            (function spawnLoopFG() {
+                spawnFallingMan(false);
+                const delay = isMobile ? (Math.random() * 3000 + 1500) : (Math.random() * 1500 + 500);
+                setTimeout(spawnLoopFG, delay);
+            })();
+
+            // Background Spawner
+            (function spawnLoopBG() {
+                spawnFallingMan(true);
+                const delay = isMobile ? (Math.random() * 5000 + 2500) : (Math.random() * 3000 + 1000);
+                setTimeout(spawnLoopBG, delay);
+            })();
+        }
+        
+        function init3DButtons() {
+            socialLinks.forEach(link => {
+                const canvas = document.getElementById(link.canvasId);
+                if (!canvas) return;
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
+                camera.position.z = 2.6;
+
+                const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+                renderer.setClearColor(0x000000, 0); 
+                
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+                scene.add(ambientLight);
+                const pointLight = new THREE.PointLight(0xffffff, 0.7);
+                pointLight.position.set(2, 5, 5);
+                scene.add(pointLight);
+
+                const textureLoader = new THREE.TextureLoader();
+                textureLoader.setCrossOrigin("anonymous");
+                const texture = textureLoader.load(link.texture);
+                
+                const geometry = new THREE.SphereGeometry(1.6, 32, 32);
+                const material = new THREE.MeshStandardMaterial({
+                       map: texture,
+                       metalness: 0.2,
+                       roughness: 0.8
+                });
+                const sphere = new THREE.Mesh(geometry, material);
+                scene.add(sphere);
+
+                const raycaster = new THREE.Raycaster();
+                const mouse = new THREE.Vector2();
+
+                canvas.addEventListener('click', (event) => {
+                    const rect = canvas.getBoundingClientRect();
+                    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                    raycaster.setFromCamera(mouse, camera);
+                    const intersects = raycaster.intersectObjects(scene.children);
+                    if (intersects.length > 0) {
+                        window.open(link.url, '_blank');
+                    }
+                });
+                
+                canvas.addEventListener('mousemove', (event) => {
+                    const rect = canvas.getBoundingClientRect();
+                    const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                    const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                    sphere.rotation.y = x * 0.5;
+                    sphere.rotation.x = -y * 0.5;
+                });
+
+                spheres.push({ scene, camera, renderer, sphere });
+            });
+        }
+
+        // --- Main Animation Loop ---
+        function animate() {
+            requestAnimationFrame(animate);
+            if (!isDraggingMan) {
+                const force = -spring * (angle - targetAngle);
+                velocity += force;
+                velocity *= damping;
+                angle += velocity;
+            }
+
+            const headForce = -headSpring * (headAngle - angle);
+            headVelocity += headForce;
+            headVelocity *= headDamping;
+            headAngle += headVelocity;
+            
+            const tieForce = -tieSpring * (tieAngle - angle);
+            tieVelocity += tieForce;
+            tieVelocity *= tieDamping;
+            tieAngle += tieVelocity;
+
+            const isAtRest = Math.abs(velocity) < 0.0005 && Math.abs(angle - targetAngle) < 0.01;
+
+            // --- Lamp Intensity & Color Logic ---
+            if (isAtRest) {
+                // At rest, hide the rays
+                lampFx.style.setProperty('--sparkle-intensity', '0');
+
+            } else {
+                // When moving, show rays and use dynamic intensity
+                const intensityMultiplier = 20;
+                let baseIntensity = 1 - Math.min(1, Math.abs(velocity) * intensityMultiplier);
+                baseIntensity = Math.max(0.2, baseIntensity);
+
+                const tension = Math.min(1.0, Math.abs(angle) / 0.7);
+                const spike = baseIntensity * tension * 3.0;
+                let finalIntensity = Math.min(4.0, baseIntensity + spike);
+
+                lampFx.style.setProperty('--light-intensity', finalIntensity);
+                lampFx.style.setProperty('--sparkle-intensity', '1'); // Show rays when moving
+
+                const flareSaturation = 70 + (finalIntensity / 4) * 30; 
+                lampFx.style.setProperty('--flare-hue', '55');
+                lampFx.style.setProperty('--flare-saturation', `${flareSaturation}%`);
+            }
+
+
+            angleHistory.push(angle);
+            if (angleHistory.length > 25) { 
+                angleHistory.shift();
+            }
+            const delayedAngle = angleHistory[0] || 0;
+
+            const rotationStyle = `rotate(${angle * (180 / Math.PI)}deg)`;
+            const textRotationStyle = `rotate(${-angle * (180 / Math.PI)}deg)`;
+            
+            const wobbleAngle = headAngle - angle;
+            const tieWobbleAngle = tieAngle - angle;
+            const wobbleRotationStyle = `rotate(${wobbleAngle * (180 / Math.PI) * 2.5}deg)`;
+
+            const isMobile = window.innerWidth <= 800;
+            const tieScale = isMobile ? ' scaleX(1.2)' : '';
+            const tieWobbleRotationStyle = `rotate(${tieWobbleAngle * (180 / Math.PI) * 2.5}deg)${tieScale}`;
+
+            const subHeadlineRelativeRotation = (angle - delayedAngle) * (180 / Math.PI);
+            const subHeadlineRotationStyle = `rotate(${subHeadlineRelativeRotation}deg)`;
+
+            characterContainer.style.transform = rotationStyle;
+            headContainer.style.transform = wobbleRotationStyle; // The entire head unit now wobbles together
+            tie.style.transform = tieWobbleRotationStyle;
+            textOverlay.style.transform = textRotationStyle;
+            wallTextOverlay.style.transform = textRotationStyle;
+            subHeadline.style.transform = subHeadlineRotationStyle;
+
+            // --- Parallax Effect ---
+            const parallaxFactorBg = 80;
+            const parallaxFactorWall = 160;
+            const bgTranslateX = -angle * parallaxFactorBg;
+            const wallTranslateX = -angle * parallaxFactorWall;
+
+            bg.style.transform = `translateX(calc(-50% + ${bgTranslateX}px)) scale(1.3)`;
+            wall.style.transform = `translateX(calc(-50% + ${wallTranslateX}px)) scale(1.15)`;
+
+            // --- "EAT" Blinking, Apple Pulse & Particle Logic ---
+            if (isAtRest) {
+                eat.classList.add('is-blinking');
+                appleContainer.classList.add('is-pulsing');
+                appleContainer.classList.add('clickable'); // Make apple clickable
+                if (!particleIntervalId) {
+                    createBiteEffect(); 
+                    particleIntervalId = setInterval(createBiteEffect, 600);
+                }
+            } else {
+                eat.classList.remove('is-blinking');
+                appleContainer.classList.remove('is-pulsing');
+                appleContainer.classList.remove('clickable'); // Make apple not clickable
+                if (particleIntervalId) {
+                    clearInterval(particleIntervalId);
+                    particleIntervalId = null;
+                }
+            }
+            
+             // Render 3D spheres
+            spheres.forEach(s => {
+                s.renderer.render(s.scene, s.camera);
+            });
+        }
+        
+        // --- Event Listeners & Initialization ---
+        window.addEventListener('load', () => {
+            textOverlay.style.opacity = 1;
+            setTimeout(() => {
+                initFallingManFeature();
+            }, 5000); 
+            init3DButtons();
+            updatePivot();
+            animate();
+        });
+        
+        window.addEventListener('resize', updatePivot);
+        
+        artContainer.addEventListener('mousedown', manDragStart);
+        artContainer.addEventListener('touchstart', manDragStart, { passive: false });
+
+        document.addEventListener('mousemove', manDrag);
+        document.addEventListener('touchmove', manDrag, { passive: false });
+        document.addEventListener('mouseup', manDragEnd);
+        document.addEventListener('touchend', manDragEnd);
+
+        appleContainer.addEventListener('click', () => {
+            if (!appleContainer.classList.contains('clickable')) return;
+            
+            wall.classList.toggle('raised'); 
+            socialLinksContainer.classList.toggle('visible');
+
+            // Trigger a bigger particle burst
+            createBiteEffect();
+            setTimeout(createBiteEffect, 50);
+
+            // Temporarily hide the apple with a "poof" effect
+            appleContainer.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
+            appleContainer.style.opacity = '0';
+            appleContainer.style.transform = 'scale(1.3)';
+            appleContainer.classList.remove('is-pulsing', 'clickable'); // Prevent further interaction
+
+            // Stop the automatic particle creation
+            if (particleIntervalId) {
+                clearInterval(particleIntervalId);
+                particleIntervalId = null;
+            }
+
+            // Bring the apple back after a moment
+            setTimeout(() => {
+                appleContainer.style.transition = 'transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.3s ease-in';
+                appleContainer.style.opacity = '1';
+                appleContainer.style.transform = 'scale(1)';
+            }, 800);
+        });
+
+        wallToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent click from reaching the man
+            wall.classList.toggle('raised');
+            socialLinksContainer.classList.toggle('visible');
+
+
+            // Mobile-only red apple blink effect on click
+            const isMobile = window.innerWidth <= 800;
+            if (isMobile) {
+                if (appleContainer.dataset.blinkTimeout) {
+                    clearTimeout(parseInt(appleContainer.dataset.blinkTimeout));
+                }
+                appleContainer.classList.add('flicker-red');
+                const timeoutId = setTimeout(() => {
+                    appleContainer.classList.remove('flicker-red');
+                    delete appleContainer.dataset.blinkTimeout;
+                }, 3000);
+                appleContainer.dataset.blinkTimeout = timeoutId;
+            }
+        });
+
+        wallToggleBtn.addEventListener('mouseover', () => {
+            const isMobile = window.innerWidth <= 800;
+            if (!isMobile) {
+                 appleContainer.classList.add('flicker-red');
+            }
+        });
+
+        wallToggleBtn.addEventListener('mouseout', () => {
+            const isMobile = window.innerWidth <= 800;
+            if (!isMobile) {
+                appleContainer.classList.remove('flicker-red');
+            }
+        });
+
+        function triggerGlitch() {
+            wallHeaderText.classList.add('glitching');
+
+            // Remove the class after a short duration
+            setTimeout(() => {
+                wallHeaderText.classList.remove('glitching');
+            }, 500); // Duration of the glitch effect
+
+            // Schedule the next glitch at a random interval
+            const randomDelay = Math.random() * 4000 + 2000; // between 2 and 6 seconds
+            setTimeout(triggerGlitch, randomDelay);
+        }
+
+        // Initial call to start the glitching loop
+        setTimeout(triggerGlitch, 3000); // Start after 3 seconds
+    </script>
+</body>
+</html>
+
