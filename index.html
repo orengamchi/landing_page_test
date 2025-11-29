@@ -3,786 +3,1575 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oren Gamchi - Vibe Coding Master Kit</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Orbitron:wght@500;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Tailwind (for utilities) -->
+    <title>בן האנוש - אינטראקטיבי</title>
+    <!-- Preload critical images -->
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fapple.png?alt=media&token=85c0edb4-5d11-43fd-8ceb-88731253a828" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fapple%20red.png?alt=media&token=f4000d4b-51c1-4650-a8f5-0e5b563d64a3" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fbg.png?alt=media&token=f527f9b1-3bc4-48e9-9af2-e7d6f42e72c0" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman.png?alt=media&token=8da1ff64-f319-49fa-91de-28ec3d5f4976" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fhands.png?alt=media&token=61201388-702e-4999-86b3-771149f433bd" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fwall%20%20move.png?alt=media&token=bbc568bc-b380-4c47-91fd-f987916e101e" as="image">
+    <link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Ftie.png?alt=media&token=c9d88174-b999-42f8-8fd6-afeb06500d3f" as="image">
+
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap" rel="stylesheet">
+    <!-- Added new font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* --- Vibe Coding Theme Variables --- */
-        :root {
-            --bg-dark: #0a0a0a;
-            --card-bg: rgba(20, 20, 25, 0.85);
-            --text-primary: #e2e8f0;
-            --text-secondary: #94a3b8;
-            --accent-primary: #6366f1;    /* Indigo (Pivot, Code) */
-            --accent-secondary: #10b981; /* Emerald (Success, Live) */
-            --accent-highlight: #f43f5e; /* Rose (Legacy, Danger) */
-            --accent-warning: #f59e0b;    /* Amber (Warning) */
-            --border-color: rgba(255, 255, 255, 0.1);
-            --font-mono: 'Fira Code', monospace;
-            --font-sans: 'Assistant', sans-serif;
-            --font-display: 'Orbitron', sans-serif;
-            
-            /* Consistency Mappings */
-            --success: var(--accent-secondary); 
-            --danger: #ef4444; 
-        }
-
-        * { box-sizing: border-box; }
-
         body {
-            font-family: var(--font-sans);
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
+            font-family: 'Assistant', sans-serif;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            /* Center the art container */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
             margin: 0;
-            padding: 40px 20px;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* --- Animated Background --- */
-        .bg-grid {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            animation: grid-pan 20s linear infinite;
-        }
-        @keyframes grid-pan { 0% { transform: translateY(0); } 100% { transform: translateY(40px); } }
-
-        .bg-glow {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 80vw; height: 80vh;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 60%);
-            z-index: -2; pointer-events: none;
-        }
-
-        .container { max-width: 950px; margin: 0 auto; }
-
-        /* --- Header --- */
-        header { text-align: center; margin-bottom: 60px; }
-        h1 { 
-            font-family: var(--font-display); 
-            font-size: 3rem; 
-            margin-bottom: 10px; 
-            letter-spacing: 2px;
-            background: linear-gradient(to right, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-color: #f1f5f9; /* bg-slate-100 */
         }
         
-        .typewriter {
-            font-family: var(--font-mono);
-            color: var(--success);
-            font-size: 1.1rem;
-            border-left: 2px solid var(--success);
-            white-space: nowrap;
+        #art-container {
+            position: relative;
+            width: 1326px; /* Increased by 30% */
+            height: 936px; /* Increased by 30% */
+            margin: 2rem;
             overflow: hidden;
-            display: inline-block;
-            animation: typing 3.5s steps(40, end), blink .75s step-end infinite;
-            padding-left: 10px;
-        }
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--success); } }
-
-        /* --- Glass Cards --- */
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 0;
-            margin-bottom: 50px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            transition: 0.3s ease;
-        }
-        .card:hover { 
-            transform: translateY(-5px); 
-            border-color: rgba(99, 102, 241, 0.4);
-            box-shadow: 0 15px 50px rgba(99, 102, 241, 0.15);
+            background-color: #f0f0f0;
+            touch-action: none;
+            border: 12px solid #2c3e50;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0,0,0,0.2);
         }
 
-        .card-header {
-            padding: 20px 30px;
-            border-bottom: 1px solid var(--border-color);
-            background: rgba(255,255,255,0.02);
-            display: flex; justify-content: space-between; align-items: center;
+        #bg {
+            object-fit: cover;
+            width: 300%; /* Make wider for parallax */
+            left: 50%; /* Center the element */
+            transform: translateX(-50%); /* Center the element */
         }
 
-        .card-title {
-            font-family: var(--font-mono);
-            font-weight: 700; font-size: 1.2rem; color: #fff;
-            display: flex; align-items: center; gap: 10px;
-        }
-        
-        .card-body { padding: 30px; }
-
-        /* --- Tags --- */
-        .tag {
-            font-family: var(--font-mono); font-size: 0.7rem; padding: 5px 12px; border-radius: 4px;
-            text-transform: uppercase; border: 1px solid transparent; letter-spacing: 1px;
-        }
-        .tag-code { background: rgba(99, 102, 241, 0.15); color: #818cf8; border-color: #818cf8; }
-        .tag-live { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: #34d399; }
-        .tag-alert { background: rgba(244, 63, 94, 0.15); color: #fb7185; border-color: #fb7185; }
-        .tag-thanks { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: #fbbf24; }
-
-        /* --- Profile --- */
-        .profile-flex { display: flex; gap: 30px; align-items: center; }
-        .profile-img-box {
-            width: 130px; height: 130px; border-radius: 50%; position: relative;
-            padding: 4px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        }
-        .profile-img-box img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid var(--bg-dark); }
-        .profile-status {
-            position: absolute; bottom: 5px; right: 5px; width: 24px; height: 24px;
-            background: var(--accent-secondary); border: 4px solid var(--bg-dark); border-radius: 50%;
-            box-shadow: 0 0 15px var(--accent-secondary);
-        }
-        
-        .role-badge {
-            display: inline-block; background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 50px;
-            font-family: var(--font-mono); font-size: 0.75rem; border: 1px solid var(--border-color); margin-bottom: 10px;
-            color: var(--accent-secondary);
-        }
-        
-        .tech-stack { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
-        .tech-pill { 
-            font-family: var(--font-mono); font-size: 0.75rem; background: rgba(255,255,255,0.05); 
-            padding: 5px 12px; border-radius: 4px; color: var(--text-secondary); border: 1px solid var(--border-color);
-            transition: 0.2s;
-        }
-        .tech-pill:hover { border-color: var(--accent-primary); color: #fff; box-shadow: 0 0 10px rgba(99, 102, 241, 0.3); }
-
-        /* --- Terminal / Text Content --- */
-        .terminal {
-            background: #0d0d0d; border-radius: 8px; overflow: hidden; margin-bottom: 25px;
-            border: 1px solid #333; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-        }
-        .terminal-bar {
-            background: #1a1a1a; padding: 8px 15px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #333;
-        }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
-        .terminal-title { margin-left: 10px; font-family: var(--font-mono); font-size: 0.75rem; color: #666; }
-        
-        .terminal-content {
-            padding: 20px; font-family: var(--font-mono); font-size: 0.9rem; color: #d4d4d4; white-space: pre-line; line-height: 1.7;
-        }
-        .hl-kw { color: #c586c0; } .hl-str { color: #ce9178; } .hl-com { color: #6a9955; font-style: italic; }
-
-        /* --- Buttons --- */
-        .action-bar { display: flex; justify-content: flex-end; gap: 15px; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 20px; }
-        .btn {
-            background: transparent; border: 1px solid var(--accent-primary); color: var(--accent-primary);
-            padding: 8px 20px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.85rem; cursor: pointer;
-            transition: 0.2s; display: flex; align-items: center; gap: 8px; text-decoration: none;
-        }
-        .btn:hover { background: var(--accent-primary); color: #fff; box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); }
-        .btn-live { border-color: var(--accent-secondary); color: var(--accent-secondary); }
-        .btn-live:hover { background: var(--accent-secondary); color: #000; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
-
-        /* --- Graphics & Charts --- */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
-        .stat-item { 
-            background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; 
-            border-left: 3px solid var(--accent-primary); transition: 0.3s;
-        }
-        .stat-item.new { border-color: var(--accent-secondary); background: rgba(16, 185, 129, 0.05); }
-        .stat-val { font-size: 1.8rem; font-weight: 900; font-family: var(--font-display); color: #fff; margin: 5px 0; }
-        .stat-lbl { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; }
-
-        .pie-layout { 
-            display: flex; align-items: center; justify-content: space-around; 
-            background: #0f0f11; padding: 30px; border-radius: 16px; border: 1px solid #333;
-        }
-        .pie-visual {
-            width: 140px; height: 140px; border-radius: 50%; flex-shrink: 0;
-            background: conic-gradient(var(--accent-primary) 0% 40%, var(--accent-secondary) 40% 70%, var(--accent-warning) 70% 90%, var(--accent-highlight) 90% 100%);
-            position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.5);
-        }
-        .pie-visual::after {
-            content: "CORE"; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-            width: 90px; height: 90px; background: #0f0f11; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; color: #fff;
-            font-family: var(--font-mono);
-        }
-        .pie-legend li { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); }
-        .l-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-        /* --- Project Gallery --- */
-        .gallery-scroll {
-            display: flex; overflow-x: auto; gap: 20px; padding: 10px 0 25px 0;
-            scrollbar-width: thin; scrollbar-color: var(--accent-primary) transparent;
-        }
-        .gallery-scroll::-webkit-scrollbar { height: 6px; }
-        .gallery-scroll::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 10px; }
-        
-        .gallery-card {
-            min-width: 250px; height: 160px; background: #1a1a1a; border-radius: 12px;
-            position: relative; overflow: hidden; cursor: pointer; border: 1px solid #333; transition: 0.3s;
-        }
-        .gallery-card:hover { transform: scale(1.05); border-color: var(--accent-secondary); box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
-        .g-overlay {
-            position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            display: flex; justify-content: space-between; align-items: flex-end;
-        }
-        .g-title { font-family: var(--font-display); font-size: 0.9rem; color: #fff; }
-        .g-icon { color: var(--accent-secondary); font-size: 1.2rem; }
-
-        /* --- Mobile Mockup (now Full Screen Preview) --- */
-        /* Hiding or flattening the phone elements */
-        .mockup-stage, .phone-frame, .notch { display: none; }
-        
-        /* New Container for Full Screen Effect inside Card */
-        .full-preview-container {
-            width: 100%;
-            height: 600px; /* Fixed height for consistent display within the card */
-            background: #0a0a0a;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative; 
-        }
-        .full-preview-container iframe {
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+        
+        #man, #head, #hands, #tie { cursor: grab; }
+        #man:active, #head:active, #hands:active, #tie:active { cursor: grabbing; }
+
+        #character-container {
+             z-index: 80;
+            transform-origin: 50% 180%; /* Adjusted for landscape */
+            pointer-events: none; /* Events pass through container */
+        }
+
+        #head-container {
+            z-index: 85; /* Above other body parts */
+            pointer-events: none;
+            transform-origin: 50% 115%; /* Pivot from below the chin for an arc swing */
+        }
+        #head { pointer-events: auto; }
+        
+        #man { 
+            z-index: 2; /* Relative to parent */
+            pointer-events: auto; /* Man is draggable */
+            transition: opacity 0.5s ease-in-out; /* Smooth fade for man */
+        }
+        
+        #permission-request {
+            display: none; 
+            position: fixed; 
+            bottom: 20px;
+            left: 50%; 
+            transform: translateX(-50%); 
+            z-index: 2000;
+        }
+
+        #text-overlay {
+            z-index: 30;
+            pointer-events: none; /* Allows clicks to pass through container */
+            display: flex;
+            align-items: center; /* Changed to center */
+            justify-content: center;
+            text-align: center;
+            line-height: 1.1;
+            color: white;
+            font-family: 'Gilda Display', serif; /* New font */
+            font-size: 3.23rem; /* Reduced by 15% */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+            transform-origin: 50% 180%; /* Adjusted for landscape */
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.5s ease-in-out; /* Smooth fade-in */
+        }
+
+        .sub-headline {
+            font-family: 'Assistant', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: 0.1em;
+            margin-top: 0.5rem;
             display: block;
         }
 
-
-        /* --- Social Graphics --- */
-        .graphic-linkedin {
-            background: #050505; padding: 25px; border-radius: 12px; border: 1px solid #333; position: relative; overflow: hidden; direction: ltr;
-        }
-        .li-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 20px 20px; }
-        .li-cols { display: flex; gap: 15px; position: relative; z-index: 1; margin-top: 20px; }
-        .li-col { flex: 1; padding: 15px; border-radius: 8px; text-align: center; }
-        .li-old { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); }
-        .li-new { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); box-shadow: 0 0 20px rgba(16, 185, 129, 0.1); }
-
-        .graphic-facebook {
-            background: linear-gradient(135deg, #2b1055, #7597de); padding: 30px; border-radius: 12px; position: relative; overflow: hidden; min-height: 450px; display: flex; align-items: center; justify-content: center; direction: ltr;
-        }
-        .fb-invoice { background: rgba(255,255,255,0.95); padding: 20px; border-radius: 10px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; z-index: 1; color: #333; }
-        .fb-row { display: flex; justify-content: space-between; margin-bottom: 8px; color: #555; text-decoration: line-through; font-size: 0.85rem; }
-        .canceled-stamp { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%) rotate(-15deg); border: 3px solid #d32f2f; color: #d32f2f; font-weight: 900; font-size: 2rem; padding: 5px 15px; text-transform: uppercase; opacity: 0.8; pointer-events: none; }
-
-        /* Toast */
-        #toast {
-            visibility: hidden; min-width: 200px; background: var(--accent-secondary); color: #000; text-align: center;
-            border-radius: 50px; padding: 12px; position: fixed; z-index: 1000; left: 50%; bottom: 40px;
-            transform: translateX(-50%); font-weight: bold; font-family: var(--font-mono); opacity: 0; transition: 0.3s;
-        }
-        #toast.show { visibility: visible; opacity: 1; bottom: 60px; }
-
-        /* Resignation Letter Style */
-        .resignation-letter {
-            background: #fff; color: #333; padding: 25px; border-radius: 4px;
-            font-family: 'Courier New', monospace; font-size: 0.9rem; margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); position: relative;
-            transform: rotate(-1deg);
-            border-top: 5px solid var(--danger);
-        }
-        .resignation-letter::after {
-            content: 'CONFIDENTIAL'; position: absolute; top: 15px; right: 15px;
-            border: 2px solid #d32f2f; color: #d32f2f; padding: 2px 5px;
-            font-weight: bold; opacity: 0.3; transform: rotate(15deg);
+        @keyframes blink-animation {
+          0%, 49.9% { opacity: 1; }
+          50%, 100% { opacity: 0; }
         }
 
-        /* Footer / Contact Section */
-        .contact-footer {
-            margin-top: 50px;
-            padding: 30px;
-            background: rgba(0,0,0,0.5);
-            border-radius: 16px;
-            text-align: center;
-            border: 1px solid var(--border-color);
+        #eat {
+            opacity: 0;
+            pointer-events: none;
         }
-        .contact-footer h3 {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            color: #fff;
-            margin-bottom: 20px;
+
+        #eat.is-blinking {
+            animation: blink-animation 0.3s infinite;
         }
-        .contact-links a {
-            display: inline-flex; align-items: center; gap: 8px;
-            margin: 0 10px; padding: 8px 15px; border-radius: 6px;
-            background: rgba(255,255,255,0.08); color: var(--text-primary);
-            font-family: var(--font-mono); font-size: 0.9rem; text-decoration: none;
-            transition: 0.2s;
-        }
-        .contact-links a:hover { background: var(--accent-secondary); color: #000; }
-
-
-        @media (max-width: 768px) {
-            .profile-flex, .pie-layout, .stats-grid, .li-cols { flex-direction: column; text-align: center; }
-            .phone-frame { width: 100%; height: 600px; border-width: 4px; }
-            .action-bar { flex-direction: column; }
-            .btn { justify-content: center; width: 100%; }
-            /* Adjusted height for mobile view */
-            .full-preview-container { height: 400px; } 
-        }
-    </style>
-</head>
-<body>
-
-    <div class="bg-grid"></div>
-    <div class="bg-glow"></div>
-
-    <div class="container">
         
-        <header>
-            <h1>CAMPAIGN_MASTER_KIT</h1>
-            <div class="typewriter">Oren Gamchi // Technical Artist // Pivot 2025</div>
-        </header>
+        /* Particle styles */
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #84cc16; /* Apple green */
+            border-radius: 50%;
+            opacity: 0; /* Start invisible */
+        }
 
-        <!-- 1. PROFILE -->
-        <div class="card">
-            <div class="card-body">
-                <div class="profile-flex">
-                    <div class="profile-img-box">
-                         <!-- Using a placeholder image since the original source '1378839...' is local -->
-                         <img src="https://placehold.co/150x150/6366f1/ffffff?text=OG" alt="Oren" onerror="this.src='https://placehold.co/150x150/6366f1/ffffff?text=OG'">
-                         <div class="profile-status"></div>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="role-badge">SYSTEM_STATUS: ONLINE 🟢</div>
-                        <h2 style="margin:0 0 10px 0; font-size:2rem; font-weight:800; font-family:var(--font-display);">אורן גמצ'י</h2>
-                        <div style="color:var(--text-secondary); margin:5px 0; font-family:var(--font-mono); font-size:0.9rem;">
-                            <span style="text-decoration:line-through; opacity:0.5;">Web Designer</span> 
-                            <span style="color:var(--accent-primary);">➜</span> 
-                            <span style="color:var(--accent-secondary);">Technical Artist (AI & Physics)</span>
-                        </div>
-                        <p style="color:#cbd5e1; margin:15px 0;">
-                            בונה מנועי פיזיקה ברכבת התחתית. שובר את הקיר שבין עיצוב לקוד.
-                            <br>יוצר את <strong>DafkaZe.com</strong>
-                        </p>
-                        <div class="tech-stack">
-                            <span class="tech-pill">#ThreeJS</span>
-                            <span class="tech-pill">#AI_Coding</span>
-                            <span class="tech-pill">#WebGL</span>
-                            <span class="tech-pill">#NoCode_Revolution</span>
-                        </div>
-                        
-                        <div class="action-bar">
-                            <a href="https://dafkaze.com" target="_blank" class="btn btn-live"><i class="fa-solid fa-bolt"></i> Live Project</a>
-                            <a href="https://www.linkedin.com/in/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-                            <!-- הוספת לינק לפייסבוק -->
-                            <a href="https://www.facebook.com/orengamchi/" target="_blank" class="btn"><i class="fa-brands fa-facebook-f"></i> Facebook</a> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        .man-particle {
+            background-color: #334155; /* Man's suit color */
+        }
 
-        <!-- 2. ANNUAL REPORT -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title"><i class="fa-solid fa-chart-pie"></i> ANNUAL_REPORT_DATA</div>
-                <span class="tag tag-code">Internal Audit</span>
-            </div>
-            <div class="card-body">
-                <div class="terminal">
-                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">intro.txt</div></div>
-                    <div class="terminal-content">במקום לדבר בסיסמאות, בואו נדבר במספרים. 
-הנה הניתוח האמיתי של המעבר מסטודיו מסורתי למודל AI רזה. הנתונים מראים שינוי דרמטי במבנה העלויות והתפוקה.</div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-lbl">LEGACY COST</div>
-                        <div class="stat-val" style="color:var(--accent-highlight)">HIGH</div>
-                        <div style="font-size:0.8rem; color:#94a3b8; font-family:var(--font-mono);">Adobe, Wix, Manual Labor</div>
-                        <div style="font-size:0.75rem; margin-top:8px; color:#666;"><i class="fa-solid fa-chair"></i> Loc: Office Chair</div>
-                    </div>
-                    <div class="stat-item new" style="border-left-color:var(--accent-secondary); background:rgba(16,185,129,0.05);">
-                        <div class="stat-lbl">NEW COST</div>
-                        <div class="stat-val" style="color:var(--accent-secondary)">ZERO</div>
-                        <div style="font-size:0.8rem; color:#94a3b8; font-family:var(--font-mono);">AI Code, Physics, Interactive</div>
-                        <div style="font-size:0.75rem; margin-top:8px; color:var(--accent-secondary);"><i class="fa-solid fa-train"></i> Loc: Commute</div>
-                    </div>
-                </div>
-
-                <div class="pie-layout">
-                    <div class="pie-visual"></div>
-                    <ul class="pie-legend" style="color:#ccc;">
-                        <li><div class="l-dot" style="background:var(--accent-primary)"></div> 40% Physics Engine</li>
-                        <li><div class="l-dot" style="background:var(--accent-secondary)"></div> 30% Creative Tools</li>
-                        <li><div class="l-dot" style="background:var(--accent-warning)"></div> 20% Satire</li>
-                        <li><div class="l-dot" style="background:var(--accent-highlight)"></div> 10% Sensors</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. LINKEDIN POST -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title"><i class="fa-brands fa-linkedin"></i> POST_01: THE_CUTBACK</div>
-                <span class="tag tag-alert">Business Logic</span>
-            </div>
-            <div class="card-body">
-                
-                <!-- Expanded Resignation Letter (Hebrew) -->
-                <div class="resignation-letter">
-                    <strong>לכבוד:</strong> אורן גמצ'י (הגרסה הישנה)<br>
-                    <strong>מאת:</strong> הדירקטוריון (אני)<br>
-                    <strong>הנדון:</strong> סיום העסקה מיידי - מחלקת עבודת כפיים<br>
-                    <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
-                    <p style="margin-bottom: 5px;">אורן שלום,</p>
-                    <p style="margin-top: 0;">לאחר בחינה מעמיקה של הביצועים והתשואות, הגענו למסקנה שההתעקשות שלך להזיז פיקסלים ידנית ב-Photoshop פוגעת בשורת הרווח ומעכבת את הצמיחה.</p>
-                    <p>החל מהבוקר, תפקידך כ"ביצועיסט" מבוטל. אתה מקודם לתפקיד <strong>"ארכיטקט חזון"</strong>.</p>
-                    <p>נא להשאיר את העכבר בכניסה. מעתה אתה עובד עם המוח.</p>
-                    <br>
-                    בברכה,<br>
-                    האני העתידי שלך.
-                </div>
-                
-                <!-- Replacement Breakdown -->
-                <div style="background:rgba(99,102,241,0.1); border:1px solid var(--accent-primary); padding:15px; border-radius:8px; margin-bottom:20px; font-family:var(--font-mono); font-size:0.85rem; color:#cbd5e1;">
-                    <strong style="color:#fff; display:block; margin-bottom:10px;">AI REPLACES ADOBE SUITE:</strong>
-                    <ul style="list-style:none; padding:0;">
-                        <li style="margin-bottom:5px;"><span style="color:var(--accent-highlight)">[DEL]</span> Photoshop ➔ <span style="color:var(--accent-secondary)">Midjourney / Flux</span> ("למה לצרוב כשאפשר לברוא?")</li>
-                        <li style="margin-bottom:5px;"><span style="color:var(--accent-highlight)">[DEL]</span> After Effects ➔ <span style="color:var(--accent-secondary)">Runway Gen-2</span> ("קיפריימים זה לפועלים.")</li>
-                        <li><span style="color:var(--accent-highlight)">[DEL]</span> Premiere ➔ <span style="color:var(--accent-secondary)">AI Auto-Edit</span> ("הסיפור מסופר מעצמו.")</li>
-                    </ul>
-                </div>
-
-                <div class="terminal">
-                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">announcement.txt</div></div>
-                    <div class="terminal-content" id="post1-txt"><span class="hl-com">// הודעה לציבור המשקיעים</span>
-<span class="hl-kw">Title:</span> פיטרתי את הספקים שלי (ואת עצמי). התוצאות בדוח. 📉➡️📈
-
-לאחר הערכת מצב, הדירקטוריון (אני) הגיע למסקנה שהשותפים הפכו לנטל.
-אנחנו משלמים "מס דמיון" לתאגידים.
-
-<span class="hl-kw">Status Update:</span>
-[X] <i class="fa-brands fa-adobe" style="color:#ff0000;"></i> Adobe Creative Cloud: <span class="hl-str">"לא משלמים שכירות על מכחולים."</span>
-[X] <i class="fa-brands fa-wix" style="color:#00c0e3;"></i> WIX: <span class="hl-str">"המוח שלנו לא מרובע."</span>
-[X] <i class="fa-solid fa-cube" style="color:#ffffff;"></i> Unity 3D: <span class="hl-str">"כבדים מידי."</span>
-
-סגרנו את הברז. orengamchi.com יורד מהאוויר.
-העולם החדש דורש רק שנחשוב.
-
-<span class="hl-com">-- המנכ"ל</span></div>
-                </div>
-                <button class="btn" onclick="copyToClipboard('post1-txt')"><i class="fa-regular fa-copy"></i> Copy Text</button>
-                
-                <div class="graphic-box" style="margin-top:20px;">
-                    <div class="graphic-linkedin">
-                        <div class="li-grid"></div>
-                        <h3 style="text-align:center; font-family:'Orbitron'; letter-spacing:2px;">PIVOT <span style="color:var(--accent-secondary)">Q4_25</span></h3>
-                        <div class="li-cols">
-                            <div class="li-col li-old">
-                                <div style="color:var(--accent-highlight); font-weight:bold;">LEGACY</div>
-                                <div style="font-size:2rem;">📉</div>
-                                <div style="font-size:0.8rem; opacity:0.7;">Adobe, Wix, Manual</div>
-                            </div>
-                            <div style="display:flex; align-items:center; justify-content:center; font-size:2rem;">➜</div>
-                            <div class="li-col li-new">
-                                <div style="color:var(--accent-secondary); font-weight:bold;">VELOCITY</div>
-                                <div style="font-size:1.5rem;">📈</div>
-                                <div style="font-size:0.8rem; opacity:0.7;">AI Code, 0$ Cost</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. FACEBOOK POST -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title"><i class="fa-brands fa-facebook"></i> POST_02: THE_ASSET</div>
-                <span class="tag tag-code">Social</span>
-            </div>
-            <div class="card-body">
-                <div class="terminal">
-                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">rebellion.txt</div></div>
-                    <div class="terminal-content" id="post2-txt"><span class="hl-kw">Report:</span> דוח רווח והפסד: חשיפת המודל החדש. 📉🍏
-
-זוכרים שפיטרנו את כולם?
-בלי מנועים ובלי עמלות – בנינו את הדבר הבא.
-תכירו את <span class="hl-str">DafkaZe.com</span>
-
-אנחנו לא בונים אתרים, אנחנו בונים תודעה דיגיטלית.
-המרחק בין מחשבה לביצוע התקצר לאפס.
-
-<span class="hl-kw">Dev Costs:</span>
-> מתכנתים: 0 ש"ח (הוחלפו ב-AI).
-> רישיונות: 0 ש"ח (Open Source).
-> זמן: צנח ב-90%.
-
-השורה התחתונה: החופש האמנותי מעולם לא היה רווחי יותר.</div>
-                </div>
-                <div class="action-bar">
-                    <button class="btn" onclick="copyToClipboard('post2-txt')"><i class="fa-regular fa-copy"></i> Copy Text</button>
-                </div>
-                
-                <!-- Facebook Graphic -->
-                <div class="graphic-box" style="margin-top:20px;">
-                     <div class="graphic-facebook">
-                        <div class="fb-bg-blur"></div>
-                        <div class="invoice-card fb-invoice">
-                            <div class="inv-header">
-                                <h2 style="margin:0; color:#333; font-size:1.2rem;">Monthly Subscriptions</h2>
-                                <span style="color:#888; font-size:0.8rem;">Date: Today</span>
-                            </div>
-                            <div class="inv-items">
-                                <div class="fb-row"><span>Adobe Creative Cloud</span><span>$59.99/mo</span></div>
-                                <div class="fb-row"><span>WIX Premium Plan</span><span>$29.00/mo</span></div>
-                                <div class="fb-row"><span>Legacy Assets</span><span>$150.00</span></div>
-                            </div>
-                            <div class="canceled-stamp">CANCELED</div>
-                            <hr style="border:none; border-top:2px dashed #ddd; margin:20px 0;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:1.1rem; color:#111;">
-                                <span>My Brain + AI Code</span>
-                                <span style="background:#10b981; color:white; padding:4px 12px; border-radius:12px; font-size:0.8rem;">FREE</span>
-                            </div>
-                            <div style="text-align:center; margin-top:15px; color:#333; font-weight:bold; font-size:0.9rem;">Total Savings: Infinite Possibilities</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. PROJECT GALLERY -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title"><i class="fa-solid fa-layer-group"></i> PROJECT_GALLERY</div>
-                <span class="tag tag-live">Interactive</span>
-            </div>
-            <div class="card-body">
-                <div style="background:rgba(245,158,11,0.1); border:1px solid var(--accent-warning); color:var(--accent-warning); padding:10px; border-radius:6px; font-size:0.85rem; margin-bottom:20px; display:flex; align-items:center; gap:10px; font-family:var(--font-mono);">
-                    <i class="fa-solid fa-camera"></i> <span>Camera Required for Motion Sensors</span>
-                </div>
-
-                <div class="gallery-scroll">
-                    <div class="gallery-card">
-                        <div style="height:100%; background:linear-gradient(45deg, #0ea5e9, #22d3ee);"></div>
-                        <div class="g-overlay"><span class="g-title">Aquarium News</span><i class="fa-solid fa-fish g-icon"></i></div>
-                    </div>
-                    <div class="gallery-card">
-                        <div style="height:100%; background:linear-gradient(45deg, #6366f1, #a855f7);"></div>
-                        <div class="g-overlay"><span class="g-title">Pixel Sculpting</span><i class="fa-solid fa-cube g-icon"></i></div>
-                    </div>
-                    <div class="gallery-card">
-                        <div style="height:100%; background:linear-gradient(45deg, #cbd5e1, #64748b);"></div>
-                        <div class="g-overlay"><span class="g-title">Virtual Knesset</span><i class="fa-solid fa-landmark g-icon"></i></div>
-                    </div>
-                    <div class="gallery-card">
-                        <div style="height:100%; background:linear-gradient(45deg, #10b981, #22c55e);"></div>
-                        <div class="g-overlay"><span class="g-title">Kishkashta 3D</span><i class="fa-solid fa-leaf g-icon"></i></div>
-                    </div>
-                </div>
-                <div style="text-align:center; font-size:0.8rem; color:var(--text-secondary); margin-top:10px;">
-                    <i class="fa-solid fa-arrow-right"></i> SCROLL FOR MORE
-                </div>
-            </div>
-        </div>
-        
-        <!-- 7. THE FAREWELL -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title"><i class="fa-solid fa-hand-holding-heart"></i> THE_FAREWELL: Acknowledgment</div>
-                <span class="tag tag-thanks">Legacy</span>
-            </div>
-            <div class="card-body">
-                <div class="terminal">
-                    <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="terminal-title">thank_you.txt</div></div>
-                    <div class="terminal-content"><span class="hl-com">/* תודה והוקרה לשותפים לדרך */</span>
-
-לפני שמכבים את האור, מילה טובה לענקים שעל כתפיהם עמדנו:
-
-<span class="hl-kw">To Adobe:</span> תודה שלימדתם אותי את שפת הפיקסלים. הכלים שלכם היו הבית שלי במשך עשור.
-<span class="hl-kw">To Unity:</span> תודה שהראיתם לי מה זה פיזיקה, גם אם המנוע היה כבד מידי למטען היד שלי.
-<span class="hl-kw">To WIX:</span> תודה על הפשטות בימים שהיינו צריכים אותה.
-
-אנחנו נפרדים לא כי אתם לא טובים, אלא כי הדרך שלי השתנתה.
-העתיד הוא קוד פתוח, מהיר ואישי.
-
-<span class="hl-str">"היה שלום, ותודה על הדגים."</span> 🐬</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 6. LIVE DEMO -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title"><i class="fa-solid fa-mobile-screen"></i> LIVE_RUNTIME: Son_of_Man (Full Screen)</div>
-                <span class="tag tag-live">App 🍏</span>
-            </div>
-            <div class="card-body">
-                <p style="margin-bottom:25px; font-size:0.95rem; color:#aaa; font-family:var(--font-mono);">
-                    > Interface expanded to fullscreen mode inside the card.<br>
-                    > Initializing Physics Engine...
-                </p>
-                <!-- New full-screen container replaces the mockup structure -->
-                <div class="full-preview-container">
-                    <iframe id="live-preview" title="Son of Man Preview"></iframe>
-                </div>
-            </div>
-        </div>
-        
-        <!-- FOOTER / CONTACT SECTION -->
-        <div class="contact-footer">
-            <h3>READY TO PIVOT?</h3>
-            <div class="contact-links">
-                <a href="mailto:oren.gamchi@example.com" target="_blank"><i class="fa-solid fa-envelope"></i> Email: Let's Talk</a>
-                <a href="https://www.linkedin.com/in/orengamchi/" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn Message</a>
-                <!-- קישור לפייסבוק -->
-                <a href="https://www.facebook.com/orengamchi/" target="_blank" style="background: #3b5998; color: #fff;"><i class="fa-brands fa-facebook-f"></i> Facebook Profile</a>
-                <!-- קישור ל-CV המעודכן -->
-                <a href="https://www.orengamchi.com/cv" target="_blank"><i class="fa-solid fa-file-pdf"></i> View CV (PDF)</a>
-            </div>
-            <p style="margin-top:20px; font-size:0.8rem; color:rgba(255,255,255,0.5);">© 2025 DAFKAZE. The future is code, not overhead.</p>
-        </div>
-
-    </div>
-
-    <div id="toast">TEXT COPIED</div>
-
-    <script>
-        // Utility function to copy text to clipboard using the execCommand fallback
-        function copyToClipboard(elementId) {
-            var text = document.getElementById(elementId).innerText;
-            var textArea = document.createElement("textarea");
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                // Show toast notification
-                var t = document.getElementById("toast");
-                t.className = "show";
-                setTimeout(function(){ t.className = t.className.replace("show", ""); }, 3000);
-            } catch (err) { 
-                console.error('Copy failed', err); 
+        @keyframes fly-out {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
             }
-            document.body.removeChild(textArea);
+            100% {
+                /* These vars are set by JS for random direction */
+                transform: translate(var(--x), var(--y)) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        #wall {
+            transition: top 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 280%; /* Make wider for parallax */
+            left: 50%;   /* Center the element */
+            transform: translateX(-50%); /* Center the element */
         }
 
-        // SON OF MAN CODE (Escaped HTML for iframe srcdoc)
-        const sonOfManCode = `
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>בן האנוש - אינטראקטיבי</title>
-    <script src="https://cdn.tailwindcss.com"><\/script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body { margin:0; overflow:hidden; background:#000; font-family:sans-serif; }
-        #art-container { position:relative; width:100%; height:100vh; }
-        .layer { 
-            position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; 
-            /* Ensure the image remains centered and doesn't stretch */
-            max-width: 100%; 
-            height: auto;
-            transform-origin: center center;
+        #wall.raised {
+            top: 25% !important; /* Covers 3/4 of the screen */
+        }
+
+        #wall-header {
+            z-index: 40;
+            display: flex;
+            align-items: flex-start;
+            padding-top: 2%; /* Fine-tune vertical position */
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif; /* Changed font */
+            font-size: 4.5rem; /* Adjusted font size */
+            font-weight: 700;
+            color: #dfe3e8;
+            pointer-events: none;
+            top: -50%; /* Start off-screen */
+            transition: top 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            animation: extrude-bevel-anim 4s infinite alternate;
+        }
+
+        @keyframes extrude-bevel-anim {
+            0% {
+                text-shadow: 
+                    /* Bevel Highlight (top-left) */
+                    -1px -1px 1px #fff,
+                    /* Extrusion (bottom-right) */
+                    1px 1px 0px #2c3e50,
+                    2px 2px 0px #2c3e50,
+                    3px 3px 0px #2c3e50,
+                    4px 4px 0px #2c3e50,
+                    5px 5px 0px #2c3e50,
+                    6px 6px 0px #2c3e50,
+                    7px 7px 0px #2c3e50,
+                    8px 8px 0px #2c3e50,
+                    /* Drop Shadow */
+                    9px 9px 15px rgba(0,0,0,0.5);
+            }
+            100% {
+                text-shadow: 
+                    /* Bevel Highlight (bottom-right) */
+                    1px 1px 1px #fff,
+                    /* Extrusion (top-left) */
+                    -1px -1px 0px #2c3e50,
+                    -2px -2px 0px #2c3e50,
+                    -3px -3px 0px #2c3e50,
+                    -4px -4px 0px #2c3e50,
+                    -5px -5px 0px #2c3e50,
+                    -6px -6px 0px #2c3e50,
+                    -7px -7px 0px #2c3e50,
+                    -8px -8px 0px #2c3e50,
+                      /* Drop Shadow */
+                    9px 9px 15px rgba(0,0,0,0.5);
+            }
+        }
+
+        #wall-header > span {
+            position: relative;
+        }
+
+        #wall-header > span.glitching {
+            animation: glitch-main 0.5s linear;
+        }
+
+        #wall-header > span.glitching::before,
+        #wall-header > span.glitching::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #wall-header > span.glitching::before {
+            left: 3px;
+            text-shadow: -3px 0 #ff00c1, 0 2px #00fff9;
+            animation: glitch-clip-1 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+        }
+
+        #wall-header > span.glitching::after {
+            left: -3px;
+            text-shadow: -3px 0 #00fff9, 3px 3px #ff00c1;
+            animation: glitch-clip-2 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+        }
+
+        @keyframes glitch-main {
+            0% { transform: skewX(0deg); }
+            10% { transform: skewX(-15deg); }
+            20% { transform: skewX(10deg); }
+            30% { transform: skewX(-10deg); }
+            40% { transform: skewX(8deg); }
+            50% { transform: skewX(-5deg); }
+            60% { transform: skewX(5deg); }
+            70% { transform: skewX(-2deg); }
+            80% { transform: skewX(2deg); }
+            90% { transform: skewX(0deg); }
+            100% { transform: skewX(0deg); }
+        }
+
+        @keyframes glitch-clip-1 {
+            0% { clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%); }
+            10% { clip-path: polygon(0 78%, 100% 78%, 100% 80%, 0 80%); }
+            20% { clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%); }
+            30% { clip-path: polygon(0 25%, 100% 25%, 100% 30%, 0 30%); }
+            40% { clip-path: polygon(0 15%, 100% 15%, 100% 17%, 0 17%); }
+            50% { clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%); }
+            60% { clip-path: polygon(0 40%, 100% 40%, 100% 42%, 0 42%); }
+            70% { clip-path: polygon(0 90%, 100% 90%, 100% 95%, 0 95%); }
+            80% { clip-path: polygon(0 5%, 100% 5%, 100% 8%, 0 8%); }
+            90% { clip-path: polygon(0 33%, 100% 33%, 100% 35%, 0 35%); }
+            100% { clip-path: polygon(0 70%, 100% 70%, 100% 75%, 0 75%); }
+        }
+
+        @keyframes glitch-clip-2 {
+            0% { clip-path: polygon(0 45%, 100% 45%, 100% 47%, 0 47%); }
+            10% { clip-path: polygon(0 10%, 100% 10%, 100% 15%, 0 15%); }
+            20% { clip-path: polygon(0 85%, 100% 85%, 100% 88%, 0 88%); }
+            30% { clip-path: polygon(0 55%, 100% 55%, 100% 60%, 0 60%); }
+            40% { clip-path: polygon(0 1%, 100% 1%, 100% 5%, 0 5%); }
+            50% { clip-path: polygon(0 95%, 100% 95%, 100% 98%, 0 98%); }
+            60% { clip-path: polygon(0 20%, 100% 20%, 100% 25%, 0 25%); }
+            70% { clip-path: polygon(0 75%, 100% 75%, 100% 80%, 0 80%); }
+            80% { clip-path: polygon(0 40%, 100% 40%, 100% 43%, 0 43%); }
+            90% { clip-path: polygon(0 65%, 100% 65%, 100% 68%, 0 68%); }
+            100% { clip-path: polygon(0 28%, 100% 28%, 100% 32%, 0 32%); }
+        }
+
+        #wall.raised ~ #wall-header {
+            top: calc(18% - 120px); /* Position just above the raised wall, raised by 120px */
         }
         
-        /* UI OVERLAY */
-        #ui-layer { 
-            position:absolute; top:0; left:0; width:100%; height:100%; z-index:20; 
-            pointer-events:none; padding:20px; display:flex; flex-direction:column; justify-content:space-between;
+        #wall-text-overlay {
+            z-index: 60;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.1; /* Adjusted line height for 3 lines */
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem; /* Adjusted font size for 3 lines */
+            font-weight: 700;
+            transform-origin: 50% 180%;
+            opacity: 0; /* Hidden by default */
+            transition: opacity 0.8s ease-in-out 0.5s;
+            color: #fff;
+            animation: neon-flicker 1.5s infinite alternate;
         }
-        .top-bar { display:flex; justify-content:space-between; pointer-events:auto; }
-        .brand { color:white; font-family:'Orbitron'; font-weight:bold; font-size:1rem; text-shadow:0 2px 4px rgba(0,0,0,0.5); }
-        .status-pill { 
-            background:#10b981; color:white; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:bold;
-            box-shadow:0 0 10px rgba(16,185,129,0.6); animation:pulse 2s infinite;
-        }
-        @keyframes pulse { 0%{opacity:1;} 50%{opacity:0.7;} 100%{opacity:1;} }
         
-        .news-ticker {
-            background:rgba(0,0,0,0.7); backdrop-filter:blur(4px); padding:8px 0; overflow:hidden; margin-bottom:10px;
-            border-top:1px solid rgba(255,255,255,0.1); border-bottom:1px solid rgba(255,255,255,0.1);
+        @keyframes neon-flicker {
+            0%, 100% {
+                text-shadow:
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 20px #ff00ff,
+                    0 0 30px #ff00ff,
+                    0 0 40px #ff00ff;
+                color: #fce1fb;
+            }
+            50% {
+                text-shadow:
+                    0 0 2px #fff,
+                    0 0 5px #fff,
+                    0 0 10px #ff00de,
+                    0 0 15px #ff00de;
+                color: #fff;
+            }
         }
-        .ticker-content { display:inline-block; white-space:nowrap; animation:ticker 15s linear infinite; color:#00ff9d; font-family:'Orbitron'; font-size:0.8rem; }
-        @keyframes ticker { 0%{transform:translateX(100%);} 100%{transform:translateX(-100%);} }
+
+        #wall.raised ~ #wall-text-overlay {
+            opacity: 1;
+        }
+
+        #wall-toggle-btn {
+            z-index: 130; /* Ensure it's on top of other layers to be clickable */
+            position: absolute;
+            top: calc(52% - 6.5cm); /* Raised by 1cm for desktop */
+            left: 50%;
+            width: 65px; /* Increased by 30% */
+            height: 65px; /* Increased by 30% */
+            background-color: transparent; 
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+        }
+
+        #wall-toggle-btn:hover {
+            background-color: transparent;
+        }
+
+        /* Apple pulse animation */
+        @keyframes apple-pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        #apple-container.is-pulsing {
+            animation: apple-pulse 1.2s infinite ease-in-out;
+        }
+
+        /* Added for apple clickability */
+        .apple-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.3s ease;
+            transform: scaleX(1.62); /* Shrunk by 10% for desktop */
+        }
+
+        #apple {
+            opacity: 1; /* Green apple is visible by default */
+        }
+
+        #apple-red {
+            opacity: 0; /* Red apple is hidden by default */
+            pointer-events: none;
+        }
+
+        #apple-container.clickable {
+            pointer-events: auto;
+            cursor: pointer;
+        }
         
-        .cta-container { display:flex; justify-content:center; gap:10px; pointer-events:auto; padding-bottom:20px; }
-        .cta-btn { 
-            background:#4f46e5; color:white; padding:10px 20px; border-radius:30px; text-decoration:none; font-weight:bold; font-size:0.9rem;
-            box-shadow:0 4px 15px rgba(79,70,229,0.4); display:flex; align-items:center; gap:6px; transition:transform 0.1s;
+        /* Green glow on the green apple when hovered */
+        #apple-container.clickable:hover #apple {
+            filter: drop-shadow(0 0 15px #a3e635);
         }
-        .cta-btn:active { transform:scale(0.95); }
+        
+        /* New style for when wall button is hovered */
+        #apple-container.flicker-red #apple-red {
+            animation: blink-animation 0.4s step-end infinite; /* Make red apple blink */
+            opacity: 1; /* Ensure it starts visible for animation */
+        }
+
+        #portfolio-buttons-container {
+            z-index: 120; /* Raised above wall-toggle */
+            pointer-events: none; /* Let clicks pass through the container itself by default */
+        }
+        
+        #wall.raised ~ #portfolio-buttons-container {
+            pointer-events: auto; /* When wall is raised, the container can receive pointer events */
+        }
+
+
+        /* Use general sibling combinator to show buttons when wall is raised */
+        #wall.raised ~ #portfolio-buttons-container .portfolio-btn {
+            opacity: 1;
+            transform: translate(-50%, -50%); /* Slide into final position */
+        }
+
+        .portfolio-btn {
+            position: absolute;
+            top: calc(55% + 4cm); /* Lowered buttons */
+            width: 120px; /* Reduced by 15% */
+            height: 120px; /* Reduced by 15% */
+            background: radial-gradient(circle at 40% 35%, #6a6a6a, #1a1a1a);
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.1rem; /* Reduced by 15% */
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: auto; /* Buttons should always be clickable when visible */
+            transform: translate(-50%, calc(-50% + 20px)); /* Start lower */
+            transition: opacity 0.4s ease-out 0.7s, transform 0.4s ease-out 0.7s, box-shadow 0.3s ease; /* Delayed fade and slide-in */
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+            box-shadow: 
+                inset -10px -10px 20px rgba(255, 255, 255, 0.15), /* Inner highlight */
+                inset 5px 5px 15px rgba(0, 0, 0, 0.5), /* Inner shadow */
+                0 15px 25px rgba(0, 0, 0, 0.5); /* Outer shadow */
+            overflow: hidden; /* Clips the reflection */
+        }
+
+        .portfolio-btn::before {
+            content: '';
+            position: absolute;
+            top: 2%;
+            left: 10%;
+            width: 80%;
+            height: 45%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 50%;
+            transform: skewX(-15deg);
+        }
+
+        .portfolio-btn:hover {
+            transform: translate(-50%, -50%) scale(1.05); /* On hover, move to final position and scale slightly */
+            box-shadow: 
+                inset -15px -15px 25px rgba(255, 255, 255, 0.2),
+                inset 8px 8px 20px rgba(0, 0, 0, 0.6),
+                0 20px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        #left-portfolio-btn {
+            left: 15%;
+        }
+
+        #right-portfolio-btn {
+            left: 85%;
+        }
+
+        /* Lamp and Lens Flare Styles */
+        #lamp-fx {
+            position: absolute;
+            top: calc(25% - 1.5cm); /* Lowered by 0.5cm */
+            left: 50%;
+            width: 53px;
+            height: 53px;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 1; /* Set behind man/hands */
+            --light-intensity: 1.0; /* Custom property for brightness */
+            --flare-hue: 60; /* Initial hue (yellow) */
+            --flare-saturation: 50%; /* Initial saturation */
+            --sparkle-intensity: 0;
+        }
+
+        #lamp-fx::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: none; /* בוטלה המנורה */
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: none; /* הוסר הבהוב */
+        }
+
+        #lamp-fx::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500%;
+            height: 500%;
+            background: none; /* בוטלה המנורה */
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: none; /* הוסר הבהוב */
+            opacity: var(--light-intensity);
+        }
+        
+        #sun-effect-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            transform: translate(-50%, -50%);
+            opacity: var(--sparkle-intensity);
+            transition: opacity 1.5s ease-out; /* Slow fade-out for the rays */
+            pointer-events: none;
+        }
+
+        #sun-core {
+            display: none; /* העיגול הוסר */
+        }
+
+        #sun-rays {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: sun-ray-spin 10s linear infinite;
+        }
+
+        .sun-ray {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, hsla(var(--flare-hue), 100%, 90%, 0.7) 40%, hsla(var(--flare-hue), 100%, 90%, 0.7) 60%, transparent);
+            transform-origin: center;
+            transform: translateX(-50%);
+        }
+
+        .sun-ray:nth-child(2) { transform: translateX(-50%) rotate(15deg); }
+        .sun-ray:nth-child(3) { transform: translateX(-50%) rotate(30deg); }
+        .sun-ray:nth-child(4) { transform: translateX(-50%) rotate(45deg); }
+        .sun-ray:nth-child(5) { transform: translateX(-50%) rotate(60deg); }
+        .sun-ray:nth-child(6) { transform: translateX(-50%) rotate(75deg); }
+        .sun-ray:nth-child(7) { transform: translateX(-50%) rotate(90deg); }
+        .sun-ray:nth-child(8) { transform: translateX(-50%) rotate(105deg); }
+        .sun-ray:nth-child(9) { transform: translateX(-50%) rotate(120deg); }
+        .sun-ray:nth-child(10) { transform: translateX(-50%) rotate(135deg); }
+        .sun-ray:nth-child(11) { transform: translateX(-50%) rotate(150deg); }
+        .sun-ray:nth-child(12) { transform: translateX(-50%) rotate(165deg); }
+        .sun-ray:nth-child(13) { transform: translateX(-50%) rotate(180deg); }
+        .sun-ray:nth-child(14) { transform: translateX(-50%) rotate(195deg); }
+        .sun-ray:nth-child(15) { transform: translateX(-50%) rotate(210deg); }
+        .sun-ray:nth-child(16) { transform: translateX(-50%) rotate(225deg); }
+        .sun-ray:nth-child(17) { transform: translateX(-50%) rotate(240deg); }
+        .sun-ray:nth-child(18) { transform: translateX(-50%) rotate(255deg); }
+        .sun-ray:nth-child(19) { transform: translateX(-50%) rotate(270deg); }
+        .sun-ray:nth-child(20) { transform: translateX(-50%) rotate(285deg); }
+        .sun-ray:nth-child(21) { transform: translateX(-50%) rotate(300deg); }
+        .sun-ray:nth-child(22) { transform: translateX(-50%) rotate(315deg); }
+        .sun-ray:nth-child(23) { transform: translateX(-50%) rotate(330deg); }
+        .sun-ray:nth-child(24) { transform: translateX(-50%) rotate(345deg); }
+
+
+        @keyframes sun-ray-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(0.9);
+                box-shadow: 0 0 calc(90px * var(--light-intensity)) calc(40px * var(--light-intensity)) hsla(var(--flare-hue), var(--flare-saturation), 90%, calc(0.95 * var(--light-intensity)));
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                box-shadow: 0 0 calc(160px * var(--light-intensity)) calc(80px * var(--light-intensity)) hsla(var(--flare-hue), var(--flare-saturation), 90%, var(--light-intensity));
+            }
+        }
+
+        @keyframes flicker-flare {
+            from {
+                opacity: calc(0.7 * var(--light-intensity));
+                transform: translate(-50%, -50%) rotate(-5deg) scale(0.95);
+            }
+            to {
+                opacity: var(--light-intensity);
+                transform: translate(-50%, -50%) rotate(5deg) scale(1.05);
+            }
+        }
+
+        /* Hands Layer Style */
+        #hands {
+            opacity: 0;
+            z-index: 3; /* Relative to parent */
+            pointer-events: none;
+            transition: opacity 0.2s ease-in-out; /* Fade in faster */
+        }
+
+        /* Tie Layer Style */
+        #tie-wrapper {
+            opacity: 0;
+            z-index: 4; /* Above hands, below contact form */
+            pointer-events: none; /* Make it pass-through */
+            transition: opacity 0.2s ease-in-out 0.1s; /* Fade in slightly after hands */
+        }
+
+        #tie {
+            pointer-events: none; /* Make image non-interactive by default */
+        }
+
+        #wall.raised ~ #character-container #man {
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out 0.1s; /* Delay the fade out slightly */
+        }
+        
+        #wall.raised ~ #character-container #hands {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #wall.raised ~ #character-container #tie-wrapper {
+            opacity: 1;
+            /* The wrapper itself remains non-interactive */
+        }
+
+        #wall.raised ~ #character-container #tie-wrapper #tie {
+            pointer-events: auto; /* Make the IMAGE interactive */
+        }
+
+        /* Contact Form Styles */
+        #contact-form-container {
+            z-index: 5; /* Relative to parent, was 4 */
+            top: 58%; /* Repositioned */
+            left: 35%; /* Repositioned */
+            width: 30%; /* Resized */
+            height: 35%; /* Resized */
+            font-family: 'Assistant', sans-serif;
+            color: #334155; /* slate-700 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none; /* Make container non-interactive by default */
+            transition: opacity 0.2s ease-in-out; /* Synchronized with hands layer */
+        }
+        
+        #wall.raised ~ #character-container #contact-form-container {
+            opacity: 1;
+            /* The container remains non-interactive, allowing drag events to pass through. */
+        }
+        
+        /* When the wall is raised, make ONLY the links and SVGs inside the form clickable */
+        #wall.raised ~ #character-container #contact-form-container a,
+        #wall.raised ~ #character-container #contact-form-container svg {
+            pointer-events: auto;
+        }
+
+
+        .contact-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem; /* Space between items */
+        }
+        
+        .contact-content h3 {
+            font-family: 'Gilda Display', serif;
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.1em;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .contact-item a {
+            font-size: 1rem;
+            text-decoration: none;
+            color: #334155;
+            transition: color 0.2s;
+        }
+
+        .contact-item a:hover {
+            color: #0ea5e9; /* sky-500 */
+        }
+
+        .contact-item svg {
+            width: 20px;
+            height: 20px;
+            fill: #64748b; /* slate-500 */
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem; /* Adjusted gap */
+            margin-top: 0.5rem;
+        }
+
+        .social-links a svg {
+            width: 24px;
+            height: 24px;
+            fill: #475569; /* slate-600 */
+            transition: fill 0.2s, transform 0.2s;
+        }
+
+        .social-links a:hover svg {
+            fill: #0ea5e9;
+            transform: scale(1.1);
+        }
+
+        /* --- Styles for Falling Men --- */
+        #falling-men-container {
+            z-index: 20;
+            perspective: 1000px;
+            pointer-events: none;
+        }
+
+        .falling-man {
+            position: absolute;
+            top: -50%; /* Start further above screen */
+            transform-style: preserve-3d;
+            animation: fall linear forwards;
+            pointer-events: auto;
+            cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='shadow'%3E%3CfeDropShadow dx='1' dy='1' stdDeviation='1' flood-color='%23000' flood-opacity='0.7'/%3E%3C/defs%3E%3Cg filter='url(%23shadow)'%3E%3Cpath d='M 16 2 L 16 13 M 16 19 L 16 30 M 2 16 L 13 16 M 19 16 L 30 16' stroke='white' stroke-width='2' fill='none'/%3E%3C/g%3E%3C/svg%3E") 16 16, crosshair;
+        }
+
+        .falling-man-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spin linear infinite;
+        }
+
+        .falling-man-inner img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .falling-man-back {
+            transform: rotateY(180deg);
+        }
+
+        @keyframes fall {
+            to {
+                top: 120%; /* Fall below screen */
+            }
+        }
+
+        @keyframes spin {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+        
+        /* --- Mobile Responsive Styles --- */
+        @media (max-width: 800px) {
+            body {
+                padding: 1rem 0;
+            }
+
+            #falling-men-container {
+                display: none;
+            }
+
+            #art-container {
+                width: 95vw;
+                height: calc(95vw * (720 / 1020)); /* Maintain aspect ratio */
+                min-height: 400px; /* Ensure it's not too small on tall devices */
+                margin: auto;
+                border-width: 8px;
+            }
+            
+            #text-overlay {
+                font-size: 2rem;
+            }
+
+            .sub-headline {
+                font-size: 0.9rem;
+            }
+
+            #wall-header {
+                font-size: 2.5rem;
+            }
+
+            #wall.raised ~ #wall-header {
+                top: calc(18% - 60px);
+            }
+
+            #wall-text-overlay {
+                font-size: 1.8rem;
+            }
+
+            #wall-toggle-btn {
+                top: calc(52% - 3.5cm); /* Keep original mobile position */
+            }
+            
+            .apple-img {
+                transform: scaleX(1.8); /* Revert to original size on mobile */
+            }
+            
+            .portfolio-btn {
+                width: 50px; /* Reduced by 50% */
+                height: 50px; /* Reduced by 50% */
+                font-size: 0.9rem; /* Reduced by 50% */
+                top: 70%; /* Lowered buttons */
+            }
+
+            #left-portfolio-btn {
+                left: 15%;
+            }
+
+            #right-portfolio-btn {
+                left: 85%;
+            }
+
+            #contact-form-container {
+                width: 60%;
+                left: 20%;
+                top: 55%;
+                height: 40%;
+            }
+
+            .contact-content h3 {
+                font-size: 1.2rem;
+            }
+
+            .contact-item a {
+                font-size: 0.9rem;
+            }
+            .contact-item svg {
+                width: 16px;
+                height: 16px;
+            }
+            .social-links a svg {
+                width: 20px;
+                height: 20px;
+            }
+
+
+            /* Adjust the main pendulum pivot for a better feel on portrait screens */
+            #character-container {
+                transform-origin: 50% 150%;
+            }
+
+            /* Fix character squashing on tall/narrow screens */
+            #man, #hands, #head, #hat, #eat {
+                object-fit: cover;
+                object-position: bottom;
+            }
+
+            #tie {
+                transform: scale(1.4);
+            }
+        }
+
     </style>
 </head>
 <body>
+
     <div id="art-container">
-        <!-- IMAGES: Image assets for the Son of Man interactive demo (hosted on Firebase Storage) -->
-        <!-- All images are layers for the parallax/animation effect -->
-        <img src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fbg.png?alt=media" class="layer" style="z-index:1">
-        <img src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman.png?alt=media" class="layer" id="man" style="z-index:5">
-        <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:6;" id="head-group">
-             <img src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fhead.png?alt=media" class="layer">
-             <img src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fhat.png?alt=media" class="layer">
-        </div>
-        <img src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fapple.png?alt=media" class="layer" id="apple" style="z-index:8">
+        <img id="bg" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fbg.png?alt=media&token=f527f9b1-3bc4-48e9-9af2-e7d6f42e72c0" alt="רקע" class="layer">
         
-        <div id="ui-layer">
-            <div class="top-bar">
-                <div class="brand">DAFKAZE</div>
-                <div class="status-pill">AVAILABLE</div>
+        <div id="falling-men-container" class="layer"></div>
+
+        <div id="text-overlay" class="layer">
+            <div>
+                <span>OREN<br>GAMCHI</span>
+                <span class="sub-headline" id="sub-headline">TECHNICAL<br>ARTIST</span>
             </div>
-            
-            <div style="margin-top:auto;">
-                <div class="news-ticker">
-                    <div class="ticker-content">
-                        BREAKING: ADOBE FIRED 🔴 SAVINGS: 100% 🟢 NEW ASSET LIVE 🟢
+        </div>
+
+        <img id="wall" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fwall%20%20move.png?alt=media&token=bbc568bc-b380-4c47-91fd-f987916e101e" alt="קיר" class="layer" style="z-index: 50; pointer-events: none; top: calc(68% + 1cm);">
+
+        <div id="wall-header" class="layer">
+            <span id="wall-header-text" data-text="DAFkaze">DAFkaze</span>
+        </div>
+
+        <div id="wall-text-overlay" class="layer">
+            <span>VISIT<br>MY<br>SITE</span>
+        </div>
+        
+        <div id="character-container" class="layer">
+            <div id="lamp-fx" class="layer">
+                <div id="sun-effect-container">
+                    <div id="sun-core"></div>
+                    <div id="sun-rays">
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
+                        <div class="sun-ray"></div>
                     </div>
                 </div>
-                <div class="cta-container">
-                    <a href="#" class="cta-btn"><i class="fa-solid fa-envelope"></i> Hire Me</a>
+            </div>
+            <img id="man" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman.png?alt=media&token=8da1ff64-f319-49fa-91de-28ec3d5f4976" alt="איש" class="layer">
+            <img id="hands" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fhands.png?alt=media&token=61201388-702e-4999-86b3-771149f433bd" alt="ידיים" class="layer">
+            <div id="tie-wrapper" class="layer">
+                <img id="tie" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Ftie.png?alt=media&token=c9d88174-b999-42f8-8fd6-afeb06500d3f" alt="עניבה" class="layer">
+            </div>
+            
+            <div id="contact-form-container" class="layer">
+                <div class="contact-content">
+                    <h3>GET IN TOUCH</h3>
+                    <div class="contact-item">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/></svg>
+                        <a href="tel:0523034888">052-303-4888</a>
+                    </div>
+                    <div class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,16.5C11,16.5 10,16.5 10,17C10,17.5 11,17.5 11,17.5V19H9V16C9,15.5 10,15.5 10,15.5C10,15.5 11,15.5 11,15V13H9V11H11V8.5C11,8.5 11,7.5 10,7.5C9,7.5 9,8.5 9,8.5V10H7V8C7,7 8,6 10,6C12,6 13,7 13,8V10H15V12H13V15C13,15.5 14,15.5 14,15.5C14,15.5 15,15.5 15,16V17.5H13V16.5C13,16.5 14,16.5 14,16C14,15.5 13,15.5 13,15.5V13H11V16.5Z"/></svg>
+                        <a href="https://DAFKAZE.COM" target="_blank">DAFKAZE.COM</a>
+                    </div>
+                    <div class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4M20 18H4V8L12 13L20 8V18M12 11L4 6H20L12 11Z"/></svg>
+                        <a href="mailto:ORENREDE@GMAIL.COM">ORENREDE@GMAIL.COM</a>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/oren-gamchi/" target="_blank" title="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 6 8 5.44 7.19 5.44C6.38 5.44 5.81 6 5.81 6.88A1.68 1.68 0 0 0 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"/></svg>
+                        </a>
+                        <a href="https://www.artstation.com/orengamchi" target="_blank" title="ArtStation">
+                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1.3,13.2L12,2L22.7,13.2L19.8,18.1H4.2L1.3,13.2M13,16.9H16.8L18,14.8L12,5.2L6,14.8L7.2,16.9H11V15.7H8.3L12,9.3L15.7,15.7H13V16.9Z"/></svg>
+                        </a>
+                        <a href="https://github.com/orengamchi" target="_blank" title="GitHub">
+                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69a3.6 3.6 0 0 1 .1-2.64s.84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.4.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 22 12C22 6.48 17.52 2 12 2Z"/></svg>
+                        </a>
+                        <a href="https://www.facebook.com/oren.gamchi" target="_blank" title="Facebook">
+                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06c0 5.52 4.5 10.02 10 10.02 5.5 0 10-4.5 10-10.02C22 6.53 17.5 2.04 12 2.04M16.5 8.25h-1.88c-.56 0-.67.27-.67.66v1.25h2.5L16 12.5h-2v5h-2.5v-5h-2V10.2h2V8.8c0-2 1.22-3.1 3-3.1h2.3v2.25Z"/></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
+
+            <div id="head-container" class="layer">
+                <img id="head" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fhead.png?alt=media&token=b2516d34-8a4d-4b6f-87fe-0540de7260bb" alt="ראש" class="layer">
+                <img id="hat" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fhat.png?alt=media&token=d71697e7-7ef1-478d-9cd9-8679d75e3bad" alt="כובע" class="layer" style="pointer-events: none;">
+                <img id="eat" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Feat.png?alt=media&token=4b5bcb6b-2487-4b1c-b0f2-fae65eb72b97" alt="eat" class="layer">
+            </div>
         </div>
+        
+        <div id="particle-container" class="layer" style="z-index: 90; pointer-events: none;"></div>
+        
+        <div id="apple-container" class="layer" style="z-index: 100; pointer-events: none;">
+            <img id="apple" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fapple.png?alt=media&token=85c0edb4-5d11-43fd-8ceb-88731253a828" alt="תפוח" class="apple-img">
+            <img id="apple-red" src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fapple%20red.png?alt=media&token=f4000d4b-51c1-4650-a8f5-0e5b563d64a3" alt="תפוח אדום" class="apple-img">
+        </div>
+        
+        <button id="wall-toggle-btn" class="layer"></button>
+
+        <div id="portfolio-buttons-container" class="layer">
+             <a href="https://studio--portfolioflow-8qrng.us-central1.hosted.app/" target="_blank" id="left-portfolio-btn" class="portfolio-btn">
+                  AI
+             </a>
+             <a href="https://studio--portfolioflow-8qrng.us-central1.hosted.app/about" target="_blank" id="right-portfolio-btn" class="portfolio-btn">
+                  HR
+             </a>
+        </div>
+
     </div>
-    <script>
-        // Simple animation loop for the Son of Man figure
+    
+    <div id="permission-request">
+        <button id="permission-btn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-indigo-700 transition-colors text-base">
+            הפעל חיישני תנועה
+        </button>
+    </div>
+
+    <script type="module">
+        // --- Elements ---
+        const artContainer = document.getElementById('art-container');
+        const characterContainer = document.getElementById('character-container');
         const man = document.getElementById('man');
+        const hands = document.getElementById('hands');
+        const headContainer = document.getElementById('head-container');
+        const lampFx = document.getElementById('lamp-fx');
+        const textOverlay = document.getElementById('text-overlay');
+        const subHeadline = document.getElementById('sub-headline');
+        const head = document.getElementById('head');
+        const hat = document.getElementById('hat');
+        const eat = document.getElementById('eat');
+        const appleContainer = document.getElementById('apple-container');
         const apple = document.getElementById('apple');
-        let t = 0;
+        const bg = document.getElementById('bg');
+        const particleContainer = document.getElementById('particle-container');
+        const wall = document.getElementById('wall');
+        const wallToggleBtn = document.getElementById('wall-toggle-btn');
+        const wallTextOverlay = document.getElementById('wall-text-overlay');
+        const wallHeaderText = document.getElementById('wall-header-text');
+        const fallingMenContainer = document.getElementById('falling-men-container');
+        const tieWrapper = document.getElementById('tie-wrapper');
+        const tieImage = document.getElementById('tie');
+
+        // --- Preload Images ---
+        const imageUrls = [
+            'https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman%20front.png?alt=media&token=a8697195-2c8c-4235-961d-72124578b9e6',
+            'https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman%20back.png?alt=media&token=37b406ff-353e-4f8e-9de1-90460c1bb841'
+        ];
         
-        function loop() {
-            t += 0.02;
-            // Slight horizontal sway for the man
-            if(man) man.style.transform = \`translateX(\${Math.sin(t)*5}px)\`;
-            // Subtle pulse for the apple
-            if(apple) apple.style.transform = \`scale(\${1 + Math.sin(t*3)*0.02})\`;
+        // --- Pendulum Physics Logic ---
+        let isDraggingMan = false, angle = 0, velocity = 0, targetAngle = 0;
+        let angleHistory = []; // For delayed movement
+        const spring = 0.005, damping = 0.985;
+        let pivotX, pivotY;
+
+        // --- Head Physics Logic (for secondary motion) ---
+        let headAngle = 0, headVelocity = 0;
+        const headSpring = 0.025;
+        const headDamping = 0.96;
+
+        // --- Tie Physics Logic ---
+        let isDraggingTie = false;
+        const tieAnchor = { x: 0, y: 0 };
+        const tieBob = { x: 0, y: 0 };
+        const tieVelocity = { x: 0, y: 0 };
+        const tieSpring = 0.1;
+        const tieFriction = 0.85;
+        let startDragPos = { x: 0, y: 0 };
+        let startTiePos = { x: 0, y: 0 };
+
+        // --- Particle Effect Logic ---
+        let particleIntervalId = null;
+
+        function createBiteEffect() {
+            const isMobile = window.innerWidth <= 800;
+            const topOffset = isMobile ? '3.5cm' : '6.5cm';
+            const numParticles = 10 + Math.floor(Math.random() * 10); // 10 to 19 particles
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particleContainer.appendChild(particle);
+
+                // Position particles exactly behind the apple (using the button's position as a reference)
+                const randomOffsetX = (Math.random() - 0.5) * 40; // pixel random offset
+                const randomOffsetY = (Math.random() - 0.5) * 40; // pixel random offset
+
+                particle.style.left = `calc(50% + ${randomOffsetX}px)`;
+                particle.style.top = `calc(52% - ${topOffset} + ${randomOffsetY}px)`;
+
+
+                // Random direction and distance
+                const p_angle = Math.random() * Math.PI * 2;
+                const distance = 50 + Math.random() * 50; // pixels
+                const endX = Math.cos(p_angle) * distance;
+                const endY = Math.sin(p_angle) * distance;
+                
+                particle.style.setProperty('--x', `${endX}px`);
+                particle.style.setProperty('--y', `${endY}px`);
+
+                // Random duration
+                const duration = 0.5 + Math.random() * 0.5; // 0.5 to 1.0 seconds
+                particle.style.animation = `fly-out ${duration}s ease-out forwards`;
+
+                setTimeout(() => {
+                    particle.remove();
+                }, duration * 1000);
+            }
+        }
+
+
+        function updatePivot() {
+            const containerRect = artContainer.getBoundingClientRect();
+            const isMobile = window.innerWidth <= 800;
+            const pivotYMultiplier = isMobile ? 1.5 : 1.8; // Lower pivot for mobile
+            pivotX = containerRect.left + containerRect.width / 2;
+            pivotY = containerRect.top + containerRect.height * pivotYMultiplier;
+        }
+
+        function manDragStart(e) {
+             // Prevent drag from starting on a link
+             if (e.target.closest('a')) {
+                 return;
+             }
+
+            // Allow drag if starting on man, head, hands, or the contact form area
+            if(['man', 'head', 'hands'].includes(e.target.id) || e.target.closest('#contact-form-container')) {
+                isDraggingMan = true;
+                
+                // Set the correct cursor based on which character is visible
+                if (wall.classList.contains('raised')) {
+                    hands.style.cursor = 'grabbing';
+                } else {
+                    man.style.cursor = 'grabbing';
+                }
+
+                velocity = 0;
+            }
+        }
+
+        function manDrag(e) {
+            if (!isDraggingMan) return;
+            e.preventDefault();
+            const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type.startsWith('touch') ? e.touches[0].clientY : e.clientY;
+            let newAngle = Math.atan2((clientX - pivotX) * 0.6, -(clientY - pivotY));
+
+            // Clamp the angle symmetrically for both sides
+            const maxAngle = 0.6; // Approx 34 degrees
+            if (newAngle > maxAngle) {
+                newAngle = maxAngle;
+            } else if (newAngle < -maxAngle) {
+                newAngle = -maxAngle;
+            }
+            angle = newAngle;
+        }
+
+        function manDragEnd() {
+            if (isDraggingMan) {
+                isDraggingMan = false;
+                man.style.cursor = 'grab';
+                hands.style.cursor = 'grab';
+            }
+        }
+
+        // --- Tie Drag Logic ---
+        function tieDragStart(e) {
+            if (!wall.classList.contains('raised')) return;
+            e.stopPropagation(); // Prevent character container from being dragged
+            isDraggingTie = true;
+            tieImage.style.cursor = 'grabbing';
+
+            const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type.startsWith('touch') ? e.touches[0].clientY : e.clientY;
+
+            startDragPos = { x: clientX, y: clientY };
+            startTiePos = { x: tieBob.x, y: tieBob.y };
+        }
+
+        function tieDrag(e) {
+            if (!isDraggingTie) return;
+            e.preventDefault();
+            const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type.startsWith('touch') ? e.touches[0].clientY : e.clientY;
+
+            const dx = clientX - startDragPos.x;
+            const dy = clientY - startDragPos.y;
+
+            // Limit the stretch distance
+            const stretchDistance = Math.sqrt(Math.pow(startTiePos.x + dx, 2) + Math.pow(startTiePos.y + dy, 2));
+            const maxStretch = 150; 
+            if (stretchDistance > maxStretch) {
+                 const angle = Math.atan2(startTiePos.y + dy, startTiePos.x + dx);
+                 tieBob.x = Math.cos(angle) * maxStretch;
+                 tieBob.y = Math.sin(angle) * maxStretch;
+            } else {
+                tieBob.x = startTiePos.x + dx;
+                tieBob.y = startTiePos.y + dy;
+            }
+        }
+
+        function tieDragEnd() {
+            if (isDraggingTie) {
+                isDraggingTie = false;
+                tieImage.style.cursor = 'grab';
+            }
+        }
+
+        // --- Device Orientation (Gyroscope) Logic ---
+        function handleOrientation(event) {
+            const gamma = event.gamma || 0;
+            const clampedGamma = Math.max(-60, Math.min(60, gamma));
+            targetAngle = (clampedGamma / 60) * 0.7; // Map tilt to angle in radians
+        }
+
+        function requestMotionPermission() {
+            if (typeof DeviceMotionEvent?.requestPermission === 'function') {
+                DeviceMotionEvent.requestPermission().then(state => {
+                    if (state === 'granted') {
+                        window.addEventListener('deviceorientation', handleOrientation);
+                        document.getElementById('permission-request').style.display = 'none';
+                    }
+                }).catch(console.error);
+            } else {
+                // For non-iOS devices
+                window.addEventListener('deviceorientation', handleOrientation);
+            }
+        }
+
+        // Check if permission is needed (for iOS 13+)
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream && typeof DeviceMotionEvent?.requestPermission === 'function') {
+             document.getElementById('permission-request').style.display = 'block';
+             document.getElementById('permission-btn').addEventListener('click', requestMotionPermission);
+        } else {
+            window.addEventListener('deviceorientation', handleOrientation);
+        }
+
+        // --- Falling Men Logic (Optimized with Object Pooling) ---
+        const DESKTOP_POOL_SIZE = 25;
+        const MOBILE_POOL_SIZE = 10;
+        const fallingManPool = [];
+        let masterFrontImg, masterBackImg;
+
+        function initFallingManFeature() {
+            // Preload images for the pool
+            const frontImgPromise = new Promise(resolve => {
+                masterFrontImg = new Image();
+                masterFrontImg.onload = resolve;
+                masterFrontImg.src = 'https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman%20front.png?alt=media&token=a8697195-2c8c-4235-961d-72124578b9e6';
+            });
+            const backImgPromise = new Promise(resolve => {
+                masterBackImg = new Image();
+                masterBackImg.onload = resolve;
+                masterBackImg.className = 'falling-man-back';
+                masterBackImg.src = 'https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Fsonofman%2Fman%20back.png?alt=media&token=37b406ff-353e-4f8e-9de1-90460c1bb841';
+            });
+
+            // After images are loaded, create the object pool
+            Promise.all([frontImgPromise, backImgPromise]).then(() => {
+                const isMobile = window.innerWidth <= 800;
+                const poolSize = isMobile ? MOBILE_POOL_SIZE : DESKTOP_POOL_SIZE;
+
+                for (let i = 0; i < poolSize; i++) {
+                    const manContainer = document.createElement('div');
+                    manContainer.className = 'falling-man';
+                    manContainer.style.visibility = 'hidden';
+
+                    const innerSpinner = document.createElement('div');
+                    innerSpinner.className = 'falling-man-inner';
+
+                    const frontImg = masterFrontImg.cloneNode(true);
+                    const backImg = masterBackImg.cloneNode(true);
+
+                    innerSpinner.append(frontImg, backImg);
+                    manContainer.appendChild(innerSpinner);
+
+                    manContainer.addEventListener('animationend', () => {
+                        manContainer.style.visibility = 'hidden';
+                        // Remove animation to allow it to be reset
+                        manContainer.style.animation = 'none'; 
+                        fallingManPool.push(manContainer);
+                    }, {passive: true});
+
+                    fallingMenContainer.appendChild(manContainer);
+                    fallingManPool.push(manContainer);
+                }
+
+                startSpawningMen();
+            });
+        }
+
+        function spawnFallingMan(isBackground = false) {
+            if (fallingManPool.length === 0) return; // Wait for an object to become available
+
+            const manContainer = fallingManPool.pop();
+            const innerSpinner = manContainer.querySelector('.falling-man-inner');
+
+            // --- Set random properties ---
+            manContainer.style.zIndex = isBackground ? '15' : '25';
+
+            const size = (isBackground ? 3 + Math.random() * 4 : 6 + Math.random() * 7) * 1.3;
+            const aspectRatio = 288 / 757;
+            manContainer.style.width = `${size}%`;
+            manContainer.style.height = `calc(${size}% / ${aspectRatio})`;
+            manContainer.style.left = `${Math.random() * 95}%`;
+            manContainer.style.opacity = isBackground ? 0.7 : 1.0;
+
+            let fallDuration;
+            const baseSpeed = isBackground ? 20 : 10;
+            const randomSpeed = isBackground ? 15 : 10;
+            if (Math.random() < 0.3 && !isBackground) {
+                fallDuration = 5 + Math.random() * 5;
+            } else {
+                fallDuration = baseSpeed + Math.random() * randomSpeed;
+            }
             
-            requestAnimationFrame(loop);
+            const spinDuration = 2 + Math.random() * 6;
+
+            // --- Trigger animations ---
+            // Force a reflow to restart the animation if it was already applied
+            void manContainer.offsetWidth; 
+            
+            manContainer.style.animation = `fall ${fallDuration}s linear forwards`;
+            innerSpinner.style.animation = `spin ${spinDuration}s linear infinite`;
+            manContainer.style.visibility = 'visible';
+        }
+
+        function startSpawningMen() {
+            const isMobile = window.innerWidth <= 800;
+
+            // Foreground Spawner
+            (function spawnLoopFG() {
+                spawnFallingMan(false);
+                const delay = isMobile ? (Math.random() * 3000 + 1500) : (Math.random() * 1500 + 500);
+                setTimeout(spawnLoopFG, delay);
+            })();
+
+            // Background Spawner
+            (function spawnLoopBG() {
+                spawnFallingMan(true);
+                const delay = isMobile ? (Math.random() * 5000 + 2500) : (Math.random() * 3000 + 1000);
+                setTimeout(spawnLoopBG, delay);
+            })();
+        }
+
+        // --- Main Animation Loop ---
+        function animate() {
+            requestAnimationFrame(animate);
+            if (!isDraggingMan) {
+                const force = -spring * (angle - targetAngle);
+                velocity += force;
+                velocity *= damping;
+                angle += velocity;
+            }
+
+            const headForce = -headSpring * (headAngle - angle);
+            headVelocity += headForce;
+            headVelocity *= headDamping;
+            headAngle += headVelocity;
+
+            // --- Tie Physics Update ---
+            if (wall.classList.contains('raised')) {
+                if (!isDraggingTie) {
+                    const dx = tieBob.x - tieAnchor.x;
+                    const dy = tieBob.y - tieAnchor.y;
+                    const ax = dx * -tieSpring;
+                    const ay = dy * -tieSpring;
+
+                    tieVelocity.x += ax;
+                    tieVelocity.y += ay;
+                    tieVelocity.x *= tieFriction;
+                    tieVelocity.y *= tieFriction;
+
+                    tieBob.x += tieVelocity.x;
+                    tieBob.y += tieVelocity.y;
+                }
+                tieWrapper.style.transform = `translate(${tieBob.x}px, ${tieBob.y}px)`;
+            } else {
+                // Reset tie position and physics when wall is not raised
+                if (tieBob.x !== 0 || tieBob.y !== 0 || tieVelocity.x !== 0 || tieVelocity.y !== 0) {
+                    tieBob.x = 0;
+                    tieBob.y = 0;
+                    tieVelocity.x = 0;
+                    tieVelocity.y = 0;
+                    tieWrapper.style.transform = 'translate(0px, 0px)';
+                }
+            }
+
+            const isAtRest = Math.abs(velocity) < 0.0005 && Math.abs(angle - targetAngle) < 0.01;
+
+            // --- Lamp Intensity & Color Logic ---
+            if (isAtRest) {
+                // At rest, hide the rays
+                lampFx.style.setProperty('--sparkle-intensity', '0');
+
+            } else {
+                // When moving, show rays and use dynamic intensity
+                const intensityMultiplier = 20;
+                let baseIntensity = 1 - Math.min(1, Math.abs(velocity) * intensityMultiplier);
+                baseIntensity = Math.max(0.2, baseIntensity);
+
+                const tension = Math.min(1.0, Math.abs(angle) / 0.7);
+                const spike = baseIntensity * tension * 3.0;
+                let finalIntensity = Math.min(4.0, baseIntensity + spike);
+
+                lampFx.style.setProperty('--light-intensity', finalIntensity);
+                lampFx.style.setProperty('--sparkle-intensity', '1'); // Show rays when moving
+
+                const flareSaturation = 70 + (finalIntensity / 4) * 30; 
+                lampFx.style.setProperty('--flare-hue', '55');
+                lampFx.style.setProperty('--flare-saturation', `${flareSaturation}%`);
+            }
+
+
+            angleHistory.push(angle);
+            if (angleHistory.length > 25) { 
+                angleHistory.shift();
+            }
+            const delayedAngle = angleHistory[0] || 0;
+
+            const rotationStyle = `rotate(${angle * (180 / Math.PI)}deg)`;
+            const textRotationStyle = `rotate(${-angle * (180 / Math.PI)}deg)`;
+            
+            const wobbleAngle = headAngle - angle;
+            const wobbleRotationStyle = `rotate(${wobbleAngle * (180 / Math.PI) * 2.0}deg)`;
+
+            const subHeadlineRelativeRotation = (angle - delayedAngle) * (180 / Math.PI);
+            const subHeadlineRotationStyle = `rotate(${subHeadlineRelativeRotation}deg)`;
+
+            characterContainer.style.transform = rotationStyle;
+            headContainer.style.transform = wobbleRotationStyle; // The entire head unit now wobbles together
+            textOverlay.style.transform = textRotationStyle;
+            wallTextOverlay.style.transform = textRotationStyle;
+            subHeadline.style.transform = subHeadlineRotationStyle;
+
+            // --- Parallax Effect ---
+            const parallaxFactorBg = 80;
+            const parallaxFactorWall = 160;
+            const bgTranslateX = -angle * parallaxFactorBg;
+            const wallTranslateX = -angle * parallaxFactorWall;
+
+            bg.style.transform = `translateX(calc(-50% + ${bgTranslateX}px)) scale(1.3)`;
+            wall.style.transform = `translateX(calc(-50% + ${wallTranslateX}px)) scale(1.15)`;
+
+            // --- "EAT" Blinking, Apple Pulse & Particle Logic ---
+            if (isAtRest) {
+                eat.classList.add('is-blinking');
+                appleContainer.classList.add('is-pulsing');
+                appleContainer.classList.add('clickable'); // Make apple clickable
+                if (!particleIntervalId) {
+                    createBiteEffect(); 
+                    particleIntervalId = setInterval(createBiteEffect, 600);
+                }
+            } else {
+                eat.classList.remove('is-blinking');
+                appleContainer.classList.remove('is-pulsing');
+                appleContainer.classList.remove('clickable'); // Make apple not clickable
+                if (particleIntervalId) {
+                    clearInterval(particleIntervalId);
+                    particleIntervalId = null;
+                }
+            }
         }
         
-        // Start animation loop
-        window.onload = function () {
-            loop(); 
-        }
-    <\/script>
-</body>
-</html>
-        `;
-        
-        // Inject the code into the iframe after the main DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-             document.getElementById('live-preview').srcdoc = sonOfManCode;
+        // --- Event Listeners & Initialization ---
+        window.addEventListener('load', () => {
+            textOverlay.style.opacity = 1;
+            
+            if (window.innerWidth > 800) {
+                // Delay the start of the falling men animation only on desktop
+                setTimeout(() => {
+                    initFallingManFeature();
+                }, 5000); 
+            }
+            
+            updatePivot();
+            animate();
         });
         
-    </script>
+        window.addEventListener('resize', updatePivot);
+        
+        artContainer.addEventListener('mousedown', manDragStart);
+        artContainer.addEventListener('touchstart', manDragStart, { passive: false });
 
+        document.addEventListener('mousemove', manDrag);
+        document.addEventListener('touchmove', manDrag, { passive: false });
+        document.addEventListener('mouseup', manDragEnd);
+        document.addEventListener('touchend', manDragEnd);
+
+        tieImage.addEventListener('mousedown', tieDragStart);
+        tieImage.addEventListener('touchstart', tieDragStart, { passive: false });
+        document.addEventListener('mousemove', tieDrag);
+        document.addEventListener('touchmove', tieDrag, { passive: false });
+        document.addEventListener('mouseup', tieDragEnd);
+        document.addEventListener('touchend', tieDragEnd);
+
+
+        appleContainer.addEventListener('click', () => {
+            if (!appleContainer.classList.contains('clickable')) return;
+            
+            wall.classList.toggle('raised'); // Toggle the wall on apple click
+
+            // Trigger a bigger particle burst
+            createBiteEffect();
+            setTimeout(createBiteEffect, 50);
+
+            // Temporarily hide the apple with a "poof" effect
+            appleContainer.style.transition = 'transform 0.2s ease-out, opacity 0.2s ease-out';
+            appleContainer.style.opacity = '0';
+            appleContainer.style.transform = 'scale(1.3)';
+            appleContainer.classList.remove('is-pulsing', 'clickable'); // Prevent further interaction
+
+            // Stop the automatic particle creation
+            if (particleIntervalId) {
+                clearInterval(particleIntervalId);
+                particleIntervalId = null;
+            }
+
+            // Bring the apple back after a moment
+            setTimeout(() => {
+                appleContainer.style.transition = 'transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.3s ease-in';
+                appleContainer.style.opacity = '1';
+                appleContainer.style.transform = 'scale(1)';
+            }, 800);
+        });
+
+        wallToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent click from reaching the man
+            wall.classList.toggle('raised');
+
+            // Mobile-only red apple blink effect on click
+            const isMobile = window.innerWidth <= 800;
+            if (isMobile) {
+                if (appleContainer.dataset.blinkTimeout) {
+                    clearTimeout(parseInt(appleContainer.dataset.blinkTimeout));
+                }
+                appleContainer.classList.add('flicker-red');
+                const timeoutId = setTimeout(() => {
+                    appleContainer.classList.remove('flicker-red');
+                    delete appleContainer.dataset.blinkTimeout;
+                }, 3000);
+                appleContainer.dataset.blinkTimeout = timeoutId;
+            }
+        });
+
+        wallToggleBtn.addEventListener('mouseover', () => {
+            const isMobile = window.innerWidth <= 800;
+            if (!isMobile) {
+                 appleContainer.classList.add('flicker-red');
+            }
+        });
+
+        wallToggleBtn.addEventListener('mouseout', () => {
+            const isMobile = window.innerWidth <= 800;
+            if (!isMobile) {
+                appleContainer.classList.remove('flicker-red');
+            }
+        });
+
+        function triggerGlitch() {
+            wallHeaderText.classList.add('glitching');
+
+            // Remove the class after a short duration
+            setTimeout(() => {
+                wallHeaderText.classList.remove('glitching');
+            }, 500); // Duration of the glitch effect
+
+            // Schedule the next glitch at a random interval
+            const randomDelay = Math.random() * 4000 + 2000; // between 2 and 6 seconds
+            setTimeout(triggerGlitch, randomDelay);
+        }
+
+        // Initial call to start the glitching loop
+        setTimeout(triggerGlitch, 3000); // Start after 3 seconds
+    </script>
 </body>
 </html>
+
