@@ -103,8 +103,9 @@
             opacity: 0;
             background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.6"/%3E%3C/svg%3E');
             mix-blend-mode: overlay;
+            transition: opacity 0.1s ease-out; /* Added smooth fade for random noise */
         }
-
+        
         /* --- 3D SCROLL ENGINE --- */
         .viewport-3d {
             position: fixed; top: 32px; left: 0; width: 100%; height: calc(100% - 32px);
@@ -113,6 +114,26 @@
 
         .stage-3d { position: absolute; width: 100%; height: 100%; transform-style: preserve-3d; }
         
+        /* --- NEW: TRANSITION GLITCH EFFECTS CSS --- */
+        /* Class applied to stage on scroll for camera shake effect */
+        .stage-3d.shake-active {
+            animation: camera-shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
+            transform-origin: 50% 50%;
+        }
+        @keyframes camera-shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0) rotateZ(0.5deg) scale(1.01); }
+            20%, 80% { transform: translate3d(2px, 0, 0) rotateZ(-0.5deg) scale(1.01); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0) rotateZ(1deg) scale(1.02); }
+            40%, 60% { transform: translate3d(4px, 0, 0) rotateZ(-1deg) scale(1.02); }
+        }
+        /* Class applied to noise for instant burst effect */
+        .broadcast-noise.burst {
+            transition: none; /* Disable smooth transition for instant burst */
+            opacity: 1 !important; /* Force full static noise */
+        }
+        /* --- END NEW EFFECTS CSS --- */
+
+
         .page-slide-3d {
             position: absolute; top: 50%; left: 50%;
             width: 90vw; max-width: 1000px; min-height: 65vh; max-height: 85vh;
@@ -944,6 +965,24 @@
             if(stamp) stamp.classList.remove('stamp-animate');
         }
 
+        // --- NEW: Function to trigger visual transition effects (shake and noise burst) ---
+        function triggerTransitionEffect() {
+            const stage = document.getElementById('stage-3d');
+            const noise = document.getElementById('broadcast-noise');
+            
+            // 1. Activate Shake
+            stage.classList.add('shake-active');
+            
+            // 2. Activate Noise Burst (instant high opacity)
+            noise.classList.add('burst');
+
+            // 3. Revert after 300ms (to match the shake duration)
+            setTimeout(() => {
+                stage.classList.remove('shake-active');
+                noise.classList.remove('burst');
+            }, 300); 
+        }
+
         function update() {
             const slides = document.querySelectorAll('.page-slide-3d');
             slides.forEach(slide => {
@@ -982,6 +1021,11 @@
             if (isScrollLocked) return;
             isScrollLocked = true;
             currentSlideIndex += direction;
+
+            // --- Trigger Glitch and Shake Effect on transition ---
+            triggerTransitionEffect(); 
+            // ---------------------------------------------------
+
             setTimeout(() => { isScrollLocked = false; }, 600); 
         }
 
@@ -1031,8 +1075,13 @@
 
         function triggerRandomGlitch() {
             const noise = document.getElementById('broadcast-noise');
-            noise.style.opacity = Math.random() * 0.4 + 0.1;
-            setTimeout(() => { noise.style.opacity = 0; setTimeout(triggerRandomGlitch, Math.random() * 3000 + 1000); }, 150);
+            // Check if a manual burst is not active before applying random opacity
+            if (!noise.classList.contains('burst')) {
+                noise.style.opacity = Math.random() * 0.4 + 0.1;
+                setTimeout(() => { noise.style.opacity = 0; setTimeout(triggerRandomGlitch, Math.random() * 3000 + 1000); }, 150);
+            } else {
+                 setTimeout(triggerRandomGlitch, 300); // Wait a bit if burst is active
+            }
         }
 
         window.onload = () => {
