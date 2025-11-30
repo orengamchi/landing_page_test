@@ -3,28 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Oren Gamchi - Vibe Coding Master Kit (INFINITE LOOP)</title>
+    <title>Oren Gamchi - Cyber Menu (FINAL)</title>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Orbitron:wght@500;700;900&family=Fira+Code:wght@400;500;700&family=Black+Ops+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600;700;900&family=Heebo:wght@100;300;400;700;900&family=Orbitron:wght@500;700;900&family=Fira+Code:wght@400;500;700&family=Black+Ops+One&display=swap" rel="stylesheet">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Tailwind (for utilities) -->
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
         /* --- Vibe Coding Theme Variables --- */
         :root {
-            --bg-dark: #020202;
-            --card-bg: rgba(12, 12, 18, 0.95);
+            --bg-dark: #050505;
+            --card-bg: rgba(10, 10, 15, 0.96);
             --text-primary: #e2e8f0;
             --text-secondary: #94a3b8;
-            --accent-primary: #6366f1;    /* Indigo */
-            --accent-secondary: #10b981; /* Emerald */
+            --accent-primary: #8b5cf6;    /* Violet */
+            --accent-secondary: #06b6d4; /* Cyan */
             --accent-highlight: #f43f5e; /* Rose */
-            --border-color: rgba(99, 102, 241, 0.5); 
+            --border-color: rgba(139, 92, 246, 0.3); 
             --font-mono: 'Fira Code', monospace;
-            --font-sans: 'Assistant', sans-serif;
+            --font-sans: 'Rubik', sans-serif;
+            --font-tech-he: 'Heebo', sans-serif;
             --font-display: 'Orbitron', sans-serif;
             --font-stamp: 'Black Ops One', cursive;
             --danger: #ef4444;
@@ -43,35 +44,32 @@
             background-color: var(--bg-dark);
             color: var(--text-primary);
             touch-action: none;
+            user-select: none;
         }
         
         /* --- UTILS --- */
-        .btn, .modal-content, .gallery-item-3d, .nav-buttons .btn, .stat-item, .terminal, .resignation-letter {
-            border-radius: 2px 12px 2px 12px !important; 
+        .btn, .modal-content, .nav-buttons .btn, .terminal, .credits-box {
+            border-radius: 4px; 
             border: 1px solid var(--border-color);
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.1);
         }
         
-        .big-price { font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 8vw, 3rem); font-weight: 900; line-height: 1; display: block; margin: 10px 0; }
-        .price-tag-old { color: var(--accent-highlight); text-decoration: line-through; opacity: 0.7; }
-        .price-tag-new { color: var(--accent-secondary); }
-
         /* --- LED TICKER BANNER --- */
         .led-ticker-wrap {
-            position: fixed; top: 0; left: 0; width: 100%; height: 36px;
-            background-color: #000; border-bottom: 2px solid var(--accent-secondary);
+            position: fixed; top: 0; left: 0; width: 100%; height: 32px;
+            background-color: #000; border-bottom: 1px solid var(--accent-secondary);
             z-index: 9999; overflow: hidden; display: flex; align-items: center;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
         }
 
         .led-ticker {
             display: flex; white-space: nowrap;
-            animation: ticker 80s linear infinite; /* Slower for readability */
+            animation: ticker 60s linear infinite; 
         }
 
         .led-item {
-            padding: 0 40px; font-family: var(--font-mono); font-size: 14px;
+            padding: 0 40px; font-family: var(--font-mono); font-size: 12px;
             color: var(--accent-secondary); text-shadow: 0 0 5px var(--accent-secondary);
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: center; gap: 10px; letter-spacing: 1px;
         }
 
         @keyframes ticker {
@@ -79,268 +77,306 @@
             100% { transform: translate3d(-50%, 0, 0); }
         }
 
-        /* --- GEOMETRIC BACKGROUND GRID --- */
+        /* --- BACKGROUND & NOISE --- */
         .bg-grid {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
             background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.4) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.4) 1px, transparent 1px);
-            background-size: 80px 80px;
-            transform: perspective(400px) rotateX(60deg) translateY(-100px) scale(2.5);
-            transform-origin: center 30%;
-            opacity: 0.5;
+                linear-gradient(rgba(139, 92, 246, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.2) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(600px) rotateX(60deg) translateY(-50px) scale(2);
+            opacity: 0.3;
             pointer-events: none;
-            box-shadow: 0 -200px 200px #000 inset;
-            animation: grid-flow 20s linear infinite;
+            animation: grid-move 20s linear infinite;
         }
-        
-        .bg-grid-2 {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
-            background-image: radial-gradient(var(--accent-primary) 1px, transparent 1px);
-            background-size: 40px 40px;
-            transform: perspective(400px) rotateX(60deg) translateY(-100px) scale(2.5);
-            transform-origin: center 30%;
-            opacity: 0.2;
-            pointer-events: none;
-            animation: grid-flow-reverse 30s linear infinite;
-        }
+        @keyframes grid-move { 0% { background-position: 0 0; } 100% { background-position: 0 60px; } }
 
-        @keyframes grid-flow { 0% { background-position: 0 0; } 100% { background-position: 0 80px; } }
-        @keyframes grid-flow-reverse { 0% { background-position: 0 0; } 100% { background-position: 40px -40px; } }
-
-        /* --- GLITCH & NOISE STRONGER --- */
         .scanlines {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 90; pointer-events: none;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 3px, 3px 100%;
-            opacity: 0.6; /* Increased opacity from 0.3 */
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            opacity: 0.3; 
         }
 
         .broadcast-noise {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 999; pointer-events: none;
             opacity: 0;
-            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.4"/%3E%3C/svg%3E');
-            transition: opacity 0.05s; /* Faster transition for sharper glitch */
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.6"/%3E%3C/svg%3E');
+            mix-blend-mode: overlay;
         }
 
         /* --- 3D SCROLL ENGINE --- */
         .viewport-3d {
-            position: fixed; top: 36px; left: 0; width: 100%; height: calc(100% - 36px);
-            perspective: 800px; overflow: hidden;
+            position: fixed; top: 32px; left: 0; width: 100%; height: calc(100% - 32px);
+            perspective: 1000px; overflow: hidden;
         }
 
         .stage-3d { position: absolute; width: 100%; height: 100%; transform-style: preserve-3d; }
         
         .page-slide-3d {
             position: absolute; top: 50%; left: 50%;
-            width: 85vw; max-width: 900px; min-height: 60vh; max-height: 85vh;
-            background: var(--card-bg);
-            border: none;
-            box-shadow: 0 0 0 rgba(0,0,0,0);
-            overflow: visible;
+            width: 90vw; max-width: 1000px; min-height: 65vh; max-height: 85vh;
+            
+            /* Solid background */
+            background: rgba(10, 10, 15, 0.95);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            
             padding: 0;
             backface-visibility: hidden; 
             will-change: transform, opacity;
             display: flex; flex-direction: column;
+            overflow: visible; 
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
 
-        /* THE JAGGED GRID OVERLAY */
-        .cyber-grid-overlay {
-            position: absolute; 
-            top: -20px; left: -20px; right: -20px; bottom: -20px;
+        /* --- INDIVIDUAL SLIDE CYBER GRID --- */
+        .slide-cyber-grid {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 160%; height: 160%; 
+            transform: translate(-50%, -50%) translateZ(-200px); 
             z-index: -1;
-            background-color: rgba(5, 5, 10, 0.9);
-            border: 2px solid var(--accent-primary);
-            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            pointer-events: none;
+            border: 1px solid rgba(255,255,255,0.02);
             background-image: 
-                radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 60%),
-                linear-gradient(45deg, transparent 48%, rgba(99, 102, 241, 0.2) 50%, transparent 52%);
-            background-size: 100% 100%, 20px 20px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            transition: border-color 0.3s, box-shadow 0.3s;
+                linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.3) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: 
+                slide-grid-spin 80s linear infinite,
+                slide-grid-pulse 8s ease-in-out infinite alternate;
+            mask-image: radial-gradient(circle, black 30%, transparent 70%);
+            -webkit-mask-image: radial-gradient(circle, black 30%, transparent 70%);
         }
 
-        .page-slide-3d.active .cyber-grid-overlay {
-            border-color: var(--accent-secondary);
-            box-shadow: 0 0 60px rgba(16, 185, 129, 0.2);
+        @keyframes slide-grid-spin {
+            0% { background-position: 0 0; transform: translate(-50%, -50%) translateZ(-200px) rotate(0deg); }
+            100% { background-position: 100px 100px; transform: translate(-50%, -50%) translateZ(-200px) rotate(5deg); }
         }
-        
+
+        @keyframes slide-grid-pulse {
+            0% { filter: hue-rotate(0deg) brightness(0.8); }
+            50% { filter: hue-rotate(90deg) brightness(1.2); }
+            100% { filter: hue-rotate(0deg) brightness(0.8); }
+        }
+
+        /* Cyber Deco on Slides */
+        .page-slide-3d::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--accent-secondary), var(--accent-primary));
+            z-index: 10;
+        }
+        .corner-deco {
+            position: absolute; width: 20px; height: 20px;
+            border: 2px solid var(--accent-secondary);
+            z-index: 10; pointer-events: none;
+        }
+        .corner-tl { top: 10px; left: 10px; border-bottom: none; border-right: none; }
+        .corner-br { bottom: 10px; right: 10px; border-top: none; border-left: none; }
+
         /* Inner Content */
         .slide-content-wrap {
             padding: 40px; height: 100%; overflow-y: auto; position: relative; z-index: 2;
+            background: transparent; 
         }
         .slide-content-wrap::-webkit-scrollbar { width: 4px; }
         .slide-content-wrap::-webkit-scrollbar-thumb { background: var(--accent-primary); }
 
-        /* --- "YOU'RE FIRED" STYLES & GRAPHIC FLAMES --- */
-        .fired-container {
+        /* --- HORIZONTAL MENU --- */
+        .menu-scroll-container {
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            padding: 0;
+            scroll-snap-type: x mandatory;
+            align-items: stretch;
+            height: 100%;
+            width: 100%;
+            cursor: grab;
+        }
+        .menu-scroll-container:active { cursor: grabbing; }
+        .menu-scroll-container::-webkit-scrollbar { display: none; }
+
+        .menu-card-wide {
+            flex: 0 0 100%;
+            width: 100%;
+            background: transparent;
+            border: none;
+            overflow: hidden;
+            position: relative;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            perspective: 500px;
-            position: relative;
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
         }
-        .fired-text {
-            font-family: 'Black Ops One', cursive;
-            font-size: clamp(3rem, 12vw, 7rem);
-            line-height: 0.9;
-            text-align: center;
-            font-weight: 900;
-            color: #d1d5db; 
-            background: linear-gradient(to bottom, #ffffff 0%, #9ca3af 50%, #4b5563 51%, #d1d5db 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(1px 1px 0px #881337)
-                    drop-shadow(2px 2px 0px #881337)
-                    drop-shadow(3px 3px 0px #881337)
-                    drop-shadow(4px 4px 0px #881337)
-                    drop-shadow(5px 5px 0px #881337)
-                    drop-shadow(0px 0px 20px rgba(225, 29, 72, 0.8));
-            transform: rotateX(10deg);
-            animation: fired-pulse 1.2s infinite alternate ease-in-out;
-            margin-bottom: 20px;
-            position: relative; z-index: 2;
+        
+        .cooking-stat-row {
+            display: flex; justify-content: space-around;
+            padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(255,255,255,0.1);
+            margin: 15px 0;
+            background: rgba(0,0,0,0.3);
         }
-        @keyframes fired-pulse {
-            0% { transform: scale(1) rotateX(10deg); filter: drop-shadow(1px 1px 0px #881337) drop-shadow(0px 0px 10px rgba(225, 29, 72, 0.5)); }
-            100% { transform: scale(1.05) rotateX(10deg); filter: drop-shadow(1px 1px 0px #881337) drop-shadow(2px 2px 0px #881337) drop-shadow(3px 3px 0px #881337) drop-shadow(4px 4px 0px #881337) drop-shadow(5px 5px 0px #881337) drop-shadow(0px 0px 30px rgba(225, 29, 72, 1)); }
+        .cooking-stat {
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+            font-family: var(--font-mono); font-size: 0.7rem; color: #ccc;
         }
-        .fired-subtitle {
-            font-family: var(--font-mono); color: var(--text-secondary); margin-top: 20px; letter-spacing: 2px;
-            opacity: 0; animation: fade-in 1s 0.5s forwards; position: relative; z-index: 2;
-        }
-        @keyframes fade-in { to { opacity: 1; } }
+        .neon-icon { font-size: 1.2rem; filter: drop-shadow(0 0 5px currentColor); }
+        .neon-icon.hot { color: var(--accent-highlight); }
+        .neon-icon.time { color: var(--accent-secondary); }
+        .neon-icon.tool { color: var(--accent-primary); }
+        .neon-icon.heavy { color: var(--danger); animation: heavy-pulse 2s infinite; }
+        
+        @keyframes heavy-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
-        /* --- GRAPHIC FLAMES --- */
-        .graphic-flame { position: absolute; top: 50%; left: 50%; width: 200px; height: 300px; z-index: 1; pointer-events: none; opacity: 0.8; filter: drop-shadow(0 0 20px #ff5722); }
-        .flame-left { transform: translate(-140%, -60%) rotate(-25deg); }
-        .flame-right { transform: translate(40%, -60%) rotate(25deg) scaleX(-1); }
+        .card-visual {
+            height: 45%; width: 100%; position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--accent-primary);
+            pointer-events: none; 
+        }
+        .card-visual video {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: grayscale(40%) contrast(1.1); transition: 0.5s;
+        }
+        .menu-card-wide:hover .card-visual video { filter: grayscale(0%); }
+        
+        .card-badge {
+            position: absolute; top: 15px; right: 15px;
+            background: rgba(0,0,0,0.9); color: var(--accent-secondary);
+            border: 1px solid var(--accent-secondary);
+            padding: 6px 12px; font-family: var(--font-display); font-size: 0.8rem;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+            z-index: 5;
+        }
+        
+        .card-stamp {
+            position: absolute; top: 20px; left: 20px; z-index: 30;
+            border: 2px solid var(--accent-highlight); color: var(--accent-highlight);
+            font-family: var(--font-stamp); font-size: 1.5rem; padding: 4px 12px;
+            text-transform: uppercase; text-shadow: 0 0 8px var(--accent-highlight);
+            box-shadow: 0 0 10px rgba(0,0,0,0.5); opacity: 0.9; pointer-events: none;
+            mix-blend-mode: hard-light; background: rgba(0,0,0,0.3); border-radius: 4px;
+        }
+
+        .card-details { 
+            padding: 20px 30px; flex-grow: 1; display: flex; flex-direction: column; 
+            background: linear-gradient(180deg, rgba(15,15,20,0.9) 0%, rgba(5,5,5,1) 100%);
+        }
+        
+        .card-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .card-title { font-family: var(--font-display); font-size: 1.8rem; color: #fff; text-transform: uppercase; text-shadow: 0 0 10px rgba(139, 92, 246, 0.5); }
+        .card-desc { font-size: 1rem; color: #aaa; line-height: 1.6; margin-bottom: 15px; flex-grow: 1; font-family: var(--font-sans); }
+        .ingredients-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+        .ing-tag {
+            font-size: 0.8rem; padding: 6px 10px; border-radius: 4px;
+            background: rgba(255,255,255,0.03); color: var(--accent-secondary);
+            border: 1px solid rgba(6, 182, 212, 0.3); font-family: var(--font-mono);
+        }
+
+        /* Nav Arrows for Gallery */
+        .gallery-nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(0,0,0,0.6); color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 20; transition: 0.3s;
+            backdrop-filter: blur(4px);
+        }
+        .gallery-nav-btn:hover { background: var(--accent-primary); color: #fff; box-shadow: 0 0 15px var(--accent-primary); }
+        .gallery-prev { left: 10px; }
+        .gallery-next { right: 10px; }
 
         /* --- STAMPS --- */
         .stamp-overlay {
-            position: absolute; z-index: 50; pointer-events: none; border: 5px solid var(--danger); color: var(--danger);
-            font-family: var(--font-stamp); font-size: 4rem; padding: 10px 30px; text-transform: uppercase; letter-spacing: 5px;
-            border-radius: 10px; transform-style: preserve-3d; white-space: nowrap;
-            text-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
-            box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.5), 0 0 30px rgba(239, 68, 68, 0.5);
+            position: absolute; z-index: 50; pointer-events: none; border: 4px solid var(--accent-secondary); color: var(--accent-secondary);
+            font-family: var(--font-stamp); font-size: 3rem; padding: 5px 20px; text-transform: uppercase; letter-spacing: 3px;
+            border-radius: 8px; transform-style: preserve-3d; white-space: nowrap;
+            text-shadow: 0 0 15px var(--accent-secondary);
+            box-shadow: inset 0 0 15px rgba(6, 182, 212, 0.3);
             opacity: 0;
-            mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="3" /></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.9" /></svg>');
+            top: 30px; right: 30px; left: auto;
+            transform: rotate(15deg);
         }
-        .stamp-animate { animation: stamp-slam 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .stamp-animate { animation: stamp-slam 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         @keyframes stamp-slam {
-            0% { transform: translate(-50%, -50%) translateZ(600px) scale(3) rotate(var(--rotate, 0deg)); opacity: 0; }
-            100% { transform: translate(-50%, -50%) translateZ(0) scale(1) rotate(var(--rotate, 0deg)); opacity: 0.9; }
+            0% { transform: translateZ(500px) scale(2) rotate(var(--rotate, 15deg)); opacity: 0; }
+            100% { transform: translateZ(0) scale(1) rotate(var(--rotate, 15deg)); opacity: 1; }
         }
 
-        /* --- VS SLIDE STYLES --- */
-        .vs-container { display: flex; width: 100%; height: 100%; position: relative; overflow: hidden; border-radius: 12px; }
-        .vs-half { flex: 1; padding: 30px; display: flex; flex-direction: column; justify-content: center; transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); position: relative; overflow: hidden; }
-        .vs-left { background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), transparent); border-right: 1px solid rgba(239, 68, 68, 0.3); transform: translateX(-110%); align-items: flex-end; text-align: right; }
-        .vs-right { background: linear-gradient(-135deg, rgba(16, 185, 129, 0.15), transparent); transform: translateX(110%); align-items: flex-start; text-align: left; }
-        .active .vs-left, .active .vs-right { transform: translateX(0); }
-        .vs-badge { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0); background: #000; border: 2px solid #fff; color: #fff; font-family: 'Orbitron'; font-weight: 900; font-size: 2.5rem; width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 10; transition: transform 0.4s 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 0 30px rgba(255,255,255,0.5); }
-        .active .vs-badge { transform: translate(-50%, -50%) scale(1); }
-        .vs-list { list-style: none; padding: 0; margin: 0; font-family: var(--font-mono); font-size: 1.1rem; opacity: 0.8; z-index: 2; position: relative; }
-        .vs-left .vs-list li { color: #fca5a5; margin-bottom: 10px; }
-        .vs-right .vs-list li { color: #86efac; margin-bottom: 10px; }
-        .vs-title { font-family: var(--font-display); font-size: 2rem; margin-bottom: 20px; text-transform: uppercase; z-index: 2; position: relative; }
-        
-        /* Background Icons for VS */
-        .vs-bg-icon {
-            position: absolute;
-            font-size: 15rem;
-            opacity: 0.1;
-            z-index: 1;
-            transition: transform 0.5s;
+        /* --- DAFKAZE 3D TITLE --- */
+        .dafkaze-3d-title {
+            font-family: 'Black Ops One', cursive; 
+            font-size: clamp(4rem, 15vw, 8rem);
+            font-weight: 900; line-height: 1; text-transform: uppercase; color: #fff;
+            text-shadow: 1px 1px 0px #8b5cf6, 2px 2px 0px #8b5cf6, 3px 3px 0px #8b5cf6, 4px 4px 0px #8b5cf6, 5px 5px 0px #6366f1, 6px 6px 0px #6366f1, 7px 7px 0px #6366f1, 8px 8px 0px #6366f1, 20px 20px 20px rgba(0,0,0,0.5);
+            animation: color-cycle-3d 4s infinite alternate, float-3d 5s ease-in-out infinite;
+            transform-style: preserve-3d; margin-bottom: 10px;
         }
-        .vs-left .vs-bg-icon {
-            left: -20px; bottom: -20px; color: var(--danger); transform: rotate(15deg);
+        @keyframes color-cycle-3d {
+            0% { color: #fff; text-shadow: 1px 1px 0 #8b5cf6, 2px 2px 0 #8b5cf6, 3px 3px 0 #8b5cf6, 4px 4px 0 #8b5cf6, 5px 5px 0 #6366f1, 6px 6px 0 #6366f1; }
+            50% { color: #ccfbf1; text-shadow: 1px 1px 0 #06b6d4, 2px 2px 0 #06b6d4, 3px 3px 0 #06b6d4, 4px 4px 0 #06b6d4, 5px 5px 0 #0e7490, 6px 6px 0 #0e7490; }
+            100% { color: #fecdd3; text-shadow: 1px 1px 0 #f43f5e, 2px 2px 0 #f43f5e, 3px 3px 0 #f43f5e, 4px 4px 0 #f43f5e, 5px 5px 0 #be123c, 6px 6px 0 #be123c; }
         }
-        .vs-right .vs-bg-icon {
-            right: -20px; bottom: -20px; color: var(--success); transform: rotate(-15deg);
+        @keyframes float-3d {
+            0%, 100% { transform: translateY(0) rotateX(10deg) rotateY(-5deg); }
+            50% { transform: translateY(-15px) rotateX(0deg) rotateY(5deg); }
         }
-
-        /* --- TEXT ANIMATIONS --- */
-        .header-anim-enter { animation: tech-slide-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
-        @keyframes tech-slide-in { 0% { opacity: 0; transform: translateX(50px); clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); filter: blur(10px); } 50% { opacity: 1; filter: blur(0px); } 100% { opacity: 1; transform: translateX(0); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); } }
-        .typing-cursor::after { content: '_'; animation: blink 0.7s infinite; color: var(--accent-secondary); }
-        @keyframes blink { 50% { opacity: 0; } }
-        .pre-type-hidden { visibility: hidden; }
 
         /* --- UI OVERLAY --- */
         .ui-overlay { position: fixed; top: 40px; right: 0; left: 0; z-index: 100; padding: 20px; pointer-events: none; }
         header { text-align: center; pointer-events: auto; }
-        .nav-buttons { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 101; pointer-events: auto; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; width: 100%; }
-        .scroll-indicator { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); color: var(--accent-primary); font-size: 0.8rem; font-family: var(--font-mono); z-index: 10; animation: bounce-arrow 1.5s infinite; pointer-events: none; text-shadow: 0 0 10px var(--accent-primary); }
-        @keyframes bounce-arrow { 0%, 100% { transform: translate(-50%, 0); opacity: 0.5; } 50% { transform: translate(-50%, -10px); opacity: 1; } }
         
-        /* --- CONTENT STYLES --- */
-        .slide-header { font-family: var(--font-display); font-size: clamp(1.5rem, 5vw, 2.2rem); color: var(--accent-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px; direction: ltr; }
-        .resignation-letter { background: #fdfbf7; color: #1e293b; padding: 30px; position: relative; transform: rotate(-1deg); border-top: 5px solid var(--danger); font-family: 'Courier New', monospace; direction: rtl; }
-        .resignation-letter::after { content: "CONFIDENTIAL"; position: absolute; top: 15px; right: 15px; border: 3px solid var(--danger); color: var(--danger); font-weight: 900; padding: 5px; transform: rotate(10deg); opacity: 0.8; font-family: sans-serif; }
+        /* Updated Nav Buttons Container */
+        .nav-buttons { 
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
+            z-index: 101; pointer-events: auto; 
+            display: flex; gap: 15px; flex-wrap: wrap; 
+            justify-content: center; align-items: center; 
+            width: 100%; 
+        }
+        
+        /* SCROLL INSTRUCTION - UPDATED POSITIONING */
+        .scroll-instruction-container {
+            position: relative; 
+            bottom: auto; left: auto; transform: none;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 10px;
+            z-index: 105; pointer-events: none; 
+            opacity: 0; transition: opacity 0.5s ease-in-out;
+        }
+        .scroll-instruction-container.visible { opacity: 1; }
+        .scroll-mouse-icon {
+            width: 24px; height: 40px;
+            border: 2px solid var(--accent-secondary); border-radius: 12px;
+            position: relative; margin-bottom: 5px; box-shadow: 0 0 10px var(--accent-secondary);
+        }
+        .scroll-mouse-wheel {
+            width: 4px; height: 6px; background: #fff; border-radius: 2px;
+            position: absolute; top: 8px; left: 50%; transform: translateX(-50%); animation: scroll-wheel 1.5s infinite;
+        }
+        .scroll-text-info { 
+            font-family: var(--font-mono); font-size: 0.6rem; color: var(--accent-secondary); 
+            text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 5px var(--accent-secondary); 
+            white-space: nowrap; 
+        }
+        @keyframes scroll-wheel { 0% { top: 8px; opacity: 1; } 100% { top: 20px; opacity: 0; } }
+        
+        .slide-header { font-family: var(--font-display); font-size: 2rem; color: var(--accent-secondary); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 25px; direction: ltr; text-transform: uppercase; letter-spacing: 2px; }
+        
+        /* Table Styles */
+        .cost-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; font-family: var(--font-mono); direction: ltr; }
+        .cost-table td { padding: 15px; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .cost-table th { color: var(--text-secondary); padding: 10px; text-align: left; }
+        .total-row td { border-top: 1px solid var(--accent-secondary); color: var(--accent-secondary); font-weight: bold; }
 
-        /* Table */
-        .cost-table { width: 100%; border-collapse: separate; border-spacing: 0 15px; font-family: var(--font-mono); font-size: 1rem; direction: ltr; }
-        .cost-table td { padding: 20px; background: rgba(255,255,255,0.03); vertical-align: middle; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .cost-table th { color: var(--text-secondary); padding: 15px 20px; text-align: left; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; }
-        .cost-table .legacy-cost { color: var(--accent-highlight); font-size: 1.8rem; font-weight: 700; background: rgba(244, 63, 94, 0.1); text-shadow: 0 0 15px rgba(244, 63, 94, 0.4); border-radius: 8px; }
-        .cost-table .ai-cost { color: var(--accent-secondary); font-size: 1.8rem; font-weight: 700; background: rgba(16, 185, 129, 0.1); text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); border-radius: 8px; }
-        .total-row td { font-size: 1.2rem; border-top: 2px solid #333; background: transparent !important; }
-        
-        /* Blink Animation for Final Sum */
-        .blink-infinite {
-            animation: infinite-blink 0.5s infinite alternate;
-        }
-        @keyframes infinite-blink {
-            0% { opacity: 1; text-shadow: 0 0 20px var(--accent-highlight); color: #fff; }
-            100% { opacity: 0.7; text-shadow: 0 0 5px var(--accent-highlight); color: var(--accent-highlight); }
-        }
+        /* Formatting */
+        .blink-zero { animation: blink-fast 0.15s infinite; color: var(--accent-highlight); font-weight: bold; }
+        @keyframes blink-fast { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .strike-red { text-decoration: line-through; color: var(--danger) !important; text-decoration-color: var(--danger); }
+        .table-type-cursor::after { content: '|'; animation: blink-cursor 0.7s infinite; color: var(--accent-secondary); }
+        @keyframes blink-cursor { 50% { opacity: 0; } }
 
-        /* Gallery Updated */
-        .project-slide-grid { display: flex; overflow-x: auto; gap: 20px; padding-bottom: 25px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
-        .project-slide-grid::-webkit-scrollbar { height: 8px; }
-        .project-slide-grid::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 4px; }
-        .project-slide-grid::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 4px; }
-        
-        .gallery-item-3d { 
-            min-width: 260px; height: 220px; scroll-snap-align: center; 
-            background: #050510; /* Darker blue-ish base */
-            border: 1px solid #333; overflow: hidden; transition: 0.3s; 
-            cursor: pointer; position: relative; display: flex; flex-direction: column; 
-        }
-        .gallery-item-3d video { 
-            width: 100%; height: 160px; object-fit: cover; 
-            opacity: 0.8; transition: all 0.3s;
-            filter: sepia(100%) hue-rotate(190deg) saturate(200%) contrast(1.1);
-        }
-        .gallery-item-3d:hover { transform: translateY(-5px); border-color: var(--accent-secondary); box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3); }
-        .gallery-item-3d:hover video { opacity: 1; filter: none; }
-        .gallery-item-3d h5 { padding: 15px; margin: 0; color: #fff; font-size: 0.9rem; font-family: var(--font-mono); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #080808; flex-grow: 1; display:flex; align-items:center; justify-content:center; position: relative; z-index: 2; }
-        .gallery-item-3d::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 200%; height: 100%;
-            background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.1) 45%, rgba(99, 102, 241, 0.4) 50%, transparent 55%);
-            z-index: 3; pointer-events: none; transform: translateX(-150%) skewX(-20deg); animation: shimmer 4s infinite;
-        }
-        @keyframes shimmer { 0%, 70% { transform: translateX(-150%) skewX(-20deg); } 100% { transform: translateX(150%) skewX(-20deg); } }
-        
-        .gallery-scroll-hint { display: flex; justify-content: center; align-items: center; gap: 15px; color: var(--accent-secondary); font-family: var(--font-mono); font-size: 0.9rem; margin-bottom: 15px; opacity: 0.8; animation: pulse-horizontal 2s infinite ease-in-out; letter-spacing: 2px; }
-        @keyframes pulse-horizontal { 0%, 100% { transform: translateX(0); opacity: 0.6; } 50% { transform: translateX(10px); opacity: 1; text-shadow: 0 0 10px var(--accent-secondary); } }
-
-        /* Profile */
-        .slide-profile-img { width: 140px; height: 140px; border-radius: 50% !important; margin: 0 auto 20px; padding: 4px; background: linear-gradient(var(--accent-primary), var(--accent-secondary)); box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
-        .slide-profile-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 50% !important; border: 4px solid #000; }
-
-        /* Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.95); z-index: 200; display: none; justify-content: center; align-items: center; overflow-y: auto; backdrop-filter: blur(5px); }
-        .modal-content { max-width: 800px; width: 95%; margin: 20px auto; padding: 30px; background: #080808; border: 1px solid var(--accent-primary); position: relative; box-shadow: 0 0 50px rgba(99, 102, 241, 0.2); }
-        .modal-close { position: absolute; top: 15px; left: 15px; color: var(--accent-highlight); cursor: pointer; font-size: 1.5rem; transition: transform 0.2s; }
-        .modal-close:hover { transform: scale(1.1); }
-        .cv-timeline { border-right: 2px solid var(--accent-primary); padding-right: 30px; margin-top: 30px; direction: rtl; }
-        .cv-item { position: relative; margin-bottom: 30px; }
-        .cv-dot { position: absolute; top: 5px; right: -36px; width: 12px; height: 12px; background: var(--bg-dark); border: 2px solid var(--accent-secondary); border-radius: 50% !important; z-index: 2; }
-        
         /* Glitch Text */
         .glitch-text { position: relative; display: inline-block; }
         .glitch-text::before, .glitch-text::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); }
@@ -349,119 +385,137 @@
         @keyframes glitch-anim-1 { 0% { clip: rect(30px, 9999px, 10px, 0); } 100% { clip: rect(0, 0, 0, 0); } }
         @keyframes glitch-anim-2 { 0% { clip: rect(10px, 9999px, 80px, 0); } 100% { clip: rect(0, 0, 0, 0); } }
 
+        /* --- FLAMES STYLES --- */
+        .cyber-flame-container {
+            position: absolute;
+            bottom: 20px;
+            font-size: 6rem;
+            color: var(--accent-highlight);
+            filter: drop-shadow(0 0 15px var(--accent-highlight));
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 20;
+        }
+        .cyber-flame-left { left: 20px; transform: rotate(30deg); animation: flame-flicker-left 0.1s infinite alternate; }
+        .cyber-flame-right { right: 20px; transform: rotate(-30deg); animation: flame-flicker-right 0.1s infinite alternate; }
+        @keyframes flame-flicker-left { 0% { transform: rotate(30deg) scale(1); opacity: 0.8; } 100% { transform: rotate(30deg) scale(1.05); opacity: 1; } }
+        @keyframes flame-flicker-right { 0% { transform: rotate(-30deg) scale(1); opacity: 0.8; } 100% { transform: rotate(-30deg) scale(1.05); opacity: 1; } }
+
+        /* --- SIDE ICONS (Intro & Charts) --- */
+        .side-icon-container {
+            flex: 0 0 auto;
+            font-size: 4rem;
+            opacity: 0.8;
+            filter: drop-shadow(0 0 10px currentColor);
+            animation: pulse-side 3s infinite ease-in-out;
+        }
+        @keyframes pulse-side { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
+
+        /* --- NEW HUGE CYBER CHARTS (Slide 03) --- */
+        .cyber-chart-large {
+            font-size: 12rem; /* Significantly larger */
+            color: rgba(6, 182, 212, 0.2); /* Low opacity cyber cyan/transparent-ish */
+            filter: none !important; /* No glow explicitly requested */
+            text-shadow: 2px 2px 0px rgba(139, 92, 246, 0.5); /* Hard shadow for cyber look */
+            animation: chart-float 6s ease-in-out infinite;
+            flex: 0 0 auto;
+        }
+        @keyframes chart-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Mobile */
         @media (max-width: 600px) {
-            .page-slide-3d { width: 95vw; }
-            .slide-content-wrap { padding: 25px; }
-            .big-price { font-size: 2rem; }
-            .nav-buttons { bottom: 10px; gap: 10px; }
-            .btn { padding: 8px 16px; font-size: 0.8rem; }
-            .cv-timeline { padding-right: 15px; }
-            .cv-dot { right: -22px; }
-            .cost-table .legacy-cost, .cost-table .ai-cost { font-size: 1.4rem; }
-            .gallery-item-3d { min-width: 220px; height: 200px; }
-            .stamp-overlay { font-size: 3rem; }
-            .vs-container { flex-direction: column; }
-            .vs-half { border-bottom: 1px solid rgba(239,68,68,0.3); border-right: none; transform: translateY(-100%); }
-            .vs-right { transform: translateY(100%); }
-            .active .vs-left, .active .vs-right { transform: translateY(0); }
-            /* Mobile Flames adjustment */
-            .graphic-flame { width: 120px; height: 180px; }
-            .flame-left { transform: translate(-100%, -60%) rotate(-15deg); }
-            .flame-right { transform: translate(0%, -60%) rotate(15deg) scaleX(-1); }
-            .vs-bg-icon { font-size: 8rem; opacity: 0.15; }
+            .page-slide-3d { width: 95vw; min-height: 75vh; }
+            .slide-content-wrap { padding: 25px 15px; }
+            .stamp-overlay { font-size: 2rem; top: 10px; right: 10px; }
+            .slide-header { font-size: 1.5rem; text-align: center; }
+            .dafkaze-3d-title { font-size: 4rem; }
+            .card-title { font-size: 1.4rem; }
+            .card-visual { height: 40%; }
+            .cyber-flame-container { font-size: 4rem; bottom: 10px; } 
+            .side-icon-container, .cyber-chart-large { display: none; } /* Hide heavy side icons on mobile */
+        }
+        
+        /* Desktop */
+        @media (min-width: 900px) {
+            .menu-card-wide { flex-direction: row; }
+            .card-visual { width: 50%; height: 100%; border-bottom: none; border-right: 1px solid var(--accent-primary); }
+            .card-details { width: 50%; justify-content: center; }
+        }
+        
+        /* --- CUTLERY ANIMATION --- */
+        @keyframes cutting-motion {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-15deg) translateX(-5px); }
+            50% { transform: rotate(0deg) scale(1.1); }
+            75% { transform: rotate(15deg) translateX(5px); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+        .cutlery-icon {
+            color: var(--accent-highlight); 
+            filter: drop-shadow(0 0 10px var(--accent-highlight));
+            animation: cutting-motion 2s ease-in-out infinite;
+            display: inline-block;
         }
     </style>
 </head>
 <body ondblclick="handleDoubleTap()">
 
     <div class="bg-grid"></div>
-    <div class="bg-grid-2"></div>
-    
     <div class="scanlines"></div> 
     <div id="broadcast-noise" class="broadcast-noise"></div>
 
-    <!-- LED TICKER (Infinite) -->
+    <!-- LED TICKER -->
     <div class="led-ticker-wrap">
         <div class="led-ticker">
-            <!-- Set 1 -->
-            <div class="led-item"><i class="fa-solid fa-circle-info"></i> הנחיות: גלול או החלק למעבר</div>
-            <div class="led-item">/// לחיצה כפולה לדילוג מהיר ///</div>
-            <div class="led-item">תוכן: גלריית פרויקטים אינטראקטיבית</div>
-            <div class="led-item">השוואת טכנולוגיות: LEGACY vs AI</div>
-            <div class="led-item">/// יצירת קשר: orengamchi@gmail.com ///</div>
-            <div class="led-item"><i class="fa-brands fa-linkedin"></i> LinkedIn: Oren Gamchi</div>
-            <div class="led-item">יוצר: אורן גמצ'י - ארכיטקט טכני ומפתח AI</div>
-            <div class="led-item">/// גלול כדי להתחיל ///</div>
-            
-             <!-- Set 2 -->
-            <div class="led-item"><i class="fa-solid fa-circle-info"></i> הנחיות: גלול או החלק למעבר</div>
-            <div class="led-item">/// לחיצה כפולה לדילוג מהיר ///</div>
-            <div class="led-item">תוכן: גלריית פרויקטים אינטראקטיבית</div>
-            <div class="led-item">השוואת טכנולוגיות: LEGACY vs AI</div>
-            <div class="led-item">/// יצירת קשר: orengamchi@gmail.com ///</div>
-            <div class="led-item"><i class="fa-brands fa-linkedin"></i> LinkedIn: Oren Gamchi</div>
-            <div class="led-item">יוצר: אורן גמצ'י - ארכיטקט טכני ומפתח AI</div>
-            <div class="led-item">/// גלול כדי להתחיל ///</div>
+            <div class="led-item">:: SYSTEM STATUS: ONLINE :: MENU LOADED :: CHEF: OREN GAMCHI :: TODAY'S SPECIALS: AI GENERATED ::</div>
+            <div class="led-item">:: SYSTEM STATUS: ONLINE :: MENU LOADED :: CHEF: OREN GAMCHI :: TODAY'S SPECIALS: AI GENERATED ::</div>
         </div>
     </div>
 
-    <!-- --- 3D SCROLL VIEWPORT --- -->
+    <!-- 3D VIEWPORT -->
     <div class="viewport-3d">
-        <div class="stage-3d" id="stage-3d">
-            <!-- Slides injected by JS -->
-        </div>
+        <div class="stage-3d" id="stage-3d"></div>
     </div>
 
-    <!-- --- UI --- -->
+    <!-- UI -->
     <div class="ui-overlay">
         <header>
-            <h1 class="font-mono text-emerald-400 text-lg tracking-wider glitch-text" data-text="CAMPAIGN_MASTER_KIT_V3">CAMPAIGN_MASTER_KIT_V3</h1>
-            <div class="font-mono text-slate-400 text-xs">Oren Gamchi // Infinite Pivot</div>
+            <div class="font-mono text-slate-500 text-[10px] mt-1 tracking-widest">EST. 2026 // INFINITE FLAVORS</div>
         </header>
     </div>
     
-    <div class="scroll-indicator">
-        SCROLL <i class="fa-solid fa-angles-down"></i>
-    </div>
-    
+    <!-- NAVIGATION BAR -->
     <div class="nav-buttons">
-        <a href="https://dafkaze.com" target="_blank" class="btn" style="background:var(--accent-secondary); color:#000; border:none;"><i class="fa-solid fa-bolt"></i> DAFKAZE</a>
-        <a href="#" onclick="openModal('cv-modal'); return false;" class="btn" style="background:var(--accent-primary); color:#fff;"><i class="fa-solid fa-file-pdf"></i> CV FILE</a>
+        <a href="https://dafkaze.com" target="_blank" class="btn" style="background:var(--accent-secondary); color:#000; border:none; padding: 8px 16px; font-weight:bold;"><i class="fa-solid fa-utensils"></i> MAIN SITE</a>
+        
+        <!-- SCROLL INSTRUCTION ICON (MOVED HERE) -->
+        <div id="scroll-instruction" class="scroll-instruction-container">
+            <div class="scroll-mouse-icon">
+                <div class="scroll-mouse-wheel"></div>
+            </div>
+            <div class="scroll-text-info">SCROLL</div>
+        </div>
+
+        <a href="#" onclick="openModal('cv-modal'); return false;" class="btn" style="background:var(--accent-primary); color:#fff; padding: 8px 16px;"><i class="fa-solid fa-receipt"></i> RESUME</a>
     </div>
 
-    <!-- --- CV MODAL --- -->
-    <div id="cv-modal" class="modal-overlay" onclick="if(event.target.id === 'cv-modal') closeModal('cv-modal')">
-        <div class="modal-content" dir="rtl">
-            <div class="modal-close" onclick="closeModal('cv-modal')"><i class="fa-solid fa-xmark"></i></div>
-            <h2 class="font-mono text-2xl text-indigo-400 border-b border-gray-800 pb-4 mb-4 glitch-text" data-text="TECHNICAL_RESUME" dir="ltr">TECHNICAL_RESUME_V3.0</h2>
-            <div class="cv-timeline">
-                <div class="cv-item">
-                    <div class="cv-dot"></div>
-                    <div class="text-emerald-400 font-bold text-xl">2025</div>
-                    <div class="text-white text-lg">Technical Artist / AI Architect</div>
-                    <div class="text-slate-400 text-sm mt-1">בניית מנועי פיזיקה (Three.js), אוטומציה של תהליכי קריאייטיב ושימוש ב-Generative AI ליצירת חוויות WebGL מתקדמות.</div>
-                </div>
-                <div class="cv-item">
-                    <div class="cv-dot"></div>
-                    <div class="text-emerald-400 font-bold text-xl">2024</div>
-                    <div class="text-white text-lg">UX/UI & Shopping Tech</div>
-                    <div class="text-slate-400 text-sm mt-1">פיתוח ממשקים אינטראקטיביים לערוץ הקניות, אופטימיזציה של חווית משתמש מבוססת דאטה.</div>
-                </div>
-                <div class="cv-item">
-                    <div class="cv-dot"></div>
-                    <div class="text-emerald-400 font-bold text-xl">2023</div>
-                    <div class="text-white text-lg">Natural Intelligence</div>
-                    <div class="text-slate-400 text-sm mt-1">Motion Design & Frontend Prototyping.</div>
-                </div>
-                <div class="cv-item">
-                    <div class="cv-dot"></div>
-                    <div class="text-emerald-400 font-bold text-xl">2021</div>
-                    <div class="text-white text-lg">Freelance Motion Expert</div>
-                    <div class="text-slate-400 text-sm mt-1">עבודה עם מותגי על (Microsoft, Playtika) ביצירת סרטוני תדמית ומוצר.</div>
-                </div>
+    <!-- MODAL -->
+    <div id="cv-modal" class="modal-overlay" onclick="if(event.target.id === 'cv-modal') closeModal('cv-modal')" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; justify-content:center; align-items:center;">
+        <div class="modal-content" dir="rtl" style="width:90%; max-width:600px; background:#111; border:1px solid #333; padding:20px; position:relative;">
+            <div class="modal-close" onclick="closeModal('cv-modal')" style="color:#fff; position:absolute; top:10px; left:10px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></div>
+            <h2 class="font-mono text-xl text-cyan-400 border-b border-gray-800 pb-2 mb-4" dir="ltr">CHEF'S_RESUME.log</h2>
+            <div style="font-family: var(--font-mono); line-height: 1.6; color: #ccc;">
+                 <p class="mb-2"><span style="color:var(--accent-highlight)">> CURRENT ROLE:</span> Tech Artist & AI Chef</p>
+                 <p class="mb-2"><span style="color:var(--accent-secondary)">> EXP:</span> 10+ Years Legacy / 3+ Years AI</p>
+                 <p class="mb-4"><span style="color:var(--accent-primary)">> SPECIALTY:</span> WebGL, React, Physics Engines</p>
+                 <hr style="border-color:#333; margin: 15px 0;">
+                 <p>מבשל חוויות דיגיטליות על אש גבוהה. עברתי מעיצוב ידני לאוטומציה מלאה.</p>
             </div>
-             <div style="text-align:center; margin-top:30px;">
-                 <div class="btn" style="border:1px solid var(--danger); color:var(--danger);" onclick="closeModal('cv-modal')">CLOSE TERMINAL</div>
+             <div style="text-align:center; margin-top:20px;">
+                 <div class="btn" style="border:1px solid var(--danger); color:var(--danger); display:inline-block; padding:5px 15px; cursor:pointer;" onclick="closeModal('cv-modal')">CLOSE</div>
             </div>
         </div>
     </div>
@@ -470,229 +524,165 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // --- Data ---
+        // --- Data (Menu Items) - UPDATED with 'weight' for Heavy Load ---
         const galleryBaseUrl = "https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2Fthumbs_video%2F";
+        
         const galleryFiles = [
-            { f: "THUMB__KISHKASHTA.mp4", t: "Kishkashta", u: "https://dafkaze.com/projects/kishkashta" },
-            { f: "THUMB_fishy.mp4", t: "Fishy News", u: "https://dafkaze.com/projects/fishy-news" },
-            { f: "THUMB_CITY.mp4", t: "City Timelapse", u: "https://dafkaze.com/projects/city-timelapse" },
-            { f: "THUMB_knesset.mp4", t: "AI Knesset", u: "https://dafkaze.com/projects/ai-knesset" },
-            { f: "thumb_globe.mp4", t: "Globe", u: "https://dafkaze.com/projects/globe-gallery" },
-            { f: "THUMB_GROVEBOX.mp4", t: "Grovebox", u: "https://dafkaze.com/projects/grove-box" },
-            { f: "thumb_blackhole.mp4", t: "Blackhole", u: "https://dafkaze.com/projects/black-hole-simulator" },
-            { f: "thumb_gallery.mp4", t: "Cyber Gallery", u: "https://dafkaze.com/projects/cyber-gallery" },
-            { f: "thumb_like_machine.mp4", t: "Like Machine", u: "https://dafkaze.com/projects/like-machine" },
-            { f: "thumb_segmentation.mp4", t: "Segmentation", u: "https://dafkaze.com/projects/rt-segmentation" },
-            { f: "thumb_wow_screen.mp4", t: "Wow Screen", u: "https://dafkaze.com/projects/interactive-webcam" },
-            { f: "THUMB__ANTS.mp4", t: "Ants", u: "https://dafkaze.com/projects/ant-colony-simulation" },
-            { f: "THUMB_pegs.mp4", t: "Pegs", u: "https://dafkaze.com/projects/peg-solitaire-game" },
-            { f: "thumb_bg_maker.mp4", t: "Bg Maker", u: "https://dafkaze.com/projects/blue-white-app" },
-            { f: "thumb_newspaper.mp4", t: "Newspaper", u: "https://dafkaze.com/projects/cinematic-tool" },
-            { f: "thumb_video_node.mp4", t: "Video Node", u: "https://dafkaze.com/projects/video-node-editor" }
+            { f: "THUMB__KISHKASHTA.mp4", t: "Kishkashta", u: "https://dafkaze.com/projects/kishkashta", tech: "SVG, Storytelling", time: "24h", spice: 2, desc: "A nostalgic journey through classic storytelling utilizing vector graphics and smooth animations.", stamp: "CLASSIC", weight: 1 },
+            { f: "THUMB_fishy.mp4", t: "Fishy News", u: "https://dafkaze.com/projects/fishy-news", tech: "News API, Canvas", time: "12h", spice: 3, desc: "Real-time news aggregator visualized as an underwater ecosystem. Fish swim based on trends.", stamp: "LIVE_DATA", weight: 2 },
+            { f: "THUMB_CITY.mp4", t: "City Timelapse", u: "https://dafkaze.com/projects/city-timelapse", tech: "Midjourney, Frame Interpolation", time: "8h", spice: 4, desc: "AI-generated urban evolution. Thousands of synthetic frames blended into a coherent timeline.", stamp: "SYNTHETIC", weight: 3 },
+            { f: "THUMB_knesset.mp4", t: "AI Knesset", u: "https://dafkaze.com/projects/ai-knesset", tech: "Generative Audio, React", time: "48h", spice: 5, desc: "Satirical simulation using voice synthesis to generate endless debates between AI politicians.", stamp: "SATIRE", weight: 2 },
+            { f: "thumb_globe.mp4", t: "Globe Gallery", u: "https://dafkaze.com/projects/globe-gallery", tech: "Three.js, Shaders", time: "36h", spice: 3, desc: "Interactive 3D globe visualization plotting digital assets across physical coordinates.", stamp: "GLOBAL", weight: 3 },
+            { f: "THUMB_GROVEBOX.mp4", t: "Grovebox", u: "https://dafkaze.com/projects/grove-box", tech: "Physics, Interactive Audio", time: "18h", spice: 2, desc: "Musical sandbox where physics collisions trigger generative soundscapes.", stamp: "PHYSICS", weight: 2 },
+            { f: "thumb_blackhole.mp4", t: "Blackhole Sim", u: "https://dafkaze.com/projects/black-hole-simulator", tech: "GLSL Shaders, Math", time: "∞", spice: 5, desc: "Raymarching experiment simulating gravitational lensing around a singularity.", stamp: "VOID", weight: 3 },
+            { f: "thumb_gallery.mp4", t: "Cyber Gallery", u: "https://dafkaze.com/projects/cyber-gallery", tech: "3D DOM, CSS3D", time: "16h", spice: 2, desc: "Immersive 3D gallery space built entirely with CSS transformations and DOM elements.", stamp: "CSS_3D", weight: 2 },
+            { f: "thumb_like_machine.mp4", t: "Like Machine", u: "https://dafkaze.com/projects/like-machine", tech: "Social API, Particles", time: "10h", spice: 1, desc: "Visual commentary on social media dopamine loops using particle systems.", stamp: "DOPAMINE", weight: 1 },
+            { f: "thumb_segmentation.mp4", t: "RT Segmentation", u: "https://dafkaze.com/projects/rt-segmentation", tech: "TensorFlow.js, Webcam", time: "32h", spice: 4, desc: "Browser-based computer vision removing backgrounds in real-time video streams.", stamp: "VISION", weight: 3 },
+            { f: "thumb_wow_screen.mp4", t: "Wow Screen", u: "https://dafkaze.com/projects/interactive-webcam", tech: "Motion Detection, Filters", time: "14h", spice: 2, desc: "Interactive mirror installation applying digital filters based on user movement.", stamp: "MOTION", weight: 3 },
+            { f: "THUMB__ANTS.mp4", t: "Ant Colony", u: "https://dafkaze.com/projects/ant-colony-simulation", tech: "Emergent Behavior, Canvas", time: "40h", spice: 5, desc: "Complex simulation of ant pheromone trails and emergent swarm intelligence.", stamp: "COLONY", weight: 3 },
+            { f: "THUMB_pegs.mp4", t: "Pegs", u: "https://dafkaze.com/projects/peg-solitaire-game", tech: "Game Logic, Logic", time: "6h", spice: 1, desc: "Classic puzzle game implementation with polished UI and state management.", stamp: "LOGIC", weight: 1 },
+            { f: "thumb_bg_maker.mp4", t: "Bg Maker", u: "https://dafkaze.com/projects/blue-white-app", tech: "Canvas API, Generators", time: "8h", spice: 2, desc: "Tool for generating procedural abstract backgrounds for national holidays.", stamp: "GEN_ART", weight: 1 }
+        ];
+
+        // --- Bill Data for Animation ---
+        const billData = [
+            { item: "Adobe Suite", legacy: 720, price: 0, isMoney: true },
+            { item: "Wix Subscription", legacy: 324, price: 0, isMoney: true },
+            { item: "Unity Pro", legacy: 2040, price: 0, isMoney: true },
+            { item: "Dev Time", legacy: 200, price: 20, isMoney: false, suffix: 'h' },
+            { item: "Creativity", legacy: "High", price: "Unbound", isText: true }
         ];
 
         const pageSlides = [
-            // SLIDE 0
+            // SLIDE 0: INTRO - UPDATED SIDE ICONS RESTORED
             {
-                title: "00_ALERT: SYSTEM_MSG",
+                title: "00_WELCOME",
+                stamp: "OPEN",
                 content: `
-                    <div class="fired-container">
-                        <svg class="graphic-flame flame-left" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="flameGrad" x1="0%" y1="100%" x2="0%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#ffeb3b;stop-opacity:1" />
-                                    <stop offset="50%" style="stop-color:#ff9800;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#f44336;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <path fill="url(#flameGrad)" d="M50,150 C20,130 0,100 0,70 C0,40 20,10 50,0 C80,10 100,40 100,70 C100,100 80,130 50,150 Z M50,150 Q70,120 70,80 Q70,40 50,20 Q30,40 30,80 Q30,120 50,150 Z" />
-                            <path fill="#fff" opacity="0.6" d="M50,120 Q60,100 60,70 Q60,40 50,30 Q40,40 40,70 Q40,100 50,120 Z" />
-                        </svg>
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; position:relative;">
                         
-                        <div class="fired-text">YOU'RE<br>FIRED</div>
-                        <div class="fired-subtitle">// PREVIOUS_VERSION_TERMINATED //</div>
+                        <!-- ADDED BACK SIDE ICONS AS REQUESTED -->
+                        <div style="position:absolute; left:20px; top:50%; transform:translateY(-50%); font-size:6rem; opacity:0.8;">
+                            <i class="fa-solid fa-utensils cutlery-icon"></i>
+                        </div>
+                        <div style="position:absolute; right:20px; top:50%; transform:translateY(-50%); font-size:6rem; opacity:0.8;">
+                            <i class="fa-solid fa-utensils cutlery-icon"></i>
+                        </div>
+
+                        <div style="font-size: 5rem; margin-bottom: 20px; display: flex; gap: 30px;">
+                            <i class="fa-solid fa-utensils cutlery-icon"></i>
+                        </div>
+                        <h1 class="dafkaze-3d-title">DAFKAZE</h1>
+                        <h2 class="glitch-text" data-text="CYBER BISTRO" style="font-family:var(--font-display); font-size:clamp(1.5rem, 4vw, 2.5rem); margin-bottom:10px; color:var(--text-secondary); letter-spacing:4px;">CYBER BISTRO</h2>
+                        <!-- APPLIED NEW FONT & ORIGINAL TEXT RESTORED -->
+                        <div class="type-me" style="font-family: var(--font-tech-he); font-weight: 300; font-size: 1.2rem; color:#888; max-width:500px; line-height: 1.6;">
+                            ברוכים הבאים למסעדה הדיגיטלית שלי.<br>
+                            כל מנה בתפריט היא קוד טהור, מוגשת רותחת היישר מה-GPU.<br>
+                            אין צורך להשאיר טיפ.
+                        </div>
+                    </div>
+                `
+            },
+            // SLIDE 1: CHEF PROFILE
+            {
+                title: "01_THE_CHEF",
+                stamp: "MASTER",
+                content: `
+                    <div style="display:flex; align-items:center; justify-content:center; height:100%; gap: 40px; flex-wrap: wrap;">
                         
-                        <svg class="graphic-flame flame-right" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="flameGrad2" x1="0%" y1="100%" x2="0%" y2="0%">
-                                    <stop offset="0%" style="stop-color:#ffeb3b;stop-opacity:1" />
-                                    <stop offset="50%" style="stop-color:#ff9800;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#f44336;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <path fill="url(#flameGrad2)" d="M50,150 C20,130 0,100 0,70 C0,40 20,10 50,0 C80,10 100,40 100,70 C100,100 80,130 50,150 Z M50,150 Q70,120 70,80 Q70,40 50,20 Q30,40 30,80 Q30,120 50,150 Z" />
-                            <path fill="#fff" opacity="0.6" d="M50,120 Q60,100 60,70 Q60,40 50,30 Q40,40 40,70 Q40,100 50,120 Z" />
-                        </svg>
-                    </div>
-                `
-            },
-            // SLIDE 1
-            {
-                title: "01_INIT: RESIGNATION",
-                stamp: "DEPRECATED",
-                content: `
-                    <div class="resignation-letter">
-                        <strong class="type-me" style="color:#555;">לכבוד:</strong> אורן גמצ'י (Legacy v2.0)<br>
-                        <strong class="type-me" style="color:#555;">מאת:</strong> הדירקטוריון (האני החדש)<br><br>
-                        <p class="type-me">אורן שלום,</p>
-                        <p class="type-me">לאחר בחינה מעמיקה, הגענו למסקנה שהזזת פיקסלים ידנית ב-Photoshop היא נחלת העבר. זה לא סקיילבילי.</p>
-                        <p class="type-me">החל מהבוקר, תפקידך כ"ביצועיסט" מבוטל. אתה מקודם לתפקיד "Technical Architect".</p>
-                        <p class="type-me">העכבר שלך הוחרם. מעתה אתה כותב קוד ומאמן מודלים.</p>
-                        <div style="margin-top:30px; text-align:left;" class="type-me">בברכה,<br>System Admin.</div>
-                    </div>
-                `
-            },
-            // SLIDE 2
-            {
-                title: "02_CONFLICT: EVOLUTION",
-                content: `
-                    <div class="vs-container" dir="ltr">
-                        <div class="vs-half vs-left">
-                            <i class="fa-solid fa-chair vs-bg-icon"></i>
-                            <h4 class="vs-title" style="color:var(--danger)">LEGACY</h4>
-                            <ul class="vs-list">
-                                <li>Adobe After Effects</li>
-                                <li>Adobe Premiere</li>
-                                <li>Manual Physics</li>
-                                <li>Render Times: High</li>
-                                <li>Sleep: Low</li>
-                            </ul>
+                        <!-- Left Icon: Smartphone -->
+                        <div class="side-icon-container">
+                            <i class="fa-solid fa-mobile-screen-button" style="color: var(--accent-secondary);"></i>
                         </div>
-                        <div class="vs-half vs-right">
-                            <i class="fa-solid fa-train-subway vs-bg-icon"></i>
-                            <h4 class="vs-title" style="color:var(--success)">AI / WEBGL</h4>
-                            <ul class="vs-list">
-                                <li>Runway / Midjourney</li>
-                                <li>Three.js / React</li>
-                                <li>Real-time Physics</li>
-                                <li>Render Times: Zero</li>
-                                <li>Velocity: Max</li>
-                            </ul>
+
+                        <!-- Main Profile -->
+                        <div style="display:flex; flex-direction:column; align-items:center;">
+                            <div style="width:120px; height:120px; border-radius:50%; border:3px solid var(--accent-primary); overflow:hidden; margin-bottom:20px; box-shadow:0 0 20px rgba(139, 92, 246, 0.5);">
+                                <img src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Foren_pics_masters%2Foren%20blue.png?alt=media" style="width:100%; height:100%; object-fit:cover;">
+                            </div>
+                            <h3 style="font-family:var(--font-display); font-size:2rem;">OREN GAMCHI</h3>
+                            <div style="font-family:var(--font-mono); color:var(--accent-secondary); margin-bottom:20px;">HEAD CHEF & ARCHITECT</div>
+                            <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:8px; max-width:400px; text-align:center; font-family:var(--font-sans);">
+                                <p class="type-me">"אני מבשל קוד ברכבת. מחליף סכינים במקלדות, ורכיבים בפיקסלים. המטרה שלי היא ליצור חוויות שמשאירות טעם של עוד."</p>
+                            </div>
                         </div>
-                        <div class="vs-badge">VS</div>
+
+                        <!-- Right Icon: Laptop -->
+                        <div class="side-icon-container">
+                            <i class="fa-solid fa-laptop-code" style="color: var(--accent-primary);"></i>
+                        </div>
+
                     </div>
                 `
             },
-            // SLIDE 3
+            // SLIDE 2: THE MENU
             {
-                title: "03_DATA: COST_ANALYSIS",
-                stamp: "OPTIMIZED",
+                title: "02_MAIN_COURSES",
+                stamp: "GALLERY",
                 content: `
-                    <h3 class="type-me" style="color:var(--accent-highlight); margin-bottom:15px; font-family:var(--font-mono); font-size:1rem;">MANUAL VS AI COST EFFICIENCY</h3>
-                    <div class="terminal" style="padding:20px; border:1px solid #333; background:rgba(0,0,0,0.5);">
-                        <table class="cost-table">
-                            <thead><tr><th>TOOL</th><th>LEGACY ($)</th><th>AI ($)</th></tr></thead>
-                            <tbody>
-                                <tr><td>Adobe Cloud</td><td class="legacy-cost" data-val="720" data-prefix="$">$720</td><td class="ai-cost" data-val="0" data-prefix="$">$0</td></tr>
-                                <tr><td>WIX Premium</td><td class="legacy-cost" data-val="348" data-prefix="$">$348</td><td class="ai-cost" data-val="0" data-prefix="$">$0</td></tr>
-                                <tr><td>Unity Assets</td><td class="legacy-cost" data-val="4000" data-prefix="$" data-suffix="+">$4000+</td><td class="ai-cost" data-val="0" data-prefix="$">$0</td></tr>
-                                <tr class="total-row"><td style="color:white; padding-top:20px; font-weight:bold;">TOTAL / YEAR</td><td class="legacy-cost blink-infinite" data-val="5500" data-prefix="~$" style="border-radius:0 0 0 12px; margin-top:10px;">~$5.5k</td><td class="ai-cost" data-val="0" data-prefix="$" style="border-radius:0 0 12px 0; margin-top:10px;">$0</td></tr>
-                            </tbody>
-                        </table>
+                    <div class="type-me" style="color:#888; margin-bottom:10px; font-family:var(--font-mono); text-align:center; font-size:0.8rem; opacity:0.7;">
+                        /// DRAG LEFT/RIGHT OR USE ARROWS ///
+                    </div>
+                    <div style="position:relative; width:100%; flex-grow:1; overflow:hidden;">
+                        <div class="gallery-nav-btn gallery-prev" onclick="scrollGallery(-1)"><i class="fa-solid fa-chevron-left"></i></div>
+                        <div class="gallery-nav-btn gallery-next" onclick="scrollGallery(1)"><i class="fa-solid fa-chevron-right"></i></div>
+                        <div id="menu-scroll-container" class="menu-scroll-container"></div>
                     </div>
                 `
             },
-            // SLIDE 4
+            // SLIDE 3: COST ANALYSIS - UPDATED HUGE ICONS
             {
-                title: "04_STATUS: ONLINE",
-                stamp: "VERIFIED",
+                title: "03_THE_BILL",
+                stamp: "PAID",
                 content: `
-                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
-                        <div class="slide-profile-img"><img src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Foren_pics_masters%2Foren%20blue.png?alt=media" alt="Oren"></div>
-                        <h2 class="glitch-text" data-text="אורן גמצ'י" style="text-align:center; font-size:2.5rem; font-weight:800; margin:10px 0; font-family:var(--font-display);">אורן גמצ'י</h2>
-                        <div class="type-me" style="text-align:center; color:#888; font-family:var(--font-mono); margin-bottom:15px;">Web Designer <span style="color:var(--accent-primary); margin:0 10px;">➜</span> Technical Artist</div>
-                        <p class="type-me" style="text-align:center; font-size:1.1rem; max-width:600px; line-height:1.6; color:#ccc;">
-                            בונה מנועי פיזיקה ברכבת התחתית. שובר את הקיר שבין עיצוב לקוד.<br>
-                            הופך רעיונות למציאות אינטראקטיבית באמצעות AI ו-WebGL.
+                    <div style="display:flex; align-items:center; justify-content:center; height:100%; gap:20px;">
+                        
+                        <!-- Left Icon: Bar Chart (Huge) -->
+                        <i class="fa-solid fa-chart-simple cyber-chart-large"></i>
+
+                        <div style="max-width:600px; width:100%; z-index:10;">
+                            <div class="terminal" style="padding:20px; background:rgba(0,0,0,0.8);">
+                                <div style="text-align:center; border-bottom:1px dashed #555; padding-bottom:10px; margin-bottom:15px; font-family:var(--font-mono);">
+                                    RECEIPT #90210<br>SERVER: AI_AGENT_007
+                                </div>
+                                <table class="cost-table">
+                                    <thead><tr><th>ITEM</th><th>LEGACY COST</th><th>OUR PRICE</th></tr></thead>
+                                    <tbody id="bill-table-body"></tbody>
+                                    <tfoot id="bill-table-foot" style="display:none;">
+                                        <tr class="total-row"><td>TOTAL SAVINGS</td><td></td><td class="blink-infinite">100%</td></tr>
+                                    </tfoot>
+                                </table>
+                                <div style="text-align:center; margin-top:20px; font-family:var(--font-display); font-size:0.8rem; color:#666;">THANK YOU FOR DINING WITH US</div>
+                            </div>
+                        </div>
+
+                        <!-- Right Icon: Pie Chart (Huge) -->
+                        <i class="fa-solid fa-chart-pie cyber-chart-large"></i>
+
+                    </div>
+                `
+            },
+            // SLIDE 4: CONTACT
+            {
+                title: "04_FEEDBACK",
+                stamp: "WRITE_US",
+                content: `
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; position:relative;">
+                        <!-- FLAMES -->
+                        <div class="cyber-flame-container cyber-flame-left"><i class="fa-solid fa-fire"></i></div>
+                        <div class="cyber-flame-container cyber-flame-right"><i class="fa-solid fa-fire"></i></div>
+
+                        <i class="fa-solid fa-comment-dots" style="font-size:3rem; color:var(--accent-highlight); margin-bottom:20px;"></i>
+                        <h3 style="font-family:var(--font-display); font-size:1.8rem; margin-bottom:10px;">COMPLIMENTS TO THE CHEF?</h3>
+                        <p class="type-me" style="text-align:center; color:#ccc; max-width:500px; margin-bottom:30px;">
+                            אהבתם את האוכל? יש לכם רעיון למנה חדשה? אני זמין לשיתופי פעולה, פרויקטים, או סתם קפה וקוד.
                         </p>
-                    </div>
-                `
-            },
-            // SLIDE 5
-            {
-                title: "05_STRATEGY: INVENTORY",
-                stamp: "UPGRADED",
-                content: `
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; text-align:left; height:100%;" dir="ltr">
-                        <div style="border:1px solid rgba(239, 68, 68, 0.3); padding:20px; background:rgba(239, 68, 68, 0.05);">
-                            <h4 style="color:var(--danger); margin-bottom:20px; font-family:var(--font-display); border-bottom:1px solid var(--danger); padding-bottom:5px;">LEGACY STACK</h4>
-                            <ul style="font-family:var(--font-mono); color:var(--text-secondary); font-size:0.9rem; list-style:none; padding:0;">
-                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Adobe Creative Cloud</span> <span style="color:var(--danger);">$60/mo</span></li>
-                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Cinema 4D / Maya</span> <span style="color:var(--danger);">$200/mo</span></li>
-                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Wix Premium</span> <span style="color:var(--danger);">$30/mo</span></li>
-                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Stock Assets</span> <span style="color:var(--danger);">$50/mo</span></li>
-                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Render Farm</span> <span style="color:var(--danger);">$100+</span></li>
-                            </ul>
+                        <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
+                            <!-- ADDED FACEBOOK & GMAIL -->
+                            <a href="mailto:ORENREDE@GMAIL.COM" class="btn" style="padding:10px 25px; background:rgba(255,255,255,0.1); color:#fff; text-decoration:none;"><i class="fa-solid fa-envelope"></i> EMAIL</a>
+                            <a href="https://linkedin.com/in/orengamchi" target="_blank" class="btn" style="padding:10px 25px; background:var(--accent-secondary); color:#000; text-decoration:none;"><i class="fa-brands fa-linkedin"></i> LINKEDIN</a>
+                            <a href="https://facebook.com/orengamchi" target="_blank" class="btn" style="padding:10px 25px; background:#3b5998; color:#fff; border:none; text-decoration:none;"><i class="fa-brands fa-facebook"></i> FACEBOOK</a>
                         </div>
-                        <div style="border:1px solid rgba(16, 185, 129, 0.3); padding:20px; background:rgba(16, 185, 129, 0.05);">
-                            <h4 style="color:var(--success); margin-bottom:20px; font-family:var(--font-display); border-bottom:1px solid var(--success); padding-bottom:5px;">AI / CODE STACK</h4>
-                            <ul style="font-family:var(--font-mono); color:var(--text-secondary); font-size:0.9rem; list-style:none; padding:0;">
-                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>VS Code + Cursor</span> <span style="color:var(--success);">$20/mo</span></li>
-                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Three.js / React</span> <span style="color:var(--success);">OPEN SRC</span></li>
-                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Midjourney</span> <span style="color:var(--success);">$30/mo</span></li>
-                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Runway Gen-2</span> <span style="color:var(--success);">$15/mo</span></li>
-                                <li style="margin-bottom:12px; display:flex; justify-content:space-between;"><span>Google Firebase</span> <span style="color:var(--success);">FREE TIER</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                `
-            },
-            // SLIDE 6
-            {
-                title: "06_OUTPUT: GALLERY",
-                stamp: "APPROVED",
-                content: `
-                    <p class="type-me" style="color:#888; margin-bottom:10px; font-family:var(--font-mono); font-size:0.9rem;">Interactive WebGL & Physics Experiments</p>
-                    <div class="gallery-scroll-hint">
-                        <i class="fa-solid fa-angles-right"></i>
-                        <span>SCROLL / DRAG</span>
-                        <i class="fa-solid fa-angles-left"></i>
-                    </div>
-                    <div id="project-slide-grid" class="project-slide-grid"></div>
-                `
-            },
-            // SLIDE 7
-            {
-                title: "07_LOG: INVOICE",
-                stamp: "CANCELED",
-                content: `
-                    <div style="background:#fff; color:#000; padding:30px; position:relative; max-width:400px; margin:0 auto; direction:ltr; box-shadow:0 10px 30px rgba(0,0,0,0.5); transform:rotate(2deg);">
-                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #000; padding-bottom:10px; margin-bottom:20px;">
-                            <h4 style="margin:0; font-weight:bold; font-size:1.2rem;">Monthly Invoice</h4>
-                            <span style="font-family:var(--font-mono);">#00942</span>
-                        </div>
-                        <div style="margin:15px 0; color:#555; font-family:var(--font-mono);">
-                            <div class="type-me" style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Adobe Creative Cloud</span><span style="text-decoration:line-through;">$59.99</span></div>
-                            <div class="type-me" style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Wix Premium</span><span style="text-decoration:line-through;">$29.00</span></div>
-                            <div class="type-me" style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Stock Assets</span><span style="text-decoration:line-through;">$150.00</span></div>
-                        </div>
-                        <div style="border-top:2px dashed #000; padding-top:15px; font-weight:bold; display:flex; justify-content:space-between; font-size:1.2rem;">
-                            <span>AI BRAIN</span><span>FREE</span>
-                        </div>
-                    </div>
-                `
-            },
-            // SLIDE 8
-            {
-                title: "08_END: CONTACT",
-                stamp: "HIRE_ME",
-                content: `
-                    <div style="background:#111; padding:25px; border-left:4px solid var(--accent-primary); margin-bottom:30px; border-radius:0 12px 12px 0;">
-                        <span class="type-me" style="color:#6a9955; font-family:var(--font-mono);">/* תודה לשותפים: Adobe, Unity, Wix. */</span><br>
-                        <p class="type-me" style="margin:10px 0; line-height:1.6;">אנחנו נפרדים לא כי אתם לא טובים, אלא כי הדרך שלי השתנתה.<br>
-                        העתיד הוא קוד פתוח, מהיר ואישי.</p>
-                    </div>
-                    <div style="border-top:1px solid #333; padding-top:30px; position:relative; min-height:200px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                        <h3 class="glitch-text" data-text="READY TO PIVOT?" style="font-size:2rem; margin-bottom:25px; color:#fff; font-family:var(--font-display); z-index:2; text-shadow:0 2px 10px rgba(0,0,0,0.8);">READY TO PIVOT?</h3>
-                         <!-- Video BG -->
-                        <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; opacity:0.3; overflow:hidden; border-radius:12px;">
-                            <video autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;"><source src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2FTrain_dev_vid_master.mp4?alt=media"></video>
-                        </div>
-                        <div style="position:relative; z-index:2; display:flex; gap:15px; flex-wrap:wrap; justify-content:center;">
-                            <a href="mailto:orengamchi@gmail.com" class="btn" style="background:rgba(0,0,0,0.8); border-color:#fff; backdrop-filter:blur(4px);"><i class="fa-solid fa-envelope"></i> Email</a>
-                            <a href="https://www.linkedin.com/in/orengamchi/" class="btn" style="background:rgba(0,0,0,0.8); border-color:#0077b5; color:#0077b5; backdrop-filter:blur(4px);"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-                        </div>
-                        <p class="type-me" style="margin-top:20px; font-size:0.7rem; color:#888; position:relative; z-index:2; font-family:var(--font-mono);">© 2025 DAFKAZE</p>
                     </div>
                 `
             }
@@ -700,13 +690,83 @@
 
         // --- INFINITE SCROLL ENGINE ---
         let virtualScroll = 0;
-        let currentSlideIndex = 0; // Integer index tracking
-        const spacing = 1500;
+        let currentSlideIndex = 0; 
+        const spacing = 1200; 
         const totalSlides = pageSlides.length;
         const loopDistance = spacing * totalSlides;
         
         let isScrollLocked = false;
         let lastTouchTime = 0;
+        let isDragging = false;
+        let startX, scrollLeft;
+        let billAnimationPlayed = false;
+
+        function renderMenu(container) {
+            const createCardHtml = (item) => {
+                 const spiceLevel = Array(item.spice).fill('<i class="fa-solid fa-pepper-hot neon-icon hot"></i>').join(' ');
+                 const rot = Math.floor(Math.random() * 20) - 10;
+                 
+                 // --- LOGIC FOR ICONS ---
+                 let hardwareIcon = '';
+                 if(item.tech.toLowerCase().includes('audio') || item.tech.toLowerCase().includes('voice')) {
+                     hardwareIcon = '<i class="fa-solid fa-microphone-lines neon-icon tool" title="Audio Input"></i><span>VOICE</span>';
+                 } else if (item.tech.toLowerCase().includes('webcam') || item.tech.toLowerCase().includes('vision') || item.tech.toLowerCase().includes('tensorflow')) {
+                     hardwareIcon = '<i class="fa-solid fa-video neon-icon tool" title="Camera Input"></i><span>VISION</span>';
+                 } else {
+                     hardwareIcon = '<i class="fa-solid fa-keyboard neon-icon tool" title="Keyboard/Mouse"></i><span>INPUT</span>'; 
+                 }
+
+                 let heavyIcon = '';
+                 if(item.weight >= 3) {
+                     heavyIcon = `<div class="cooking-stat"><i class="fa-solid fa-weight-hanging neon-icon heavy" title="Heavy Computational Load"></i><span>HEAVY</span></div>`;
+                 }
+
+                 return `
+                    <div class="menu-card-wide">
+                        <div class="card-visual" onclick="if(!isDragging) window.open('${item.u}', '_blank')">
+                            <div class="card-badge">OPEN 24/7</div>
+                            <div class="card-stamp" style="transform: rotate(${rot}deg);">${item.stamp || 'APPROVED'}</div>
+                            <video autoplay loop muted playsinline><source src="${galleryBaseUrl}${item.f}?alt=media"></video>
+                        </div>
+                        <div class="card-details">
+                            <div class="card-title-row"><span class="card-title">${item.t}</span></div>
+                            <div class="cooking-stat-row">
+                                 <div class="cooking-stat"><i class="fa-solid fa-stopwatch neon-icon time"></i><span>${item.time} PREP</span></div>
+                                 <div class="cooking-stat">${hardwareIcon}</div>
+                                 <div class="cooking-stat"><div>${spiceLevel}</div><span>SPICE LVL</span></div>
+                                 ${heavyIcon}
+                            </div>
+                            <div class="card-desc">${item.desc}</div>
+                            <div class="ingredients-tags">${item.tech.split(',').map(t => `<span class="ing-tag">${t.trim()}</span>`).join('')}</div>
+                        </div>
+                    </div>
+                `;
+            };
+            const html = galleryFiles.map(item => createCardHtml(item)).join('');
+            container.innerHTML = html;
+            
+            setTimeout(() => {
+                container.addEventListener('mousedown', (e) => { isDragging = true; startX = e.pageX - container.offsetLeft; scrollLeft = container.scrollLeft; container.style.cursor = 'grabbing'; });
+                container.addEventListener('mouseleave', () => { isDragging = false; container.style.cursor = 'grab'; });
+                container.addEventListener('mouseup', () => { setTimeout(() => isDragging = false, 10); container.style.cursor = 'grab'; snapToNearest(container); });
+                container.addEventListener('mousemove', (e) => { if (!isDragging) return; e.preventDefault(); const x = e.pageX - container.offsetLeft; const walk = (x - startX) * 2; container.scrollLeft = scrollLeft - walk; });
+            }, 100);
+        }
+
+        function snapToNearest(container) {
+            const itemWidth = container.clientWidth;
+            const scrollPos = container.scrollLeft;
+            const nearestIndex = Math.round(scrollPos / itemWidth);
+            container.scrollTo({ left: nearestIndex * itemWidth, behavior: 'smooth' });
+        }
+
+        function scrollGallery(dir) {
+            const container = document.getElementById('menu-scroll-container');
+            if(container) {
+                const itemWidth = container.clientWidth;
+                container.scrollBy({ left: dir * itemWidth, behavior: 'smooth' });
+            }
+        }
 
         function setupSlides() {
             const stage = document.getElementById('stage-3d');
@@ -715,272 +775,196 @@
             pageSlides.forEach((slide, index) => {
                 const el = document.createElement('div');
                 el.className = 'page-slide-3d';
-                
-                // JAGGED GRID OVERLAY (Behind)
-                const grid = document.createElement('div');
-                grid.className = 'cyber-grid-overlay';
-                el.appendChild(grid);
+                const gridHtml = `<div class="slide-cyber-grid"></div>`;
+                const cornerDeco = `<div class="corner-deco corner-tl"></div><div class="corner-deco corner-br"></div>`;
+                el.innerHTML = gridHtml + cornerDeco; 
 
-                // Stamp Container (Random Positioning Logic)
                 if (slide.stamp) {
                     const stamp = document.createElement('div');
                     stamp.className = 'stamp-overlay';
                     stamp.innerText = slide.stamp;
-                    
-                    if (slide.stamp === "OPTIMIZED") {
-                        // Special positioning for Optimized stamp - Right, slight diagonal
-                        stamp.style.right = "10%";
-                        stamp.style.left = "auto";
-                        stamp.style.top = "10%";
-                        stamp.style.transform = "rotate(-15deg)";
-                        stamp.style.removeProperty('--rotate');
-                    } else if (slide.stamp === "VERIFIED") {
-                        // Left
-                        stamp.style.left = "10%";
-                        stamp.style.right = "auto";
-                        stamp.style.top = "20%"; // default height
-                        stamp.style.transform = "rotate(-5deg)";
-                        stamp.style.removeProperty('--rotate');
-                    } else if (slide.stamp === "APPROVED") {
-                        // Top Right
-                        stamp.style.top = "5%";
-                        stamp.style.right = "10%";
-                        stamp.style.left = "auto";
-                        stamp.style.transform = "rotate(10deg)";
-                        stamp.style.removeProperty('--rotate');
-                    } else if (slide.stamp === "CANCELED") {
-                        // Right
-                        stamp.style.right = "10%";
-                        stamp.style.left = "auto";
-                        stamp.style.top = "40%";
-                        stamp.style.transform = "rotate(20deg)";
-                        stamp.style.removeProperty('--rotate');
-                    } else {
-                        // Randomize Position (between 10% and 70% to avoid edges)
-                        const randTop = Math.floor(Math.random() * 60) + 15; 
-                        const randLeft = Math.floor(Math.random() * 60) + 15;
-                        const randRotate = Math.floor(Math.random() * 40) - 20; // -20 to 20 deg
-                        
-                        stamp.style.top = randTop + '%';
-                        stamp.style.left = randLeft + '%';
-                        stamp.style.setProperty('--rotate', randRotate + 'deg');
-                    }
-                    
+                    const rot = Math.random() * 20 - 10;
+                    stamp.style.setProperty('--rotate', rot + 'deg');
                     el.appendChild(stamp);
                 }
 
-                // Inner Content
                 const contentWrap = document.createElement('div');
                 contentWrap.className = 'slide-content-wrap';
+                
+                if(slide.title.includes("MAIN_COURSES")) {
+                    contentWrap.style.padding = "20px 0";
+                    contentWrap.style.display = "flex";
+                    contentWrap.style.flexDirection = "column";
+                }
 
-                let html = "";
-                // Use standard header logic unless it's the pure Fired slide
-                if (!slide.content.includes('fired-container') && !slide.content.includes('vs-container')) {
-                     html += `<h3 class="slide-header">${slide.title}</h3>`;
-                } else if (slide.content.includes('vs-container')) {
-                    // Small header for VS
-                    html += `<h3 class="slide-header" style="font-size:1rem; opacity:0.5; border:none; margin-bottom:5px;">${slide.title}</h3>`;
-                }
-                
+                let html = `<h3 class="slide-header" style="margin:0 20px 10px 20px;">${slide.title}</h3>`;
                 html += slide.content;
-                
-                if (slide.title.includes("GALLERY")) {
-                    const galHtml = galleryFiles.map(p => `
-                        <div class="gallery-item-3d" onclick="window.open('${p.u}', '_blank')">
-                            <video autoplay loop muted playsinline><source src="${galleryBaseUrl}${p.f}?alt=media"></video>
-                            <h5>${p.t}</h5>
-                        </div>
-                    `).join('');
-                    html = html.replace('<div id="project-slide-grid" class="project-slide-grid"></div>', `<div class="project-slide-grid">${galHtml}</div>`);
-                }
-                
                 contentWrap.innerHTML = html;
                 el.appendChild(contentWrap);
-                
                 stage.appendChild(el);
+                
+                if (slide.title.includes("MAIN_COURSES")) {
+                    const gridContainer = contentWrap.querySelector('#menu-scroll-container');
+                    if(gridContainer) {
+                        renderMenu(gridContainer);
+                        gridContainer.addEventListener('wheel', (evt) => { evt.preventDefault(); evt.stopPropagation(); gridContainer.scrollLeft += evt.deltaY; });
+                    }
+                }
                 el._baseIndex = index;
                 
-                // Typewriter Prep
                 const textElements = contentWrap.querySelectorAll('.type-me');
-                textElements.forEach(elem => {
-                    elem.dataset.originalHtml = elem.innerHTML;
-                    elem.innerHTML = ''; 
-                    elem.classList.add('pre-type-hidden');
-                });
+                textElements.forEach(elem => { elem.dataset.originalHtml = elem.innerHTML; elem.innerHTML = ''; elem.classList.add('pre-type-hidden'); });
             });
         }
 
-        // --- ANIMATIONS ---
-        
+        async function runBillAnimation() {
+            if(billAnimationPlayed) return;
+            billAnimationPlayed = true;
+            
+            const tbody = document.getElementById('bill-table-body');
+            const tfoot = document.getElementById('bill-table-foot');
+            if(!tbody) return;
+            
+            tbody.innerHTML = ''; 
+            
+            for (let i = 0; i < billData.length; i++) {
+                const item = billData[i];
+                const row = document.createElement('tr');
+                const cellItem = document.createElement('td');
+                const cellLegacy = document.createElement('td');
+                const cellPrice = document.createElement('td');
+                
+                cellLegacy.className = "strike-red"; 
+                cellPrice.style.color = "var(--success)";
+                
+                row.appendChild(cellItem);
+                row.appendChild(cellLegacy);
+                row.appendChild(cellPrice);
+                tbody.appendChild(row);
+                
+                await typeText(cellItem, item.item);
+                
+                if(item.isText) {
+                    await typeText(cellLegacy, item.legacy);
+                } else {
+                    await countNumber(cellLegacy, item.legacy, item.isMoney, item.suffix);
+                }
+                
+                if(item.isText) {
+                    await typeText(cellPrice, item.price);
+                } else {
+                    await countNumber(cellPrice, item.price, item.isMoney, item.suffix);
+                }
+            }
+            if(tfoot) tfoot.style.display = 'table-row-group';
+        }
+
+        function typeText(element, text) {
+            return new Promise(resolve => {
+                element.classList.add('table-type-cursor');
+                let i = 0;
+                const interval = setInterval(() => {
+                    element.innerText = text.substring(0, i + 1);
+                    i++;
+                    if (i === text.length) {
+                        clearInterval(interval);
+                        element.classList.remove('table-type-cursor');
+                        resolve();
+                    }
+                }, 30);
+            });
+        }
+
+        function countNumber(element, targetVal, isMoney, suffix = '') {
+            return new Promise(resolve => {
+                let start = 0;
+                const end = parseInt(targetVal);
+                const duration = 500;
+                const startTime = performance.now();
+
+                function update(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    const currentVal = Math.floor(progress * end);
+                    let displayStr = isMoney ? '$' + currentVal.toLocaleString() : currentVal + suffix;
+                    element.innerHTML = displayStr.replace(/0/g, '<span class="blink-zero">0</span>');
+
+                    if (progress < 1) {
+                        requestAnimationFrame(update);
+                    } else {
+                        resolve();
+                    }
+                }
+                requestAnimationFrame(update);
+            });
+        }
+
         function typeWriter(element) {
             if(element.dataset.typing === "true" || element.dataset.typing === "finished") return;
             element.dataset.typing = "true";
-            
             const fullHtml = element.dataset.originalHtml;
             element.innerHTML = '';
             element.classList.remove('pre-type-hidden');
             element.classList.add('typing-cursor');
-            
-            const parts = fullHtml.split(/(<[^>]*>)/g).filter(x => x !== "");
-            let partIndex = 0;
-            let charIndex = 0;
-            
-            function typeLoop() {
-                if(!element.closest('.active')) {
-                    element.innerHTML = ''; 
-                    element.classList.add('pre-type-hidden');
-                    element.dataset.typing = "false";
-                    element.classList.remove('typing-cursor');
-                    return;
-                }
-                
-                if (partIndex < parts.length) {
-                    const part = parts[partIndex];
-                    if (part.startsWith('<')) {
-                        element.innerHTML += part;
-                        partIndex++;
-                        requestAnimationFrame(typeLoop);
-                    } else {
-                        if (charIndex < part.length) {
-                            element.innerHTML += part.charAt(charIndex);
-                            charIndex++;
-                            setTimeout(typeLoop, 10); 
-                        } else {
-                            partIndex++;
-                            charIndex = 0;
-                            requestAnimationFrame(typeLoop);
-                        }
-                    }
-                } else {
-                    element.classList.remove('typing-cursor');
-                    element.dataset.typing = "finished";
-                    
+            let i = 0;
+            const speed = 10;
+            function type() {
+                if(!element.closest('.active')) { element.innerHTML = ''; element.dataset.typing = "false"; return; }
+                if (fullHtml.charAt(i) === '<') {
+                    const endTag = fullHtml.indexOf('>', i);
+                    if (endTag !== -1) { element.innerHTML += fullHtml.substring(i, endTag + 1); i = endTag + 1; }
+                } else { element.innerHTML += fullHtml.charAt(i); i++; }
+                if (i < fullHtml.length) { setTimeout(type, speed); } 
+                else { 
+                    element.dataset.typing = "finished"; 
                     const slide = element.closest('.page-slide-3d');
-                    const allText = slide.querySelectorAll('.type-me');
-                    const lastText = allText[allText.length - 1];
-                    
-                    if (element === lastText) {
-                        const stamp = slide.querySelector('.stamp-overlay');
-                        if (stamp) {
-                            setTimeout(() => {
-                                stamp.classList.add('stamp-animate');
-                            }, 200);
-                        }
-                    }
+                    const stamp = slide.querySelector('.stamp-overlay');
+                    if(stamp) stamp.classList.add('stamp-animate');
                 }
             }
-            typeLoop();
-        }
-
-        function animateValue(obj, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const currentVal = Math.floor(progress * (end - start) + start);
-                
-                const prefix = obj.dataset.prefix || "";
-                const suffix = obj.dataset.suffix || "";
-                obj.innerText = prefix + currentVal + suffix;
-
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        function startNumberAnimations(slide) {
-            const numericElements = slide.querySelectorAll('[data-val]');
-            numericElements.forEach(el => {
-                if(el.dataset.animated === "true") return;
-                el.dataset.animated = "true";
-                const targetVal = parseInt(el.dataset.val);
-                animateValue(el, 0, targetVal, 1500); 
-            });
+            type();
         }
 
         function triggerSlideAnimations(slide) {
-            // Header
-            const header = slide.querySelector('.slide-header');
-            if (header) {
-                header.classList.remove('header-anim-enter');
-                void header.offsetWidth;
-                header.classList.add('header-anim-enter');
-            }
-            
-            // Text Typewriter
             const textElements = slide.querySelectorAll('.type-me');
-            textElements.forEach((elem, index) => {
-                setTimeout(() => { typeWriter(elem); }, index * 150 + 300);
-            });
+            textElements.forEach((elem, index) => { setTimeout(() => { typeWriter(elem); }, index * 200 + 300); });
+            const blinkers = slide.querySelectorAll('.blink-infinite');
+            blinkers.forEach(b => b.style.animationPlayState = 'running');
             
-            // Numbers
-            setTimeout(() => { startNumberAnimations(slide); }, 500);
+            if(slide.querySelector('#bill-table-body')) {
+                setTimeout(runBillAnimation, 500);
+            }
         }
 
         function resetSlideAnimations(slide) {
-            const header = slide.querySelector('.slide-header');
-            if (header) {
-                header.classList.remove('header-anim-enter');
-                header.style.opacity = 0;
-            }
             const textElements = slide.querySelectorAll('.type-me');
-            textElements.forEach(elem => {
-                elem.dataset.typing = "false";
-                elem.innerHTML = '';
-                elem.classList.add('pre-type-hidden');
-                elem.classList.remove('typing-cursor');
-            });
-            
-            const numericElements = slide.querySelectorAll('[data-val]');
-            numericElements.forEach(el => {
-                el.dataset.animated = "false";
-                el.innerText = (el.dataset.prefix||"") + "0" + (el.dataset.suffix||"");
-            });
-
+            textElements.forEach((elem, index) => { elem.dataset.typing = "false"; elem.innerHTML = ''; elem.classList.add('pre-type-hidden'); });
             const stamp = slide.querySelector('.stamp-overlay');
-            if (stamp) {
-                stamp.classList.remove('stamp-animate');
-            }
+            if(stamp) stamp.classList.remove('stamp-animate');
         }
 
-        // --- RENDER LOOP ---
         function update() {
             const slides = document.querySelectorAll('.page-slide-3d');
             slides.forEach(slide => {
                 let z = (slide._baseIndex * spacing) + virtualScroll;
-                const offset = 50000 * loopDistance; 
-                z = (z + offset) % loopDistance;
+                const offset = 50000 * loopDistance; z = (z + offset) % loopDistance;
                 if (z > spacing) z -= loopDistance;
-                
                 const distance = Math.abs(z);
-                
                 let opacity = 1;
-                let rotateX = 0;
-                let rotateY = 0;
-
-                if (z > 200) opacity = 0; 
-                else if (z < -2500) opacity = 0; 
-                else {
-                    opacity = 1 - Math.min(1, Math.max(0, (distance - 400) / 1800));
-                    if (z < -100) {
-                        rotateX = Math.min(20, distance / 50); 
-                        if (slide._baseIndex % 2 === 0) rotateY = Math.min(10, distance / 100);
-                        else rotateY = Math.max(-10, -distance / 100);
-                    }
-                }
-                
-                let scale = 1;
-                slide.style.transform = `translate3d(-50%, -50%, ${z}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+                if (z > 300) opacity = 0; else if (z < -1500) opacity = 0; else { opacity = 1 - Math.min(1, Math.max(0, (distance - 200) / 1000)); }
+                let scale = 1; let rotateX = 0;
+                if (z < 0) { rotateX = Math.max(-15, z / 50); }
+                slide.style.transform = `translate3d(-50%, -50%, ${z}px) rotateX(${rotateX}deg) scale(${scale})`;
                 slide.style.opacity = opacity;
                 slide.style.zIndex = 10000 - Math.floor(distance);
                 
-                // ACTIVE STATE
                 if (z > -100 && z < 100) {
                     if (!slide.classList.contains('active')) {
                         slide.classList.add('active');
                         slide.style.pointerEvents = 'auto';
+                        document.body.classList.add('glitch-active');
+                        setTimeout(() => document.body.classList.remove('glitch-active'), 300);
                         triggerSlideAnimations(slide);
                     }
                 } else {
@@ -994,43 +978,37 @@
             requestAnimationFrame(update);
         }
 
-        // --- SCROLL LOGIC ---
         function handleScroll(direction) {
             if (isScrollLocked) return;
             isScrollLocked = true;
             currentSlideIndex += direction;
-            setTimeout(() => { isScrollLocked = false; }, 800); 
+            setTimeout(() => { isScrollLocked = false; }, 600); 
         }
 
         window.addEventListener('wheel', (e) => { 
-            if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && e.target.closest('.project-slide-grid')) return;
-            if (e.deltaY > 0) handleScroll(1);
-            else handleScroll(-1);
-        });
-        
-        let touchStartX = 0, touchStartY = 0;
-        window.addEventListener('touchstart', e => {
-            touchStartY = e.touches[0].clientY;
-            touchStartX = e.touches[0].clientX;
-            
-            const currentTime = new Date().getTime();
-            const tapLength = currentTime - lastTouchTime;
-            if (tapLength < 300 && tapLength > 0) {
-                handleScroll(1); 
-                e.preventDefault();
+            if (e.target.closest('.menu-scroll-container')) return;
+            if (e.target.closest('.slide-content-wrap')) {
+                 const wrap = e.target.closest('.slide-content-wrap');
+                 const atTop = wrap.scrollTop === 0 && e.deltaY < 0;
+                 const atBottom = Math.abs(wrap.scrollHeight - wrap.scrollTop - wrap.clientHeight) < 1 && e.deltaY > 0;
+                 if (!atTop && !atBottom) return; 
             }
-            lastTouchTime = currentTime;
+            // CHANGED: Inverted the directions based on user request (Forward)
+            if (e.deltaY > 0) handleScroll(-1); else handleScroll(1);
         }, {passive: false});
         
+        let touchStartX = 0, touchStartY = 0;
+        window.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; touchStartX = e.touches[0].clientX; lastTouchTime = new Date().getTime(); }, {passive: false});
         window.addEventListener('touchmove', e => {
             const deltaY = touchStartY - e.touches[0].clientY;
-            const deltaX = touchStartX - e.touches[0].clientX;
-            if (Math.abs(deltaX) > Math.abs(deltaY) && e.target.closest('.project-slide-grid')) return;
-            if (Math.abs(deltaY) > 50) {
-                if (deltaY > 0) handleScroll(1);
-                else handleScroll(-1);
-                touchStartY = e.touches[0].clientY; 
+            if (e.target.closest('.slide-content-wrap')) {
+                 const wrap = e.target.closest('.slide-content-wrap');
+                 const atTop = wrap.scrollTop === 0 && deltaY < 0;
+                 const atBottom = Math.abs(wrap.scrollHeight - wrap.scrollTop - wrap.clientHeight) < 1 && deltaY > 0;
+                 if (e.target.closest('.menu-scroll-container')) return;
+                 if (!atTop && !atBottom) return; 
             }
+            if (Math.abs(deltaY) > 50) { if (deltaY > 0) handleScroll(1); else handleScroll(-1); touchStartY = e.touches[0].clientY; }
         }, {passive: false});
 
         function animateScroll() {
@@ -1039,27 +1017,22 @@
             requestAnimationFrame(animateScroll);
         }
 
-        // --- RANDOM GLITCH/NOISE LOGIC (Strengthened) ---
+        let idleTimer;
+        function resetIdleTimer() {
+            const el = document.getElementById('scroll-instruction');
+            el.classList.remove('visible'); 
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => { el.classList.add('visible'); }, 3000);
+        }
+        window.addEventListener('mousemove', resetIdleTimer);
+        window.addEventListener('scroll', resetIdleTimer);
+        window.addEventListener('touchstart', resetIdleTimer);
+        window.addEventListener('wheel', resetIdleTimer);
+
         function triggerRandomGlitch() {
             const noise = document.getElementById('broadcast-noise');
-            const duration = Math.random() * 200 + 100;
-            // Increased opacity range: 0.2 to 0.7
-            const opacity = Math.random() * 0.5 + 0.2; 
-            noise.style.opacity = opacity;
-            
-            // More frequent shift
-            if (Math.random() > 0.5) {
-                const shiftX = Math.random() * 6 - 3; // stronger shift
-                const shiftY = Math.random() * 6 - 3;
-                document.body.style.transform = `translate(${shiftX}px, ${shiftY}px)`;
-            }
-            setTimeout(() => {
-                noise.style.opacity = 0;
-                document.body.style.transform = 'none';
-                // More frequent glitches: 1s to 5s
-                const nextGlitch = Math.random() * 4000 + 1000;
-                setTimeout(triggerRandomGlitch, nextGlitch);
-            }, duration);
+            noise.style.opacity = Math.random() * 0.4 + 0.1;
+            setTimeout(() => { noise.style.opacity = 0; setTimeout(triggerRandomGlitch, Math.random() * 3000 + 1000); }, 150);
         }
 
         window.onload = () => {
@@ -1067,8 +1040,10 @@
             animateScroll(); 
             update();
             setTimeout(triggerRandomGlitch, 2000);
+            resetIdleTimer();
         };
 
+        function handleDoubleTap() {}
     </script>
 </body>
 </html>
