@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Oren Gamchi - Cyber Menu (FINAL)</title>
+    <title>Oren Gamchi - Cyber Menu (CLEAN)</title>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600;700;900&family=Heebo:wght@100;300;400;700;900&family=Orbitron:wght@500;700;900&family=Fira+Code:wght@400;500;700&family=Black+Ops+One&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
         /* --- Vibe Coding Theme Variables --- */
         :root {
             --bg-dark: #050505;
-            --card-bg: rgba(10, 10, 15, 0.96);
+            --card-bg: rgba(10, 10, 15, 0.98); 
             --text-primary: #e2e8f0;
             --text-secondary: #94a3b8;
             --accent-primary: #8b5cf6;    /* Violet */
@@ -45,20 +45,53 @@
             color: var(--text-primary);
             touch-action: none;
             user-select: none;
+            -webkit-font-smoothing: antialiased;
         }
         
         /* --- UTILS --- */
-        .btn, .modal-content, .nav-buttons .btn, .terminal, .credits-box {
+        .btn, .modal-content, .terminal, .credits-box {
             border-radius: 4px; 
             border: 1px solid var(--border-color);
             box-shadow: 0 0 10px rgba(139, 92, 246, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        /* --- ANIMATED CYBER BUTTONS (Clean Slide) --- */
+        @keyframes cyber-slide-up {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .cyber-btn-animated {
+            position: relative;
+            overflow: hidden;
+            opacity: 0; 
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 100;
+            will-change: transform, opacity;
+            transform: translateZ(0);
+        }
+        
+        .cyber-btn-animated.visible {
+            animation: cyber-slide-up 0.5s ease-out forwards;
+        }
+
+        .cyber-btn-animated:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--accent-primary);
         }
         
         /* --- LED TICKER BANNER --- */
         .led-ticker-wrap {
             position: fixed; top: 0; left: 0; width: 100%; height: 32px;
             background-color: #000; border-bottom: 1px solid var(--accent-secondary);
-            z-index: 9999; overflow: hidden; display: flex; align-items: center;
+            z-index: 20000; 
+            overflow: hidden; display: flex; align-items: center;
         }
 
         .led-ticker {
@@ -77,77 +110,41 @@
             100% { transform: translate3d(-50%, 0, 0); }
         }
 
-        /* --- BACKGROUND & NOISE --- */
+        /* --- BACKGROUND --- */
+        /* Z-Index Layer: Background (-1) - UPDATED Z-DEPTH */
         .bg-grid {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -3;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             background-image: 
-                linear-gradient(rgba(139, 92, 246, 0.2) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(139, 92, 246, 0.2) 1px, transparent 1px);
+                linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
             background-size: 60px 60px;
-            transform: perspective(600px) rotateX(60deg) translateY(-50px) scale(2);
-            opacity: 0.3;
+            /* Pushed further back on Z axis */
+            transform: perspective(1000px) rotateX(60deg) translateY(-100px) translateZ(-500px) scale(3);
+            opacity: 0.2;
             pointer-events: none;
-            animation: grid-move 20s linear infinite;
-        }
-        @keyframes grid-move { 0% { background-position: 0 0; } 100% { background-position: 0 60px; } }
-
-        .scanlines {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 90; pointer-events: none;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-            background-size: 100% 4px;
-            opacity: 0.3; 
         }
 
-        .broadcast-noise {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 999; pointer-events: none;
-            opacity: 0;
-            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.6"/%3E%3C/svg%3E');
-            mix-blend-mode: overlay;
-            transition: opacity 0.1s ease-out; /* Added smooth fade for random noise */
-        }
-        
         /* --- 3D SCROLL ENGINE --- */
         .viewport-3d {
             position: fixed; top: 32px; left: 0; width: 100%; height: calc(100% - 32px);
             perspective: 1000px; overflow: hidden;
+            z-index: 0; 
         }
 
         .stage-3d { position: absolute; width: 100%; height: 100%; transform-style: preserve-3d; }
         
-        /* --- NEW: TRANSITION GLITCH EFFECTS CSS --- */
-        /* Class applied to stage on scroll for camera shake effect */
-        .stage-3d.shake-active {
-            animation: camera-shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
-            transform-origin: 50% 50%;
-        }
-        @keyframes camera-shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0) rotateZ(0.5deg) scale(1.01); }
-            20%, 80% { transform: translate3d(2px, 0, 0) rotateZ(-0.5deg) scale(1.01); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0) rotateZ(1deg) scale(1.02); }
-            40%, 60% { transform: translate3d(4px, 0, 0) rotateZ(-1deg) scale(1.02); }
-        }
-        /* Class applied to noise for instant burst effect */
-        .broadcast-noise.burst {
-            transition: none; /* Disable smooth transition for instant burst */
-            opacity: 1 !important; /* Force full static noise */
-        }
-        /* --- END NEW EFFECTS CSS --- */
-
-
         .page-slide-3d {
             position: absolute; top: 50%; left: 50%;
             width: 90vw; max-width: 1000px; min-height: 65vh; max-height: 85vh;
-            
-            /* Solid background */
-            background: rgba(10, 10, 15, 0.95);
+            background: #0a0a0f; 
             border: 1px solid rgba(139, 92, 246, 0.3);
-            
             padding: 0;
             backface-visibility: hidden; 
-            will-change: transform, opacity;
+            will-change: transform;
             display: flex; flex-direction: column;
             overflow: visible; 
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            transform: translateZ(0); 
         }
 
         /* --- INDIVIDUAL SLIDE CYBER GRID --- */
@@ -155,30 +152,16 @@
             position: absolute;
             top: 50%; left: 50%;
             width: 160%; height: 160%; 
-            transform: translate(-50%, -50%) translateZ(-200px); 
+            transform: translate(-50%, -50%) translateZ(-50px); 
             z-index: -1;
             pointer-events: none;
             border: 1px solid rgba(255,255,255,0.02);
             background-image: 
-                linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6, 182, 212, 0.3) 1px, transparent 1px);
+                linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
             background-size: 60px 60px;
-            animation: 
-                slide-grid-spin 80s linear infinite,
-                slide-grid-pulse 8s ease-in-out infinite alternate;
             mask-image: radial-gradient(circle, black 30%, transparent 70%);
             -webkit-mask-image: radial-gradient(circle, black 30%, transparent 70%);
-        }
-
-        @keyframes slide-grid-spin {
-            0% { background-position: 0 0; transform: translate(-50%, -50%) translateZ(-200px) rotate(0deg); }
-            100% { background-position: 100px 100px; transform: translate(-50%, -50%) translateZ(-200px) rotate(5deg); }
-        }
-
-        @keyframes slide-grid-pulse {
-            0% { filter: hue-rotate(0deg) brightness(0.8); }
-            50% { filter: hue-rotate(90deg) brightness(1.2); }
-            100% { filter: hue-rotate(0deg) brightness(0.8); }
         }
 
         /* Cyber Deco on Slides */
@@ -214,6 +197,7 @@
             height: 100%;
             width: 100%;
             cursor: grab;
+            touch-action: pan-x; 
         }
         .menu-scroll-container:active { cursor: grabbing; }
         .menu-scroll-container::-webkit-scrollbar { display: none; }
@@ -229,6 +213,7 @@
             flex-direction: column;
             scroll-snap-align: center;
             scroll-snap-stop: always;
+            backface-visibility: hidden;
         }
         
         .cooking-stat-row {
@@ -241,23 +226,25 @@
             display: flex; flex-direction: column; align-items: center; gap: 5px;
             font-family: var(--font-mono); font-size: 0.7rem; color: #ccc;
         }
-        .neon-icon { font-size: 1.2rem; filter: drop-shadow(0 0 5px currentColor); }
+        .neon-icon { font-size: 1.2rem; filter: drop-shadow(0 0 2px currentColor); } 
         .neon-icon.hot { color: var(--accent-highlight); }
         .neon-icon.time { color: var(--accent-secondary); }
         .neon-icon.tool { color: var(--accent-primary); }
-        .neon-icon.heavy { color: var(--danger); animation: heavy-pulse 2s infinite; }
-        
-        @keyframes heavy-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        .neon-icon.heavy { color: var(--danger); } 
 
         .card-visual {
             height: 45%; width: 100%; position: relative;
             overflow: hidden;
             border-bottom: 1px solid var(--accent-primary);
-            pointer-events: none; 
+            pointer-events: auto; 
+            cursor: pointer;
+            z-index: 10;
+            backface-visibility: hidden;
         }
         .card-visual video {
             width: 100%; height: 100%; object-fit: cover;
-            filter: grayscale(40%) contrast(1.1); transition: 0.5s;
+            filter: grayscale(20%) contrast(1.1); transition: 0.3s; 
+            pointer-events: none; 
         }
         .menu-card-wide:hover .card-visual video { filter: grayscale(0%); }
         
@@ -276,22 +263,42 @@
             font-family: var(--font-stamp); font-size: 1.5rem; padding: 4px 12px;
             text-transform: uppercase; text-shadow: 0 0 8px var(--accent-highlight);
             box-shadow: 0 0 10px rgba(0,0,0,0.5); opacity: 0.9; pointer-events: none;
-            mix-blend-mode: hard-light; background: rgba(0,0,0,0.3); border-radius: 4px;
+            mix-blend-mode: normal;
+            background: rgba(0,0,0,0.5); border-radius: 4px;
         }
 
         .card-details { 
             padding: 20px 30px; flex-grow: 1; display: flex; flex-direction: column; 
-            background: linear-gradient(180deg, rgba(15,15,20,0.9) 0%, rgba(5,5,5,1) 100%);
+            background: #0f0f12; 
         }
         
         .card-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .card-title { font-family: var(--font-display); font-size: 1.8rem; color: #fff; text-transform: uppercase; text-shadow: 0 0 10px rgba(139, 92, 246, 0.5); }
+        .card-title { font-family: var(--font-display); font-size: 1.8rem; color: #fff; text-transform: uppercase; text-shadow: 0 0 5px rgba(139, 92, 246, 0.3); }
         .card-desc { font-size: 1rem; color: #aaa; line-height: 1.6; margin-bottom: 15px; flex-grow: 1; font-family: var(--font-sans); }
         .ingredients-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
         .ing-tag {
             font-size: 0.8rem; padding: 6px 10px; border-radius: 4px;
             background: rgba(255,255,255,0.03); color: var(--accent-secondary);
             border: 1px solid rgba(6, 182, 212, 0.3); font-family: var(--font-mono);
+        }
+
+        /* --- MOBILE VIDEO LINK OVERLAY --- */
+        .mobile-link-overlay {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            background: rgba(0,0,0,0.85);
+            color: var(--accent-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-align: center;
+            letter-spacing: 1px;
+            border-top: 1px solid var(--accent-secondary);
+            z-index: 20;
+            pointer-events: none; 
         }
 
         /* Nav Arrows for Gallery */
@@ -304,25 +311,24 @@
             cursor: pointer; z-index: 20; transition: 0.3s;
             backdrop-filter: blur(4px);
         }
-        .gallery-nav-btn:hover { background: var(--accent-primary); color: #fff; box-shadow: 0 0 15px var(--accent-primary); }
+        .gallery-nav-btn:hover { background: var(--accent-primary); color: #fff; }
         .gallery-prev { left: 10px; }
         .gallery-next { right: 10px; }
 
-        /* --- STAMPS --- */
+        /* --- STAMPS (Slide Overlay) --- */
         .stamp-overlay {
             position: absolute; z-index: 50; pointer-events: none; border: 4px solid var(--accent-secondary); color: var(--accent-secondary);
             font-family: var(--font-stamp); font-size: 3rem; padding: 5px 20px; text-transform: uppercase; letter-spacing: 3px;
             border-radius: 8px; transform-style: preserve-3d; white-space: nowrap;
-            text-shadow: 0 0 15px var(--accent-secondary);
-            box-shadow: inset 0 0 15px rgba(6, 182, 212, 0.3);
+            text-shadow: 0 0 5px var(--accent-secondary);
             opacity: 0;
             top: 30px; right: 30px; left: auto;
             transform: rotate(15deg);
         }
-        .stamp-animate { animation: stamp-slam 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .stamp-animate { animation: stamp-slam 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         @keyframes stamp-slam {
-            0% { transform: translateZ(500px) scale(2) rotate(var(--rotate, 15deg)); opacity: 0; }
-            100% { transform: translateZ(0) scale(1) rotate(var(--rotate, 15deg)); opacity: 1; }
+            0% { transform: translateZ(500px) scale(2) rotate(15deg); opacity: 0; }
+            100% { transform: translateZ(0) scale(1) rotate(15deg); opacity: 1; }
         }
 
         /* --- DAFKAZE 3D TITLE --- */
@@ -330,47 +336,29 @@
             font-family: 'Black Ops One', cursive; 
             font-size: clamp(4rem, 15vw, 8rem);
             font-weight: 900; line-height: 1; text-transform: uppercase; color: #fff;
-            text-shadow: 1px 1px 0px #8b5cf6, 2px 2px 0px #8b5cf6, 3px 3px 0px #8b5cf6, 4px 4px 0px #8b5cf6, 5px 5px 0px #6366f1, 6px 6px 0px #6366f1, 7px 7px 0px #6366f1, 8px 8px 0px #6366f1, 20px 20px 20px rgba(0,0,0,0.5);
-            animation: color-cycle-3d 4s infinite alternate, float-3d 5s ease-in-out infinite;
+            text-shadow: 2px 2px 0px #8b5cf6, 4px 4px 0px #6366f1, 6px 6px 0px rgba(0,0,0,0.5);
             transform-style: preserve-3d; margin-bottom: 10px;
-        }
-        @keyframes color-cycle-3d {
-            0% { color: #fff; text-shadow: 1px 1px 0 #8b5cf6, 2px 2px 0 #8b5cf6, 3px 3px 0 #8b5cf6, 4px 4px 0 #8b5cf6, 5px 5px 0 #6366f1, 6px 6px 0 #6366f1; }
-            50% { color: #ccfbf1; text-shadow: 1px 1px 0 #06b6d4, 2px 2px 0 #06b6d4, 3px 3px 0 #06b6d4, 4px 4px 0 #06b6d4, 5px 5px 0 #0e7490, 6px 6px 0 #0e7490; }
-            100% { color: #fecdd3; text-shadow: 1px 1px 0 #f43f5e, 2px 2px 0 #f43f5e, 3px 3px 0 #f43f5e, 4px 4px 0 #f43f5e, 5px 5px 0 #be123c, 6px 6px 0 #be123c; }
-        }
-        @keyframes float-3d {
-            0%, 100% { transform: translateY(0) rotateX(10deg) rotateY(-5deg); }
-            50% { transform: translateY(-15px) rotateX(0deg) rotateY(5deg); }
         }
 
         /* --- UI OVERLAY --- */
-        .ui-overlay { position: fixed; top: 40px; right: 0; left: 0; z-index: 100; padding: 20px; pointer-events: none; }
+        .ui-overlay { position: fixed; top: 40px; right: 0; left: 0; z-index: 20000; padding: 20px; pointer-events: none; }
         header { text-align: center; pointer-events: auto; }
         
-        /* Updated Nav Buttons Container */
-        .nav-buttons { 
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-            z-index: 101; pointer-events: auto; 
-            display: flex; gap: 15px; flex-wrap: wrap; 
-            justify-content: center; align-items: center; 
-            width: 100%; 
-        }
-        
-        /* SCROLL INSTRUCTION - UPDATED POSITIONING */
+        /* SCROLL INSTRUCTION */
         .scroll-instruction-container {
-            position: relative; 
-            bottom: auto; left: auto; transform: none;
+            position: fixed; 
+            bottom: 20px; 
+            left: 50%; 
+            transform: translateX(-50%);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            margin: 0 10px;
-            z-index: 105; pointer-events: none; 
+            z-index: 20000; pointer-events: none; 
             opacity: 0; transition: opacity 0.5s ease-in-out;
         }
         .scroll-instruction-container.visible { opacity: 1; }
         .scroll-mouse-icon {
             width: 24px; height: 40px;
             border: 2px solid var(--accent-secondary); border-radius: 12px;
-            position: relative; margin-bottom: 5px; box-shadow: 0 0 10px var(--accent-secondary);
+            position: relative; margin-bottom: 5px; box-shadow: 0 0 5px var(--accent-secondary);
         }
         .scroll-mouse-wheel {
             width: 4px; height: 6px; background: #fff; border-radius: 2px;
@@ -392,19 +380,15 @@
         .total-row td { border-top: 1px solid var(--accent-secondary); color: var(--accent-secondary); font-weight: bold; }
 
         /* Formatting */
-        .blink-zero { animation: blink-fast 0.15s infinite; color: var(--accent-highlight); font-weight: bold; }
-        @keyframes blink-fast { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .blink-zero { font-weight: bold; color: var(--accent-highlight); }
+        
         .strike-red { text-decoration: line-through; color: var(--danger) !important; text-decoration-color: var(--danger); }
         .table-type-cursor::after { content: '|'; animation: blink-cursor 0.7s infinite; color: var(--accent-secondary); }
         @keyframes blink-cursor { 50% { opacity: 0; } }
 
         /* Glitch Text */
         .glitch-text { position: relative; display: inline-block; }
-        .glitch-text::before, .glitch-text::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); }
-        .glitch-text::before { left: 2px; text-shadow: -1px 0 #ff00c1; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim-1 5s infinite linear alternate-reverse; }
-        .glitch-text::after { left: -2px; text-shadow: -1px 0 #00fff9; clip: rect(44px, 450px, 56px, 0); animation: glitch-anim-2 5s infinite linear alternate-reverse; }
-        @keyframes glitch-anim-1 { 0% { clip: rect(30px, 9999px, 10px, 0); } 100% { clip: rect(0, 0, 0, 0); } }
-        @keyframes glitch-anim-2 { 0% { clip: rect(10px, 9999px, 80px, 0); } 100% { clip: rect(0, 0, 0, 0); } }
+        .glitch-text { text-shadow: 2px 0 var(--accent-primary), -2px 0 var(--accent-secondary); }
 
         /* --- FLAMES STYLES --- */
         .cyber-flame-container {
@@ -412,51 +396,104 @@
             bottom: 20px;
             font-size: 6rem;
             color: var(--accent-highlight);
-            filter: drop-shadow(0 0 15px var(--accent-highlight));
+            filter: drop-shadow(0 0 10px var(--accent-highlight));
             opacity: 0.8;
             pointer-events: none;
             z-index: 20;
         }
-        .cyber-flame-left { left: 20px; transform: rotate(30deg); animation: flame-flicker-left 0.1s infinite alternate; }
-        .cyber-flame-right { right: 20px; transform: rotate(-30deg); animation: flame-flicker-right 0.1s infinite alternate; }
-        @keyframes flame-flicker-left { 0% { transform: rotate(30deg) scale(1); opacity: 0.8; } 100% { transform: rotate(30deg) scale(1.05); opacity: 1; } }
-        @keyframes flame-flicker-right { 0% { transform: rotate(-30deg) scale(1); opacity: 0.8; } 100% { transform: rotate(-30deg) scale(1.05); opacity: 1; } }
+        .cyber-flame-left { left: 20px; transform: rotate(30deg); animation: flame-flicker-left 2.5s infinite alternate ease-in-out; }
+        .cyber-flame-right { right: 20px; transform: rotate(-30deg); animation: flame-flicker-right 2.7s infinite alternate ease-in-out; }
+        @keyframes flame-flicker-left { 0% { transform: rotate(30deg) scale(1); opacity: 0.8; } 100% { transform: rotate(30deg) scale(1.02); opacity: 0.9; } }
+        @keyframes flame-flicker-right { 0% { transform: rotate(-30deg) scale(1); opacity: 0.8; } 100% { transform: rotate(-30deg) scale(1.02); opacity: 0.9; } }
 
         /* --- SIDE ICONS (Intro & Charts) --- */
         .side-icon-container {
             flex: 0 0 auto;
             font-size: 4rem;
             opacity: 0.8;
-            filter: drop-shadow(0 0 10px currentColor);
-            animation: pulse-side 3s infinite ease-in-out;
+            filter: drop-shadow(0 0 5px currentColor);
+            animation: pulse-side 4s infinite ease-in-out;
+            transition: transform 0.5s ease;
         }
-        @keyframes pulse-side { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
+        @keyframes pulse-side { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } }
 
         /* --- NEW HUGE CYBER CHARTS (Slide 03) --- */
         .cyber-chart-large {
-            font-size: 12rem; /* Significantly larger */
-            color: rgba(6, 182, 212, 0.2); /* Low opacity cyber cyan/transparent-ish */
-            filter: none !important; /* No glow explicitly requested */
-            text-shadow: 2px 2px 0px rgba(139, 92, 246, 0.5); /* Hard shadow for cyber look */
-            animation: chart-float 6s ease-in-out infinite;
+            font-size: 12rem; 
+            color: rgba(6, 182, 212, 0.2); 
+            text-shadow: 2px 2px 0px rgba(139, 92, 246, 0.5); 
+            animation: chart-float 8s ease-in-out infinite;
             flex: 0 0 auto;
+            transition: transform 0.5s ease;
         }
         @keyframes chart-float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+        
+        /* --- IDLE POPOUT ANIMATION --- */
+        @keyframes idle-pop-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.25); filter: drop-shadow(0 0 20px var(--accent-highlight)); }
+        }
+        .idle-pop {
+            animation: idle-pop-bounce 1s ease-in-out infinite !important;
         }
 
         /* Mobile */
         @media (max-width: 600px) {
             .page-slide-3d { width: 95vw; min-height: 75vh; }
-            .slide-content-wrap { padding: 25px 15px; }
+            .slide-content-wrap { padding: 25px 15px 40px 15px; } 
             .stamp-overlay { font-size: 2rem; top: 10px; right: 10px; }
             .slide-header { font-size: 1.5rem; text-align: center; }
-            .dafkaze-3d-title { font-size: 4rem; }
+            .dafkaze-3d-title { font-size: 3rem; text-align: center; width: 100%; margin: 0 auto; }
             .card-title { font-size: 1.4rem; }
-            .card-visual { height: 40%; }
+            
+            /* --- UPDATED MOBILE LAYOUT FOR MENU CARDS --- */
+            .menu-card-wide {
+                flex-direction: column;
+                height: 100%;
+                min-height: 60vh;
+            }
+            .card-visual {
+                width: 100%;
+                height: 35%; 
+                min-height: 200px;
+                border-right: none;
+                border-bottom: 1px solid var(--accent-primary);
+            }
+            .mobile-link-overlay {
+                display: block !important;
+            }
+            .card-details {
+                width: 100%;
+                height: auto;
+                flex-grow: 1;
+                padding: 15px;
+                display: flex;
+                flex-direction: column;
+                overflow: visible; 
+            }
+            .card-desc {
+                font-size: 0.9rem;
+                overflow: visible; 
+                max-height: none; 
+                margin-bottom: 10px;
+            }
+            .card-details > div:last-child {
+                margin-top: auto;
+                padding-top: 10px;
+            }
+            .card-details .btn {
+                z-index: 50; 
+                position: relative;
+            }
+            
+            .side-icon-container { font-size: 2.5rem; display: block; margin: 10px; }
+            .cyber-chart-large { font-size: 5rem; display: block; margin: 10px; }
+            .cutlery-icon { font-size: 4rem; }
+
             .cyber-flame-container { font-size: 4rem; bottom: 10px; } 
-            .side-icon-container, .cyber-chart-large { display: none; } /* Hide heavy side icons on mobile */
         }
         
         /* Desktop */
@@ -469,15 +506,15 @@
         /* --- CUTLERY ANIMATION --- */
         @keyframes cutting-motion {
             0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-15deg) translateX(-5px); }
-            50% { transform: rotate(0deg) scale(1.1); }
-            75% { transform: rotate(15deg) translateX(5px); }
+            25% { transform: rotate(-10deg) translateX(-3px); } 
+            50% { transform: rotate(0deg) scale(1.05); }
+            75% { transform: rotate(10deg) translateX(3px); }
             100% { transform: rotate(0deg) scale(1); }
         }
         .cutlery-icon {
             color: var(--accent-highlight); 
-            filter: drop-shadow(0 0 10px var(--accent-highlight));
-            animation: cutting-motion 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 5px var(--accent-highlight));
+            animation: cutting-motion 3s ease-in-out infinite;
             display: inline-block;
         }
     </style>
@@ -485,10 +522,8 @@
 <body ondblclick="handleDoubleTap()">
 
     <div class="bg-grid"></div>
-    <div class="scanlines"></div> 
-    <div id="broadcast-noise" class="broadcast-noise"></div>
-
-    <!-- LED TICKER -->
+    
+    <!-- LED TICKER (Fixed Top - Z: 20000) -->
     <div class="led-ticker-wrap">
         <div class="led-ticker">
             <div class="led-item">:: SYSTEM STATUS: ONLINE :: MENU LOADED :: CHEF: OREN GAMCHI :: TODAY'S SPECIALS: AI GENERATED ::</div>
@@ -496,35 +531,28 @@
         </div>
     </div>
 
-    <!-- 3D VIEWPORT -->
+    <!-- 3D VIEWPORT (Base Z: 0) -->
     <div class="viewport-3d">
         <div class="stage-3d" id="stage-3d"></div>
     </div>
 
-    <!-- UI -->
+    <!-- UI (Fixed Header - Z: 20000) -->
     <div class="ui-overlay">
         <header>
             <div class="font-mono text-slate-500 text-[10px] mt-1 tracking-widest">EST. 2026 // INFINITE FLAVORS</div>
         </header>
     </div>
     
-    <!-- NAVIGATION BAR -->
-    <div class="nav-buttons">
-        <a href="https://dafkaze.com" target="_blank" class="btn" style="background:var(--accent-secondary); color:#000; border:none; padding: 8px 16px; font-weight:bold;"><i class="fa-solid fa-utensils"></i> MAIN SITE</a>
-        
-        <!-- SCROLL INSTRUCTION ICON (MOVED HERE) -->
-        <div id="scroll-instruction" class="scroll-instruction-container">
-            <div class="scroll-mouse-icon">
-                <div class="scroll-mouse-wheel"></div>
-            </div>
-            <div class="scroll-text-info">SCROLL</div>
+    <!-- SCROLL INSTRUCTION (Fixed Bottom - Z: 20000) -->
+    <div id="scroll-instruction" class="scroll-instruction-container">
+        <div class="scroll-mouse-icon">
+            <div class="scroll-mouse-wheel"></div>
         </div>
-
-        <a href="#" onclick="openModal('cv-modal'); return false;" class="btn" style="background:var(--accent-primary); color:#fff; padding: 8px 16px;"><i class="fa-solid fa-receipt"></i> RESUME</a>
+        <div class="scroll-text-info">SCROLL</div>
     </div>
 
-    <!-- MODAL -->
-    <div id="cv-modal" class="modal-overlay" onclick="if(event.target.id === 'cv-modal') closeModal('cv-modal')" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; justify-content:center; align-items:center;">
+    <!-- MODAL (Topmost - Z: 30000) -->
+    <div id="cv-modal" class="modal-overlay" onclick="if(event.target.id === 'cv-modal') closeModal('cv-modal')" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:30000; justify-content:center; align-items:center;">
         <div class="modal-content" dir="rtl" style="width:90%; max-width:600px; background:#111; border:1px solid #333; padding:20px; position:relative;">
             <div class="modal-close" onclick="closeModal('cv-modal')" style="color:#fff; position:absolute; top:10px; left:10px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></div>
             <h2 class="font-mono text-xl text-cyan-400 border-b border-gray-800 pb-2 mb-4" dir="ltr">CHEF'S_RESUME.log</h2>
@@ -545,7 +573,7 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // --- Data (Menu Items) - UPDATED with 'weight' for Heavy Load ---
+        // --- Data (Menu Items) ---
         const galleryBaseUrl = "https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/video%2Fthumbs_video%2F";
         
         const galleryFiles = [
@@ -575,31 +603,34 @@
         ];
 
         const pageSlides = [
-            // SLIDE 0: INTRO - UPDATED SIDE ICONS RESTORED
+            // SLIDE 0: INTRO
             {
                 title: "00_WELCOME",
                 stamp: "OPEN",
                 content: `
                     <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; position:relative;">
-                        
-                        <!-- ADDED BACK SIDE ICONS AS REQUESTED -->
-                        <div style="position:absolute; left:20px; top:50%; transform:translateY(-50%); font-size:6rem; opacity:0.8;">
+                        <div class="side-icon-container" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); font-size:6rem; opacity:0.8;">
                             <i class="fa-solid fa-utensils cutlery-icon"></i>
                         </div>
-                        <div style="position:absolute; right:20px; top:50%; transform:translateY(-50%); font-size:6rem; opacity:0.8;">
+                        <div class="side-icon-container" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); font-size:6rem; opacity:0.8;">
                             <i class="fa-solid fa-utensils cutlery-icon"></i>
                         </div>
-
                         <div style="font-size: 5rem; margin-bottom: 20px; display: flex; gap: 30px;">
                             <i class="fa-solid fa-utensils cutlery-icon"></i>
                         </div>
                         <h1 class="dafkaze-3d-title">DAFKAZE</h1>
                         <h2 class="glitch-text" data-text="CYBER BISTRO" style="font-family:var(--font-display); font-size:clamp(1.5rem, 4vw, 2.5rem); margin-bottom:10px; color:var(--text-secondary); letter-spacing:4px;">CYBER BISTRO</h2>
-                        <!-- APPLIED NEW FONT & ORIGINAL TEXT RESTORED -->
                         <div class="type-me" style="font-family: var(--font-tech-he); font-weight: 300; font-size: 1.2rem; color:#888; max-width:500px; line-height: 1.6;">
                             ברוכים הבאים למסעדה הדיגיטלית שלי.<br>
                             כל מנה בתפריט היא קוד טהור, מוגשת רותחת היישר מה-GPU.<br>
                             אין צורך להשאיר טיפ.
+                        </div>
+                        
+                        <!-- MAIN SITE BUTTON -->
+                        <div style="margin-top: 30px;">
+                            <a href="https://dafkaze.com" target="_blank" class="btn cyber-btn-animated" style="background:var(--accent-secondary); color:#000; font-weight:bold; padding: 12px 24px; text-decoration:none;">
+                                <i class="fa-solid fa-utensils"></i> MAIN SITE
+                            </a>
                         </div>
                     </div>
                 `
@@ -610,13 +641,9 @@
                 stamp: "MASTER",
                 content: `
                     <div style="display:flex; align-items:center; justify-content:center; height:100%; gap: 40px; flex-wrap: wrap;">
-                        
-                        <!-- Left Icon: Smartphone -->
                         <div class="side-icon-container">
                             <i class="fa-solid fa-mobile-screen-button" style="color: var(--accent-secondary);"></i>
                         </div>
-
-                        <!-- Main Profile -->
                         <div style="display:flex; flex-direction:column; align-items:center;">
                             <div style="width:120px; height:120px; border-radius:50%; border:3px solid var(--accent-primary); overflow:hidden; margin-bottom:20px; box-shadow:0 0 20px rgba(139, 92, 246, 0.5);">
                                 <img src="https://firebasestorage.googleapis.com/v0/b/portfolioflow-8qrng.firebasestorage.app/o/oren_pics%2Foren_pics_masters%2Foren%20blue.png?alt=media" style="width:100%; height:100%; object-fit:cover;">
@@ -626,20 +653,24 @@
                             <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:8px; max-width:400px; text-align:center; font-family:var(--font-sans);">
                                 <p class="type-me">"אני מבשל קוד ברכבת. מחליף סכינים במקלדות, ורכיבים בפיקסלים. המטרה שלי היא ליצור חוויות שמשאירות טעם של עוד."</p>
                             </div>
+                            
+                            <!-- RESUME BUTTON -->
+                            <div style="margin-top: 20px;">
+                                <a href="#" onclick="openModal('cv-modal'); return false;" class="btn cyber-btn-animated" style="background:var(--accent-primary); color:#fff; padding: 12px 24px; text-decoration:none;">
+                                    <i class="fa-solid fa-receipt"></i> RESUME
+                                </a>
+                            </div>
                         </div>
-
-                        <!-- Right Icon: Laptop -->
                         <div class="side-icon-container">
                             <i class="fa-solid fa-laptop-code" style="color: var(--accent-primary);"></i>
                         </div>
-
                     </div>
                 `
             },
             // SLIDE 2: THE MENU
             {
                 title: "02_MAIN_COURSES",
-                stamp: "GALLERY",
+                stamp: "", 
                 content: `
                     <div class="type-me" style="color:#888; margin-bottom:10px; font-family:var(--font-mono); text-align:center; font-size:0.8rem; opacity:0.7;">
                         /// DRAG LEFT/RIGHT OR USE ARROWS ///
@@ -651,16 +682,13 @@
                     </div>
                 `
             },
-            // SLIDE 3: COST ANALYSIS - UPDATED HUGE ICONS
+            // SLIDE 3: COST ANALYSIS
             {
                 title: "03_THE_BILL",
                 stamp: "PAID",
                 content: `
                     <div style="display:flex; align-items:center; justify-content:center; height:100%; gap:20px;">
-                        
-                        <!-- Left Icon: Bar Chart (Huge) -->
                         <i class="fa-solid fa-chart-simple cyber-chart-large"></i>
-
                         <div style="max-width:600px; width:100%; z-index:10;">
                             <div class="terminal" style="padding:20px; background:rgba(0,0,0,0.8);">
                                 <div style="text-align:center; border-bottom:1px dashed #555; padding-bottom:10px; margin-bottom:15px; font-family:var(--font-mono);">
@@ -676,10 +704,7 @@
                                 <div style="text-align:center; margin-top:20px; font-family:var(--font-display); font-size:0.8rem; color:#666;">THANK YOU FOR DINING WITH US</div>
                             </div>
                         </div>
-
-                        <!-- Right Icon: Pie Chart (Huge) -->
                         <i class="fa-solid fa-chart-pie cyber-chart-large"></i>
-
                     </div>
                 `
             },
@@ -689,17 +714,14 @@
                 stamp: "WRITE_US",
                 content: `
                     <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; position:relative;">
-                        <!-- FLAMES -->
                         <div class="cyber-flame-container cyber-flame-left"><i class="fa-solid fa-fire"></i></div>
                         <div class="cyber-flame-container cyber-flame-right"><i class="fa-solid fa-fire"></i></div>
-
                         <i class="fa-solid fa-comment-dots" style="font-size:3rem; color:var(--accent-highlight); margin-bottom:20px;"></i>
                         <h3 style="font-family:var(--font-display); font-size:1.8rem; margin-bottom:10px;">COMPLIMENTS TO THE CHEF?</h3>
                         <p class="type-me" style="text-align:center; color:#ccc; max-width:500px; margin-bottom:30px;">
                             אהבתם את האוכל? יש לכם רעיון למנה חדשה? אני זמין לשיתופי פעולה, פרויקטים, או סתם קפה וקוד.
                         </p>
                         <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
-                            <!-- ADDED FACEBOOK & GMAIL -->
                             <a href="mailto:ORENREDE@GMAIL.COM" class="btn" style="padding:10px 25px; background:rgba(255,255,255,0.1); color:#fff; text-decoration:none;"><i class="fa-solid fa-envelope"></i> EMAIL</a>
                             <a href="https://linkedin.com/in/orengamchi" target="_blank" class="btn" style="padding:10px 25px; background:var(--accent-secondary); color:#000; text-decoration:none;"><i class="fa-brands fa-linkedin"></i> LINKEDIN</a>
                             <a href="https://facebook.com/orengamchi" target="_blank" class="btn" style="padding:10px 25px; background:#3b5998; color:#fff; border:none; text-decoration:none;"><i class="fa-brands fa-facebook"></i> FACEBOOK</a>
@@ -718,7 +740,7 @@
         
         let isScrollLocked = false;
         let lastTouchTime = 0;
-        let isDragging = false;
+        let isDragScroll = false; // Renamed to differentiate from click tracking
         let startX, scrollLeft;
         let billAnimationPlayed = false;
 
@@ -727,7 +749,7 @@
                  const spiceLevel = Array(item.spice).fill('<i class="fa-solid fa-pepper-hot neon-icon hot"></i>').join(' ');
                  const rot = Math.floor(Math.random() * 20) - 10;
                  
-                 // --- LOGIC FOR ICONS ---
+                 // Icons
                  let hardwareIcon = '';
                  if(item.tech.toLowerCase().includes('audio') || item.tech.toLowerCase().includes('voice')) {
                      hardwareIcon = '<i class="fa-solid fa-microphone-lines neon-icon tool" title="Audio Input"></i><span>VOICE</span>';
@@ -744,10 +766,14 @@
 
                  return `
                     <div class="menu-card-wide">
-                        <div class="card-visual" onclick="if(!isDragging) window.open('${item.u}', '_blank')">
+                        <div class="card-visual" data-url="${item.u}">
                             <div class="card-badge">OPEN 24/7</div>
                             <div class="card-stamp" style="transform: rotate(${rot}deg);">${item.stamp || 'APPROVED'}</div>
                             <video autoplay loop muted playsinline><source src="${galleryBaseUrl}${item.f}?alt=media"></video>
+                            
+                            <div class="mobile-link-overlay">
+                                <i class="fa-solid fa-rocket"></i> LAUNCH PROTOCOL
+                            </div>
                         </div>
                         <div class="card-details">
                             <div class="card-title-row"><span class="card-title">${item.t}</span></div>
@@ -761,7 +787,7 @@
                             
                             <div style="display:flex; justify-content:space-between; align-items:end; margin-top:auto;">
                                 <div class="ingredients-tags" style="margin-top:0;">${item.tech.split(',').map(t => `<span class="ing-tag">${t.trim()}</span>`).join('')}</div>
-                                <a href="${item.u}" target="_blank" class="btn" style="background:var(--accent-secondary); color:#000; padding:8px 12px; font-weight:bold; font-family:var(--font-mono); font-size:0.8rem; text-decoration:none; margin-right:auto; margin-left:10px;" onmousedown="event.stopPropagation();">
+                                <a href="${item.u}" target="_blank" class="btn" style="background:var(--accent-secondary); color:#000; padding:8px 12px; font-weight:bold; font-family:var(--font-mono); font-size:0.8rem; text-decoration:none; margin-right:auto; margin-left:10px;">
                                     LAUNCH <i class="fa-solid fa-rocket"></i>
                                 </a>
                             </div>
@@ -773,12 +799,50 @@
             const html = galleryFiles.map(item => createCardHtml(item)).join('');
             container.innerHTML = html;
             
-            setTimeout(() => {
-                container.addEventListener('mousedown', (e) => { isDragging = true; startX = e.pageX - container.offsetLeft; scrollLeft = container.scrollLeft; container.style.cursor = 'grabbing'; });
-                container.addEventListener('mouseleave', () => { isDragging = false; container.style.cursor = 'grab'; });
-                container.addEventListener('mouseup', () => { setTimeout(() => isDragging = false, 10); container.style.cursor = 'grab'; snapToNearest(container); });
-                container.addEventListener('mousemove', (e) => { if (!isDragging) return; e.preventDefault(); const x = e.pageX - container.offsetLeft; const walk = (x - startX) * 2; container.scrollLeft = scrollLeft - walk; });
-            }, 100);
+            // --- Custom Drag/Click Logic ---
+            let isDown = false;
+            let startMouseX;
+            let startScrollLeft;
+            let dragThreshold = 5;
+            let hasMoved = false;
+
+            container.addEventListener('mousedown', (e) => {
+                isDown = true;
+                hasMoved = false;
+                startMouseX = e.pageX - container.offsetLeft;
+                startScrollLeft = container.scrollLeft;
+                container.style.cursor = 'grabbing';
+            });
+
+            container.addEventListener('mouseleave', () => {
+                isDown = false;
+                container.style.cursor = 'grab';
+            });
+
+            container.addEventListener('mouseup', () => {
+                isDown = false;
+                container.style.cursor = 'grab';
+                snapToNearest(container);
+            });
+
+            container.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - container.offsetLeft;
+                const walk = (x - startMouseX) * 2; 
+                if (Math.abs(walk) > dragThreshold) hasMoved = true;
+                container.scrollLeft = startScrollLeft - walk;
+            });
+
+            const videoCards = container.querySelectorAll('.card-visual');
+            videoCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (!hasMoved) {
+                        const url = card.getAttribute('data-url');
+                        if(url) window.open(url, '_blank');
+                    }
+                });
+            });
         }
 
         function snapToNearest(container) {
@@ -811,8 +875,6 @@
                     const stamp = document.createElement('div');
                     stamp.className = 'stamp-overlay';
                     stamp.innerText = slide.stamp;
-                    const rot = Math.random() * 20 - 10;
-                    stamp.style.setProperty('--rotate', rot + 'deg');
                     el.appendChild(stamp);
                 }
 
@@ -913,14 +975,17 @@
                 function update(currentTime) {
                     const elapsed = currentTime - startTime;
                     const progress = Math.min(elapsed / duration, 1);
-                    
                     const currentVal = Math.floor(progress * end);
                     let displayStr = isMoney ? '$' + currentVal.toLocaleString() : currentVal + suffix;
-                    element.innerHTML = displayStr.replace(/0/g, '<span class="blink-zero">0</span>');
+                    
+                    // Avoid inserting span during animation loop to prevent layout thrashing/flicker
+                    element.innerText = displayStr; 
 
                     if (progress < 1) {
                         requestAnimationFrame(update);
                     } else {
+                        // Apply styling only at the end
+                        element.innerHTML = displayStr.replace(/0/g, '<span class="blink-zero">0</span>');
                         resolve();
                     }
                 }
@@ -957,9 +1022,14 @@
         function triggerSlideAnimations(slide) {
             const textElements = slide.querySelectorAll('.type-me');
             textElements.forEach((elem, index) => { setTimeout(() => { typeWriter(elem); }, index * 200 + 300); });
-            const blinkers = slide.querySelectorAll('.blink-infinite');
-            blinkers.forEach(b => b.style.animationPlayState = 'running');
             
+            const buttons = slide.querySelectorAll('.cyber-btn-animated');
+            buttons.forEach(btn => {
+                btn.classList.remove('visible');
+                void btn.offsetWidth;
+                btn.classList.add('visible');
+            });
+
             if(slide.querySelector('#bill-table-body')) {
                 setTimeout(runBillAnimation, 500);
             }
@@ -970,24 +1040,11 @@
             textElements.forEach((elem, index) => { elem.dataset.typing = "false"; elem.innerHTML = ''; elem.classList.add('pre-type-hidden'); });
             const stamp = slide.querySelector('.stamp-overlay');
             if(stamp) stamp.classList.remove('stamp-animate');
-        }
-
-        // --- NEW: Function to trigger visual transition effects (shake and noise burst) ---
-        function triggerTransitionEffect() {
-            const stage = document.getElementById('stage-3d');
-            const noise = document.getElementById('broadcast-noise');
             
-            // 1. Activate Shake
-            stage.classList.add('shake-active');
-            
-            // 2. Activate Noise Burst (instant high opacity)
-            noise.classList.add('burst');
-
-            // 3. Revert after 300ms (to match the shake duration)
-            setTimeout(() => {
-                stage.classList.remove('shake-active');
-                noise.classList.remove('burst');
-            }, 300); 
+            const buttons = slide.querySelectorAll('.cyber-btn-animated');
+            buttons.forEach(btn => {
+                btn.classList.remove('visible');
+            });
         }
 
         function update() {
@@ -1003,14 +1060,14 @@
                 if (z < 0) { rotateX = Math.max(-15, z / 50); }
                 slide.style.transform = `translate3d(-50%, -50%, ${z}px) rotateX(${rotateX}deg) scale(${scale})`;
                 slide.style.opacity = opacity;
+                
+                // Keep z-index in safe range (9000-10000) so it doesn't overlap fixed UI (20000)
                 slide.style.zIndex = 10000 - Math.floor(distance);
                 
                 if (z > -100 && z < 100) {
                     if (!slide.classList.contains('active')) {
                         slide.classList.add('active');
                         slide.style.pointerEvents = 'auto';
-                        document.body.classList.add('glitch-active');
-                        setTimeout(() => document.body.classList.remove('glitch-active'), 300);
                         triggerSlideAnimations(slide);
                     }
                 } else {
@@ -1028,11 +1085,6 @@
             if (isScrollLocked) return;
             isScrollLocked = true;
             currentSlideIndex += direction;
-
-            // --- Trigger Glitch and Shake Effect on transition ---
-            triggerTransitionEffect(); 
-            // ---------------------------------------------------
-
             setTimeout(() => { isScrollLocked = false; }, 600); 
         }
 
@@ -1044,7 +1096,6 @@
                  const atBottom = Math.abs(wrap.scrollHeight - wrap.scrollTop - wrap.clientHeight) < 1 && e.deltaY > 0;
                  if (!atTop && !atBottom) return; 
             }
-            // CHANGED: Inverted the directions based on user request (Forward)
             if (e.deltaY > 0) handleScroll(-1); else handleScroll(1);
         }, {passive: false});
         
@@ -1068,34 +1119,32 @@
             requestAnimationFrame(animateScroll);
         }
 
+        // Idle Timer with Pop-out Logic
         let idleTimer;
         function resetIdleTimer() {
+            // Reset pop state
+            const icons = document.querySelectorAll('.side-icon-container i, .cyber-chart-large');
+            icons.forEach(el => el.classList.remove('idle-pop'));
+            
             const el = document.getElementById('scroll-instruction');
             el.classList.remove('visible'); 
+            
             clearTimeout(idleTimer);
-            idleTimer = setTimeout(() => { el.classList.add('visible'); }, 3000);
+            idleTimer = setTimeout(() => { 
+                el.classList.add('visible'); 
+                // Add pop animation to icons
+                icons.forEach(el => el.classList.add('idle-pop'));
+            }, 3000);
         }
         window.addEventListener('mousemove', resetIdleTimer);
         window.addEventListener('scroll', resetIdleTimer);
         window.addEventListener('touchstart', resetIdleTimer);
         window.addEventListener('wheel', resetIdleTimer);
 
-        function triggerRandomGlitch() {
-            const noise = document.getElementById('broadcast-noise');
-            // Check if a manual burst is not active before applying random opacity
-            if (!noise.classList.contains('burst')) {
-                noise.style.opacity = Math.random() * 0.4 + 0.1;
-                setTimeout(() => { noise.style.opacity = 0; setTimeout(triggerRandomGlitch, Math.random() * 3000 + 1000); }, 150);
-            } else {
-                 setTimeout(triggerRandomGlitch, 300); // Wait a bit if burst is active
-            }
-        }
-
         window.onload = () => {
             setupSlides();
             animateScroll(); 
             update();
-            setTimeout(triggerRandomGlitch, 2000);
             resetIdleTimer();
         };
 
