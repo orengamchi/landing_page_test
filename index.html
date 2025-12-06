@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Oren Gamchi - Cyber Menu (CLEAN)</title>
+    <title>Oren Gamchi - Cyber Menu (ACTIVE GALLERY)</title>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600;700;900&family=Heebo:wght@100;300;400;700;900&family=Orbitron:wght@500;700;900&family=Fira+Code:wght@400;500;700&family=Black+Ops+One&display=swap" rel="stylesheet">
@@ -43,7 +43,7 @@
             font-family: var(--font-sans);
             background-color: var(--bg-dark);
             color: var(--text-primary);
-            touch-action: none;
+            touch-action: none; 
             user-select: none;
             -webkit-font-smoothing: antialiased;
         }
@@ -52,11 +52,11 @@
         .btn, .modal-content, .terminal, .credits-box {
             border-radius: 4px; 
             border: 1px solid var(--border-color);
-            box-shadow: 0 0 10px rgba(139, 92, 246, 0.1);
+            box-shadow: 0 0 5px rgba(139, 92, 246, 0.1);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         
-        /* --- ANIMATED CYBER BUTTONS (Clean Slide) --- */
+        /* --- ANIMATED CYBER BUTTONS --- */
         @keyframes cyber-slide-up {
             0% { transform: translateY(20px); opacity: 0; }
             100% { transform: translateY(0); opacity: 1; }
@@ -83,7 +83,7 @@
 
         .cyber-btn-animated:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 15px var(--accent-primary);
+            box-shadow: 0 0 5px var(--accent-primary);
         }
         
         /* --- LED TICKER BANNER --- */
@@ -101,7 +101,7 @@
 
         .led-item {
             padding: 0 40px; font-family: var(--font-mono); font-size: 12px;
-            color: var(--accent-secondary); text-shadow: 0 0 5px var(--accent-secondary);
+            color: var(--accent-secondary); 
             display: flex; align-items: center; gap: 10px; letter-spacing: 1px;
         }
 
@@ -111,14 +111,12 @@
         }
 
         /* --- BACKGROUND --- */
-        /* Z-Index Layer: Background (-1) - UPDATED Z-DEPTH */
         .bg-grid {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
             background-image: 
                 linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
             background-size: 60px 60px;
-            /* Pushed further back on Z axis */
             transform: perspective(1000px) rotateX(60deg) translateY(-100px) translateZ(-500px) scale(3);
             opacity: 0.2;
             pointer-events: none;
@@ -178,10 +176,11 @@
         .corner-tl { top: 10px; left: 10px; border-bottom: none; border-right: none; }
         .corner-br { bottom: 10px; right: 10px; border-top: none; border-left: none; }
 
-        /* Inner Content */
+        /* Inner Content - Allow Scroll */
         .slide-content-wrap {
             padding: 40px; height: 100%; overflow-y: auto; position: relative; z-index: 2;
             background: transparent; 
+            touch-action: pan-y;
         }
         .slide-content-wrap::-webkit-scrollbar { width: 4px; }
         .slide-content-wrap::-webkit-scrollbar-thumb { background: var(--accent-primary); }
@@ -192,12 +191,18 @@
             gap: 0;
             overflow-x: auto;
             padding: 0;
-            scroll-snap-type: x mandatory;
+            /* Scroll snap removed for smooth auto-scroll */
+            /* scroll-snap-type: x mandatory; */ 
             align-items: stretch;
             height: 100%;
             width: 100%;
             cursor: grab;
-            touch-action: pan-x; 
+            touch-action: pan-x; /* CRITICAL FOR MOBILE SCROLLING */
+            /* Hide scrollbar */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+            scroll-behavior: smooth; /* Enable native smooth scroll */
+            pointer-events: auto;
         }
         .menu-scroll-container:active { cursor: grabbing; }
         .menu-scroll-container::-webkit-scrollbar { display: none; }
@@ -211,8 +216,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            scroll-snap-align: center;
-            scroll-snap-stop: always;
+            scroll-snap-align: start; /* Kept for manual snap */
             backface-visibility: hidden;
         }
         
@@ -226,7 +230,7 @@
             display: flex; flex-direction: column; align-items: center; gap: 5px;
             font-family: var(--font-mono); font-size: 0.7rem; color: #ccc;
         }
-        .neon-icon { font-size: 1.2rem; filter: drop-shadow(0 0 2px currentColor); } 
+        .neon-icon { font-size: 1.2rem; filter: none; } 
         .neon-icon.hot { color: var(--accent-highlight); }
         .neon-icon.time { color: var(--accent-secondary); }
         .neon-icon.tool { color: var(--accent-primary); }
@@ -261,7 +265,7 @@
             position: absolute; top: 20px; left: 20px; z-index: 30;
             border: 2px solid var(--accent-highlight); color: var(--accent-highlight);
             font-family: var(--font-stamp); font-size: 1.5rem; padding: 4px 12px;
-            text-transform: uppercase; text-shadow: 0 0 8px var(--accent-highlight);
+            text-transform: uppercase; 
             box-shadow: 0 0 10px rgba(0,0,0,0.5); opacity: 0.9; pointer-events: none;
             mix-blend-mode: normal;
             background: rgba(0,0,0,0.5); border-radius: 4px;
@@ -273,8 +277,16 @@
         }
         
         .card-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .card-title { font-family: var(--font-display); font-size: 1.8rem; color: #fff; text-transform: uppercase; text-shadow: 0 0 5px rgba(139, 92, 246, 0.3); }
-        .card-desc { font-size: 1rem; color: #aaa; line-height: 1.6; margin-bottom: 15px; flex-grow: 1; font-family: var(--font-sans); }
+        .card-title { font-family: var(--font-display); font-size: 1.8rem; color: #fff; text-transform: uppercase; }
+        
+        /* Updated: Allow scrolling in text area */
+        .card-desc { 
+            font-size: 1rem; color: #aaa; line-height: 1.6; margin-bottom: 15px; flex-grow: 1; 
+            font-family: var(--font-sans);
+            overflow-y: auto; 
+            touch-action: pan-y; 
+        }
+        
         .ingredients-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
         .ing-tag {
             font-size: 0.8rem; padding: 6px 10px; border-radius: 4px;
@@ -310,6 +322,7 @@
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; z-index: 20; transition: 0.3s;
             backdrop-filter: blur(4px);
+            pointer-events: auto; /* Ensure clickable */
         }
         .gallery-nav-btn:hover { background: var(--accent-primary); color: #fff; }
         .gallery-prev { left: 10px; }
@@ -320,7 +333,7 @@
             position: absolute; z-index: 50; pointer-events: none; border: 4px solid var(--accent-secondary); color: var(--accent-secondary);
             font-family: var(--font-stamp); font-size: 3rem; padding: 5px 20px; text-transform: uppercase; letter-spacing: 3px;
             border-radius: 8px; transform-style: preserve-3d; white-space: nowrap;
-            text-shadow: 0 0 5px var(--accent-secondary);
+            /* Removed glow shadow */
             opacity: 0;
             top: 30px; right: 30px; left: auto;
             transform: rotate(15deg);
@@ -336,6 +349,7 @@
             font-family: 'Black Ops One', cursive; 
             font-size: clamp(4rem, 15vw, 8rem);
             font-weight: 900; line-height: 1; text-transform: uppercase; color: #fff;
+            /* Solid hard shadow only, NO BLUR/GLOW */
             text-shadow: 2px 2px 0px #8b5cf6, 4px 4px 0px #6366f1, 6px 6px 0px rgba(0,0,0,0.5);
             transform-style: preserve-3d; margin-bottom: 10px;
         }
@@ -358,7 +372,7 @@
         .scroll-mouse-icon {
             width: 24px; height: 40px;
             border: 2px solid var(--accent-secondary); border-radius: 12px;
-            position: relative; margin-bottom: 5px; box-shadow: 0 0 5px var(--accent-secondary);
+            position: relative; margin-bottom: 5px; 
         }
         .scroll-mouse-wheel {
             width: 4px; height: 6px; background: #fff; border-radius: 2px;
@@ -366,7 +380,7 @@
         }
         .scroll-text-info { 
             font-family: var(--font-mono); font-size: 0.6rem; color: var(--accent-secondary); 
-            text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 0 5px var(--accent-secondary); 
+            text-transform: uppercase; letter-spacing: 1px; 
             white-space: nowrap; 
         }
         @keyframes scroll-wheel { 0% { top: 8px; opacity: 1; } 100% { top: 20px; opacity: 0; } }
@@ -388,30 +402,32 @@
 
         /* Glitch Text */
         .glitch-text { position: relative; display: inline-block; }
-        .glitch-text { text-shadow: 2px 0 var(--accent-primary), -2px 0 var(--accent-secondary); }
+        .glitch-text { text-shadow: 2px 2px 0px var(--accent-primary); }
 
-        /* --- FLAMES STYLES --- */
+        /* --- FLAMES STYLES (ROTATED TO OTHER SIDE) --- */
         .cyber-flame-container {
             position: absolute;
             bottom: 20px;
             font-size: 6rem;
             color: var(--accent-highlight);
-            filter: drop-shadow(0 0 10px var(--accent-highlight));
+            /* Removed glow filter */
             opacity: 0.8;
             pointer-events: none;
-            z-index: 20;
+            z-index: 1; /* Keep behind content */
         }
-        .cyber-flame-left { left: 20px; transform: rotate(30deg); animation: flame-flicker-left 2.5s infinite alternate ease-in-out; }
-        .cyber-flame-right { right: 20px; transform: rotate(-30deg); animation: flame-flicker-right 2.7s infinite alternate ease-in-out; }
-        @keyframes flame-flicker-left { 0% { transform: rotate(30deg) scale(1); opacity: 0.8; } 100% { transform: rotate(30deg) scale(1.02); opacity: 0.9; } }
-        @keyframes flame-flicker-right { 0% { transform: rotate(-30deg) scale(1); opacity: 0.8; } 100% { transform: rotate(-30deg) scale(1.02); opacity: 0.9; } }
+        /* Rotated outwards */
+        .cyber-flame-left { left: 20px; transform: rotate(-15deg); animation: flame-flicker-left 2.5s infinite alternate ease-in-out; }
+        .cyber-flame-right { right: 20px; transform: rotate(15deg); animation: flame-flicker-right 2.7s infinite alternate ease-in-out; }
+        
+        @keyframes flame-flicker-left { 0% { transform: rotate(-15deg) scale(1); opacity: 0.8; } 100% { transform: rotate(-15deg) scale(1.02); opacity: 0.9; } }
+        @keyframes flame-flicker-right { 0% { transform: rotate(15deg) scale(1); opacity: 0.8; } 100% { transform: rotate(15deg) scale(1.02); opacity: 0.9; } }
 
         /* --- SIDE ICONS (Intro & Charts) --- */
         .side-icon-container {
             flex: 0 0 auto;
             font-size: 4rem;
             opacity: 0.8;
-            filter: drop-shadow(0 0 5px currentColor);
+            filter: none;
             animation: pulse-side 4s infinite ease-in-out;
             transition: transform 0.5s ease;
         }
@@ -434,7 +450,7 @@
         /* --- IDLE POPOUT ANIMATION --- */
         @keyframes idle-pop-bounce {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.25); filter: drop-shadow(0 0 20px var(--accent-highlight)); }
+            50% { transform: scale(1.25); } 
         }
         .idle-pop {
             animation: idle-pop-bounce 1s ease-in-out infinite !important;
@@ -476,8 +492,7 @@
             }
             .card-desc {
                 font-size: 0.9rem;
-                overflow: visible; 
-                max-height: none; 
+                max-height: 150px; 
                 margin-bottom: 10px;
             }
             .card-details > div:last-child {
@@ -513,7 +528,7 @@
         }
         .cutlery-icon {
             color: var(--accent-highlight); 
-            filter: drop-shadow(0 0 5px var(--accent-highlight));
+            filter: none;
             animation: cutting-motion 3s ease-in-out infinite;
             display: inline-block;
         }
@@ -553,7 +568,7 @@
 
     <!-- MODAL (Topmost - Z: 30000) -->
     <div id="cv-modal" class="modal-overlay" onclick="if(event.target.id === 'cv-modal') closeModal('cv-modal')" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:30000; justify-content:center; align-items:center;">
-        <div class="modal-content" dir="rtl" style="width:90%; max-width:600px; background:#111; border:1px solid #333; padding:20px; position:relative;">
+        <div class="modal-content" dir="rtl" style="width:90%; max-width:600px; background:#111; border:1px solid #333; padding:20px; position:relative; overflow-y: auto; max-height: 90vh;">
             <div class="modal-close" onclick="closeModal('cv-modal')" style="color:#fff; position:absolute; top:10px; left:10px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></div>
             <h2 class="font-mono text-xl text-cyan-400 border-b border-gray-800 pb-2 mb-4" dir="ltr">CHEF'S_RESUME.log</h2>
             <div style="font-family: var(--font-mono); line-height: 1.6; color: #ccc;">
@@ -562,6 +577,13 @@
                  <p class="mb-4"><span style="color:var(--accent-primary)">> SPECIALTY:</span> WebGL, React, Physics Engines</p>
                  <hr style="border-color:#333; margin: 15px 0;">
                  <p>מבשל חוויות דיגיטליות על אש גבוהה. עברתי מעיצוב ידני לאוטומציה מלאה.</p>
+                 <br>
+                 <p>ניסיון נוסף:</p>
+                 <ul>
+                     <li>פיתוח ממשקי משתמש מורכבים</li>
+                     <li>אנימציות תלת מימד ב-Three.js</li>
+                     <li>שילוב AI בתהליכי עבודה קריאייטיביים</li>
+                 </ul>
             </div>
              <div style="text-align:center; margin-top:20px;">
                  <div class="btn" style="border:1px solid var(--danger); color:var(--danger); display:inline-block; padding:5px 15px; cursor:pointer;" onclick="closeModal('cv-modal')">CLOSE</div>
@@ -609,12 +631,6 @@
                 stamp: "OPEN",
                 content: `
                     <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; position:relative;">
-                        <div class="side-icon-container" style="position:absolute; left:20px; top:50%; transform:translateY(-50%); font-size:6rem; opacity:0.8;">
-                            <i class="fa-solid fa-utensils cutlery-icon"></i>
-                        </div>
-                        <div class="side-icon-container" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); font-size:6rem; opacity:0.8;">
-                            <i class="fa-solid fa-utensils cutlery-icon"></i>
-                        </div>
                         <div style="font-size: 5rem; margin-bottom: 20px; display: flex; gap: 30px;">
                             <i class="fa-solid fa-utensils cutlery-icon"></i>
                         </div>
@@ -716,15 +732,18 @@
                     <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; position:relative;">
                         <div class="cyber-flame-container cyber-flame-left"><i class="fa-solid fa-fire"></i></div>
                         <div class="cyber-flame-container cyber-flame-right"><i class="fa-solid fa-fire"></i></div>
-                        <i class="fa-solid fa-comment-dots" style="font-size:3rem; color:var(--accent-highlight); margin-bottom:20px;"></i>
-                        <h3 style="font-family:var(--font-display); font-size:1.8rem; margin-bottom:10px;">COMPLIMENTS TO THE CHEF?</h3>
-                        <p class="type-me" style="text-align:center; color:#ccc; max-width:500px; margin-bottom:30px;">
-                            אהבתם את האוכל? יש לכם רעיון למנה חדשה? אני זמין לשיתופי פעולה, פרויקטים, או סתם קפה וקוד.
-                        </p>
-                        <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
-                            <a href="mailto:ORENREDE@GMAIL.COM" class="btn" style="padding:10px 25px; background:rgba(255,255,255,0.1); color:#fff; text-decoration:none;"><i class="fa-solid fa-envelope"></i> EMAIL</a>
-                            <a href="https://linkedin.com/in/orengamchi" target="_blank" class="btn" style="padding:10px 25px; background:var(--accent-secondary); color:#000; text-decoration:none;"><i class="fa-brands fa-linkedin"></i> LINKEDIN</a>
-                            <a href="https://facebook.com/orengamchi" target="_blank" class="btn" style="padding:10px 25px; background:#3b5998; color:#fff; border:none; text-decoration:none;"><i class="fa-brands fa-facebook"></i> FACEBOOK</a>
+                        
+                        <div style="position:relative; z-index:10; display:flex; flex-direction:column; align-items:center;">
+                            <i class="fa-solid fa-comment-dots" style="font-size:3rem; color:var(--accent-highlight); margin-bottom:20px;"></i>
+                            <h3 style="font-family:var(--font-display); font-size:1.8rem; margin-bottom:10px;">COMPLIMENTS TO THE CHEF?</h3>
+                            <p class="type-me" style="text-align:center; color:#ccc; max-width:500px; margin-bottom:30px;">
+                                אהבתם את האוכל? יש לכם רעיון למנה חדשה? אני זמין לשיתופי פעולה, פרויקטים, או סתם קפה וקוד.
+                            </p>
+                            <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
+                                <a href="mailto:ORENREDE@GMAIL.COM" class="btn" style="padding:10px 25px; background:rgba(255,255,255,0.1); color:#fff; text-decoration:none;"><i class="fa-solid fa-envelope"></i> EMAIL</a>
+                                <a href="https://linkedin.com/in/orengamchi" target="_blank" class="btn" style="padding:10px 25px; background:var(--accent-secondary); color:#000; text-decoration:none;"><i class="fa-brands fa-linkedin"></i> LINKEDIN</a>
+                                <a href="https://facebook.com/orengamchi" target="_blank" class="btn" style="padding:10px 25px; background:#3b5998; color:#fff; border:none; text-decoration:none;"><i class="fa-brands fa-facebook"></i> FACEBOOK</a>
+                            </div>
                         </div>
                     </div>
                 `
@@ -740,16 +759,17 @@
         
         let isScrollLocked = false;
         let lastTouchTime = 0;
-        let isDragScroll = false; // Renamed to differentiate from click tracking
         let startX, scrollLeft;
         let billAnimationPlayed = false;
 
         function renderMenu(container) {
+            // 1. Triple Data for Infinite Loop
+            const infiniteFiles = [...galleryFiles, ...galleryFiles, ...galleryFiles];
+
             const createCardHtml = (item) => {
                  const spiceLevel = Array(item.spice).fill('<i class="fa-solid fa-pepper-hot neon-icon hot"></i>').join(' ');
                  const rot = Math.floor(Math.random() * 20) - 10;
                  
-                 // Icons
                  let hardwareIcon = '';
                  if(item.tech.toLowerCase().includes('audio') || item.tech.toLowerCase().includes('voice')) {
                      hardwareIcon = '<i class="fa-solid fa-microphone-lines neon-icon tool" title="Audio Input"></i><span>VOICE</span>';
@@ -796,8 +816,39 @@
                     </div>
                 `;
             };
-            const html = galleryFiles.map(item => createCardHtml(item)).join('');
+            
+            const html = infiniteFiles.map(item => createCardHtml(item)).join('');
             container.innerHTML = html;
+            
+            // 2. Set Initial Scroll to Middle Set (after small delay for layout)
+            setTimeout(() => {
+                // Calculate single set width
+                const totalWidth = container.scrollWidth;
+                const singleSetWidth = totalWidth / 3;
+                
+                // Initialize in the middle set
+                container.scrollLeft = singleSetWidth; 
+                
+                // 3. Infinite Scroll Teleport Logic
+                container.addEventListener('scroll', () => {
+                    const scrollPos = container.scrollLeft;
+                    const setW = container.scrollWidth / 3;
+                    
+                    // Buffer zone to prevent flickering at edges (5px)
+                    if (scrollPos < 10) { 
+                        // If we hit start of Set 1, jump to start of Set 2
+                        container.scrollLeft = setW + 10;
+                    } 
+                    else if (scrollPos > setW * 2 + setW - container.clientWidth - 10) {
+                        // If we hit end of Set 3, jump to end of Set 2
+                        container.scrollLeft = setW * 2 - container.clientWidth - 10;
+                    }
+                });
+                
+                // Start auto scroll (slowly)
+                startAutoScroll(container);
+                
+            }, 500); // Give layout time to settle
             
             // --- Custom Drag/Click Logic ---
             let isDown = false;
@@ -807,6 +858,8 @@
             let hasMoved = false;
 
             container.addEventListener('mousedown', (e) => {
+                // Stop propagation so global 3D scroll doesn't trigger
+                e.stopPropagation();
                 isDown = true;
                 hasMoved = false;
                 startMouseX = e.pageX - container.offsetLeft;
@@ -819,15 +872,16 @@
                 container.style.cursor = 'grab';
             });
 
-            container.addEventListener('mouseup', () => {
+            container.addEventListener('mouseup', (e) => {
+                e.stopPropagation();
                 isDown = false;
                 container.style.cursor = 'grab';
-                snapToNearest(container);
             });
 
             container.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
                 e.preventDefault();
+                e.stopPropagation();
                 const x = e.pageX - container.offsetLeft;
                 const walk = (x - startMouseX) * 2; 
                 if (Math.abs(walk) > dragThreshold) hasMoved = true;
@@ -844,19 +898,36 @@
                 });
             });
         }
-
-        function snapToNearest(container) {
-            const itemWidth = container.clientWidth;
-            const scrollPos = container.scrollLeft;
-            const nearestIndex = Math.round(scrollPos / itemWidth);
-            container.scrollTo({ left: nearestIndex * itemWidth, behavior: 'smooth' });
+        
+        // Auto Scroll Function
+        function startAutoScroll(container) {
+            let autoScrollSpeed = 0.5; // Slow speed
+            let isHovering = false;
+            
+            function step() {
+                if (!isHovering) {
+                    container.scrollLeft += autoScrollSpeed;
+                }
+                requestAnimationFrame(step);
+            }
+            
+            // Interaction listeners to pause auto scroll
+            container.addEventListener('mouseenter', () => isHovering = true);
+            container.addEventListener('mouseleave', () => isHovering = false);
+            container.addEventListener('touchstart', () => isHovering = true);
+            container.addEventListener('touchend', () => setTimeout(() => isHovering = false, 2000));
+            
+            step();
         }
 
+        // --- NEW: FIXED ARROW SCROLLING ---
         function scrollGallery(dir) {
             const container = document.getElementById('menu-scroll-container');
             if(container) {
-                const itemWidth = container.clientWidth;
-                container.scrollBy({ left: dir * itemWidth, behavior: 'smooth' });
+                // Determine scroll amount: either container width or card width
+                // For safety, scroll by container width so it feels like "Next Page"
+                const scrollAmount = container.clientWidth;
+                container.scrollBy({ left: dir * scrollAmount, behavior: 'smooth' });
             }
         }
 
@@ -897,7 +968,6 @@
                     const gridContainer = contentWrap.querySelector('#menu-scroll-container');
                     if(gridContainer) {
                         renderMenu(gridContainer);
-                        gridContainer.addEventListener('wheel', (evt) => { evt.preventDefault(); evt.stopPropagation(); gridContainer.scrollLeft += evt.deltaY; });
                     }
                 }
                 el._baseIndex = index;
@@ -978,13 +1048,11 @@
                     const currentVal = Math.floor(progress * end);
                     let displayStr = isMoney ? '$' + currentVal.toLocaleString() : currentVal + suffix;
                     
-                    // Avoid inserting span during animation loop to prevent layout thrashing/flicker
                     element.innerText = displayStr; 
 
                     if (progress < 1) {
                         requestAnimationFrame(update);
                     } else {
-                        // Apply styling only at the end
                         element.innerHTML = displayStr.replace(/0/g, '<span class="blink-zero">0</span>');
                         resolve();
                     }
@@ -1061,7 +1129,6 @@
                 slide.style.transform = `translate3d(-50%, -50%, ${z}px) rotateX(${rotateX}deg) scale(${scale})`;
                 slide.style.opacity = opacity;
                 
-                // Keep z-index in safe range (9000-10000) so it doesn't overlap fixed UI (20000)
                 slide.style.zIndex = 10000 - Math.floor(distance);
                 
                 if (z > -100 && z < 100) {
@@ -1088,14 +1155,29 @@
             setTimeout(() => { isScrollLocked = false; }, 600); 
         }
 
+        // SCROLL & TOUCH HANDLERS (Improved for mixed content scroll)
+        
         window.addEventListener('wheel', (e) => { 
-            if (e.target.closest('.menu-scroll-container')) return;
-            if (e.target.closest('.slide-content-wrap')) {
-                 const wrap = e.target.closest('.slide-content-wrap');
-                 const atTop = wrap.scrollTop === 0 && e.deltaY < 0;
-                 const atBottom = Math.abs(wrap.scrollHeight - wrap.scrollTop - wrap.clientHeight) < 1 && e.deltaY > 0;
-                 if (!atTop && !atBottom) return; 
+            // If we are over the menu container (even if bubbling), don't change slides
+            const gallery = e.target.closest('.menu-scroll-container');
+            
+            if (gallery) {
+                // Manually handle the mapping: Vertical Wheel -> Horizontal Gallery Scroll
+                gallery.scrollLeft += e.deltaY;
+                return; // Stop here, do not trigger page scroll
             }
+
+            // Check if scrolling inside other content (e.g. modal)
+            const scrollable = e.target.closest('.slide-content-wrap, .modal-content, .card-desc');
+            if (scrollable) {
+                 const canScrollUp = scrollable.scrollTop > 0;
+                 const canScrollDown = scrollable.scrollTop + scrollable.clientHeight < scrollable.scrollHeight;
+
+                 if ((canScrollUp && e.deltaY < 0) || (canScrollDown && e.deltaY > 0)) {
+                     return; 
+                 }
+            }
+            
             if (e.deltaY > 0) handleScroll(-1); else handleScroll(1);
         }, {passive: false});
         
@@ -1103,14 +1185,30 @@
         window.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; touchStartX = e.touches[0].clientX; lastTouchTime = new Date().getTime(); }, {passive: false});
         window.addEventListener('touchmove', e => {
             const deltaY = touchStartY - e.touches[0].clientY;
-            if (e.target.closest('.slide-content-wrap')) {
-                 const wrap = e.target.closest('.slide-content-wrap');
-                 const atTop = wrap.scrollTop === 0 && deltaY < 0;
-                 const atBottom = Math.abs(wrap.scrollHeight - wrap.scrollTop - wrap.clientHeight) < 1 && deltaY > 0;
-                 if (e.target.closest('.menu-scroll-container')) return;
-                 if (!atTop && !atBottom) return; 
+            
+            // Critical Fix: If touching the gallery, do not change slides!
+            if (e.target.closest('.menu-scroll-container')) {
+                e.stopPropagation();
+                return;
             }
-            if (Math.abs(deltaY) > 50) { if (deltaY > 0) handleScroll(1); else handleScroll(-1); touchStartY = e.touches[0].clientY; }
+
+            const scrollable = e.target.closest('.slide-content-wrap, .card-desc, .modal-content');
+            if (scrollable) {
+                 const canScrollUp = scrollable.scrollTop > 0;
+                 const canScrollDown = Math.ceil(scrollable.scrollTop + scrollable.clientHeight) < scrollable.scrollHeight;
+
+                 if ((canScrollUp && deltaY < 0) || (canScrollDown && deltaY > 0)) {
+                     e.stopPropagation(); 
+                     return; 
+                 }
+            }
+
+            if(e.cancelable) e.preventDefault(); 
+            
+            if (Math.abs(deltaY) > 50) { 
+                if (deltaY > 0) handleScroll(1); else handleScroll(-1); 
+                touchStartY = e.touches[0].clientY; 
+            }
         }, {passive: false});
 
         function animateScroll() {
@@ -1122,7 +1220,6 @@
         // Idle Timer with Pop-out Logic
         let idleTimer;
         function resetIdleTimer() {
-            // Reset pop state
             const icons = document.querySelectorAll('.side-icon-container i, .cyber-chart-large');
             icons.forEach(el => el.classList.remove('idle-pop'));
             
@@ -1132,7 +1229,6 @@
             clearTimeout(idleTimer);
             idleTimer = setTimeout(() => { 
                 el.classList.add('visible'); 
-                // Add pop animation to icons
                 icons.forEach(el => el.classList.add('idle-pop'));
             }, 3000);
         }
